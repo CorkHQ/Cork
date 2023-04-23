@@ -4,12 +4,16 @@ import pwd
 
 
 class WineSession:
-    def __init__(self, prefix, wine_home="", environment={}):
+    def __init__(self, prefix, wine_home="", environment={}, wine64=False):
         self.wine_home = wine_home
         self.prefix = os.path.abspath(prefix)
         self.environment = environment
+        self.wine64 = wine64
 
-    def execute(self, arguments, binary_name="wine", cwd="", launcher=""):
+    def execute(self, arguments, binary_name="", cwd="", launcher=""):
+        if binary_name == "":
+            binary_name = "wine64" if self.wine64 else "wine"
+
         wine_binary = binary_name
 
         if self.wine_home != "":

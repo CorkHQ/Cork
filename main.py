@@ -20,6 +20,7 @@ if __name__ == "__main__":
 
     settings = {
         "WineHome": "",
+        "Wine64": False,
         "Launcher": "",
         "RemoteFFlags": "",
         "FFlags": {},
