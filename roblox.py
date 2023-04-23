@@ -10,6 +10,11 @@ class RobloxSession(WineSession):
     def __init__(self, prefix, wine_home="", environment={}, fflags={}, wine64=False):
         WineSession.__init__(self, prefix, wine_home, environment, wine64)
         self.fflags = fflags
+        self.installation_directories = [
+            "Program Files",
+            "Program Files (x86)",
+            os.path.join("users", self.get_user(), "AppData", "Local")
+        ]
 
     def install_roblox(self):
         url = "https://www.roblox.com/download/client"
@@ -20,13 +25,7 @@ class RobloxSession(WineSession):
         return self.execute(["C:/RobloxPlayerLauncher.exe"])
 
     def get_player(self) -> Tuple[Optional[str], Optional[str]]:
-        installation_directories = [
-            "Program Files",
-            "Program Files (x86)",
-            os.path.join("users", self.get_user(), "AppData", "Local")
-        ]
-
-        for directory in installation_directories:
+        for directory in self.installation_directories:
             full_directory = os.path.join(
                 self.get_drive(), directory, "Roblox", "Versions")
             if os.path.exists(full_directory):
@@ -34,6 +33,17 @@ class RobloxSession(WineSession):
                     exe_path = os.path.join(
                         "C:/", os.path.relpath(binary, self.get_drive()))
                     return exe_path, os.path.dirname(binary)
+
+        return None, None
+
+    def get_studio(self) -> Tuple[Optional[str], Optional[str]]:
+        for directory in self.installation_directories:
+            full_directory = os.path.join(
+                self.get_drive(), directory, "Roblox", "Versions", "RobloxStudioLauncherBeta.exe")
+            if os.path.exists(full_directory):
+                exe_path = os.path.join(
+                    "C:/", os.path.relpath(full_directory, self.get_drive()))
+                return exe_path, os.path.dirname(full_directory)
 
         return None, None
 
@@ -55,4 +65,15 @@ class RobloxSession(WineSession):
 
             return self.execute([player_exe] + arguments, cwd=player_directory, launcher=launcher)
 
-        raise Exception("Roblox could not be installed!")
+        raise Exception("Roblox Player could not be installed!")
+
+    def execute_studio(self, arguments, launcher=""):
+        studio_exe, studio_directory = self.get_studio()
+        if not studio_exe:
+            self.install_roblox()
+            studio_exe, studio_directory = self.get_studio()
+
+        if studio_exe and studio_directory:
+            return self.execute([studio_exe] + arguments, cwd=studio_directory, launcher=launcher)
+
+        raise Exception("Roblox Studio could not be installed!")

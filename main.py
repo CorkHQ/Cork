@@ -37,23 +37,23 @@ if __name__ == "__main__":
     with open(os.path.join(user_config_dir("cork"), "settings.json"), "w") as file:
         file.write(json.dumps(settings, indent=4))
 
-    remote_fflags = {}
-    if settings["RemoteFFlags"] != "":
-        try:
-            fflag_request = requests.get(settings["RemoteFFlags"])
-            remote_fflags = fflag_request.json()
-        except:
-            pass
-
     session = RobloxSession(
         os.path.join(user_data_dir("cork"), "prefix"),
         wine_home=settings["WineHome"],
         environment=settings["Environment"],
-        fflags=remote_fflags | settings["FFlags"],
         wine64=settings["Wine64"])
 
     match arguments.mode:
         case "player":
+            remote_fflags = {}
+            if settings["RemoteFFlags"] != "":
+                try:
+                    fflag_request = requests.get(settings["RemoteFFlags"])
+                    remote_fflags = fflag_request.json()
+                except:
+                    pass
+
+            session.fflags = remote_fflags | settings["FFlags"]
             session.initialize_prefix()
 
             if len(arguments.args) > 0:
@@ -64,7 +64,15 @@ if __name__ == "__main__":
 
             session.wait_prefix()
         case "studio":
-            raise Exception("Studio support not implemented!")
+            session.initialize_prefix()
+
+            if len(arguments.args) > 0:
+                session.execute_studio(
+                    arguments.args, launcher=settings["Launcher"])
+            else:
+                session.execute_studio(["-ide"], launcher=settings["Launcher"])
+
+            session.wait_prefix()
         case "wine":
             session.initialize_prefix()
             session.execute(arguments.args)
