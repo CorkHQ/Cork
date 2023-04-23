@@ -7,8 +7,8 @@ from wine import WineSession
 
 
 class RobloxSession(WineSession):
-    def __init__(self, prefix, wine_home="", environment={}, fflags={}):
-        WineSession.__init__(self, prefix, wine_home, environment)
+    def __init__(self, prefix, wine_home="", environment={}, fflags={}, wine64=False):
+        WineSession.__init__(self, prefix, wine_home, environment, wine64)
         self.fflags = fflags
 
     def install_roblox(self):

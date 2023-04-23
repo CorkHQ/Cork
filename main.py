@@ -49,7 +49,8 @@ if __name__ == "__main__":
         os.path.join(user_data_dir("cork"), "prefix"),
         wine_home=settings["WineHome"],
         environment=settings["Environment"],
-        fflags=remote_fflags | settings["FFlags"])
+        fflags=remote_fflags | settings["FFlags"],
+        wine64=settings["Wine64"])
 
     match arguments.mode:
         case "player":
