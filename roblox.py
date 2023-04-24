@@ -123,7 +123,7 @@ class RobloxSession(WineSession):
         print(f"{version} has been installed!")
 
     def get_player(self, channel="live") -> Tuple[str, str]:
-        version = self.get_version("version")
+        version = self.get_version("version", channel=channel)
 
         version_directory = os.path.join(
             self.get_drive(), "Roblox", "Versions", version)
@@ -137,7 +137,7 @@ class RobloxSession(WineSession):
         return exe_path, version_directory
 
     def get_studio(self, channel="live") -> Tuple[str, str]:
-        version = self.get_version("versionQTStudio")
+        version = self.get_version("versionQTStudio", channel=channel)
 
         version_directory = os.path.join(
             self.get_drive(), "Roblox", "Versions", version)
@@ -188,7 +188,7 @@ class RobloxSession(WineSession):
                 if argument_parts[0] in argument_dictionary:
                     arguments.append(
                         argument_dictionary[argument_parts[0]] + argument_parts[1])
-
+        
         player_exe, player_directory = self.get_player(channel=channel)
 
         self.apply_fflags(player_directory)
