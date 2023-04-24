@@ -64,7 +64,7 @@ if __name__ == "__main__":
                 session.execute_player(
                     ["--app"], launcher=settings["Launcher"], channel=settings["Channel"])
 
-            session.wait_prefix()
+            session.shutdown_prefix()
         case "studio":
             session.initialize_prefix()
 
@@ -79,4 +79,4 @@ if __name__ == "__main__":
         case "wine":
             session.initialize_prefix()
             session.execute(arguments.args)
-            session.wait_prefix()
+            session.shutdown_prefix()
