@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import shutil
 from urllib.request import urlopen
 from platformdirs import user_config_dir, user_data_dir
 from roblox import RobloxSession
@@ -9,7 +10,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog='Cork',
         description='A Roblox Wine Wrapper')
-    parser.add_argument("mode", type=str, choices=["player", "studio", "wine"])
+    parser.add_argument("mode", type=str, choices=[
+                        "player", "studio", "wine", "install", "cleanup"])
     parser.add_argument("args", nargs='*')
     arguments = parser.parse_args()
 
@@ -81,3 +83,13 @@ if __name__ == "__main__":
             session.initialize_prefix()
             session.execute(arguments.args)
             session.shutdown_prefix()
+        case "install":
+            session.get_player()
+            session.get_studio()
+        case "cleanup":
+            versions_directory = os.path.join(
+                session.get_drive(), "Roblox", "Versions")
+
+            for version in [f for f in os.listdir(versions_directory) if not os.path.isfile(os.path.join(versions_directory, f))]:
+                print(f"Removing {version}...")
+                shutil.rmtree(os.path.join(versions_directory, version))
