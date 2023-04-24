@@ -1,2 +1,3 @@
 platformdirs
 desktop-notifier
+joblib

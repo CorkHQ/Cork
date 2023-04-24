@@ -10,7 +10,7 @@ from typing import Tuple
 from desktop_notifier.base import Urgency
 from wine import WineSession
 from desktop_notifier import DesktopNotifier
-
+from joblib import Parallel, delayed
 
 class RobloxSession(WineSession):
     def __init__(self, prefix, wine_home="", environment={}, fflags={}, wine64=False):
@@ -105,8 +105,8 @@ class RobloxSession(WineSession):
 
         os.makedirs(version_directory)
 
-        for package, target in packages.items():
-            print(f"Installing package {package}...")
+        def extract(package, target):
+            print(f"Downloading package {package}...")
             target_directory = os.path.join(version_directory, target)
             if not os.path.isdir(target_directory):
                 os.makedirs(target_directory)
@@ -114,9 +114,12 @@ class RobloxSession(WineSession):
             response = urlopen(
                 f"https://setup.rbxcdn.com/{version}-{package}")
             zip = ZipFile(BytesIO(response.read()))
+            print(f"Installing package {package}...")
             for zipinfo in zip.infolist():
                 zipinfo.filename = zipinfo.filename.replace("\\", "/")
                 zip.extract(zipinfo, target_directory)
+
+        Parallel(n_jobs=16)(delayed(extract)(package, target) for package, target in packages.items())
 
         with open(os.path.join(version_directory, "AppSettings.xml"), "w") as file:
             file.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" +
