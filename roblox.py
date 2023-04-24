@@ -3,6 +3,7 @@ import json
 import shutil
 import urllib.parse
 import asyncio
+import hashlib
 from zipfile import ZipFile
 from urllib.request import urlopen
 from io import BytesIO
@@ -105,6 +106,22 @@ class RobloxSession(WineSession):
 
         os.makedirs(version_directory)
 
+        package_manifest_text = urlopen(f"https://setup.rbxcdn.com/{version}-rbxPkgManifest.txt").read().decode("utf-8").split("\n", 1)[1].splitlines()
+        package_manifest = {}
+        line_count = 1
+        last_header = ""
+
+        for line in package_manifest_text:
+            if line_count == 5:
+                line_count = 1
+            
+            if line_count == 1:
+                last_header = line
+                package_manifest[last_header] = []
+            else:
+                package_manifest[last_header].append(line)
+            line_count += 1
+        
         def extract(package, target):
             print(f"Downloading package {package}...")
             target_directory = os.path.join(version_directory, target)
@@ -113,7 +130,14 @@ class RobloxSession(WineSession):
 
             response = urlopen(
                 f"https://setup.rbxcdn.com/{version}-{package}")
-            zip = ZipFile(BytesIO(response.read()))
+            response_bytes = response.read()
+            while package_manifest[package][0] != hashlib.md5(response_bytes).hexdigest():
+                print(f"Checksum failed for {package}, retrying...")
+                response = urlopen(
+                    f"https://setup.rbxcdn.com/{version}-{package}")
+                response_bytes = response.read()
+
+            zip = ZipFile(BytesIO(response_bytes))
             print(f"Installing package {package}...")
             for zipinfo in zip.infolist():
                 zipinfo.filename = zipinfo.filename.replace("\\", "/")
