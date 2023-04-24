@@ -6,7 +6,7 @@ from urllib.request import urlopen
 from platformdirs import user_config_dir, user_data_dir
 from cork.roblox import RobloxSession
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(
         prog='Cork',
         description='A Roblox Wine Wrapper')
@@ -93,3 +93,6 @@ if __name__ == "__main__":
             for version in [f for f in os.listdir(versions_directory) if not os.path.isfile(os.path.join(versions_directory, f))]:
                 print(f"Removing {version}...")
                 shutil.rmtree(os.path.join(versions_directory, version))
+
+if __name__ == "__main__":
+    main()
