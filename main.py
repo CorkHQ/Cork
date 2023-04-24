@@ -21,6 +21,7 @@ if __name__ == "__main__":
     settings = {
         "WineHome": "",
         "Wine64": False,
+        "Channel": "live",
         "Launcher": "",
         "RemoteFFlags": "",
         "FFlags": {},
@@ -58,9 +59,10 @@ if __name__ == "__main__":
 
             if len(arguments.args) > 0:
                 session.execute_player(
-                    arguments.args, launcher=settings["Launcher"])
+                    arguments.args, launcher=settings["Launcher"], channel=settings["Channel"])
             else:
-                session.execute_player(["--app"], launcher=settings["Launcher"])
+                session.execute_player(
+                    ["--app"], launcher=settings["Launcher"], channel=settings["Channel"])
 
             session.wait_prefix()
         case "studio":
@@ -68,9 +70,10 @@ if __name__ == "__main__":
 
             if len(arguments.args) > 0:
                 session.execute_studio(
-                    arguments.args, launcher=settings["Launcher"])
+                    arguments.args, launcher=settings["Launcher"], channel=settings["Channel"])
             else:
-                session.execute_studio(["-ide"], launcher=settings["Launcher"])
+                session.execute_studio(
+                    ["-ide"], launcher=settings["Launcher"], channel=settings["Channel"])
 
             session.wait_prefix()
         case "wine":

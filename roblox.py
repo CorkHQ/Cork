@@ -14,8 +14,12 @@ class RobloxSession(WineSession):
         WineSession.__init__(self, prefix, wine_home, environment, wine64)
         self.fflags = fflags
 
-    def get_version(self, version_type, channel=""):
+    def get_version(self, version_type, channel="live"):
+        if channel == "live":
+            channel = ""
+
         base_url = "https://setup.rbxcdn.com/"
+
         if channel != "":
             base_url = f"{base_url}channel/{channel}/"
 
@@ -118,7 +122,7 @@ class RobloxSession(WineSession):
 
         print(f"{version} has been installed!")
 
-    def get_player(self) -> Tuple[str, str]:
+    def get_player(self, channel="live") -> Tuple[str, str]:
         version = self.get_version("version")
 
         version_directory = os.path.join(
@@ -132,7 +136,7 @@ class RobloxSession(WineSession):
 
         return exe_path, version_directory
 
-    def get_studio(self) -> Tuple[str, str]:
+    def get_studio(self, channel="live") -> Tuple[str, str]:
         version = self.get_version("versionQTStudio")
 
         version_directory = os.path.join(
@@ -153,10 +157,7 @@ class RobloxSession(WineSession):
         with open(os.path.join(player_directory, "ClientSettings", "ClientAppSettings.json"), "w") as file:
             file.write(json.dumps(self.fflags, indent=4))
 
-    def execute_player(self, arguments, launcher=""):
-        player_exe, player_directory = self.get_player()
-
-        self.apply_fflags(player_directory)
+    def execute_player(self, arguments, launcher="", channel="live"):
         if len(arguments) > 0 and arguments[0].startswith("roblox-player:1+launchmode:"):
             argument_dictionary = {
                 "launchmode":       "--",
@@ -166,6 +167,7 @@ class RobloxSession(WineSession):
                 "browsertrackerid": "-b ",
                 "robloxLocale":     "--rloc ",
                 "gameLocale":       "--gloc ",
+                "channel":          "-channel "
             }
             startup_argument = arguments[0]
 
@@ -177,14 +179,23 @@ class RobloxSession(WineSession):
                     argument_parts[1] = "app"
                 if argument_parts[0] == "placelauncherurl":
                     argument_parts[1] = urllib.parse.unquote(argument_parts[1])
+                if argument_parts[0] == "channel":
+                    if channel == "live":
+                        channel = argument_parts[1].lower()
+                    else:
+                        argument_parts[1] = channel
 
                 if argument_parts[0] in argument_dictionary:
                     arguments.append(
                         argument_dictionary[argument_parts[0]] + argument_parts[1])
 
+        player_exe, player_directory = self.get_player(channel=channel)
+
+        self.apply_fflags(player_directory)
+
         return self.execute([player_exe] + arguments, cwd=player_directory, launcher=launcher)
 
-    def execute_studio(self, arguments, launcher=""):
-        studio_exe, studio_directory = self.get_studio()
+    def execute_studio(self, arguments, launcher="", channel="live"):
+        studio_exe, studio_directory = self.get_studio(channel=channel)
 
         return self.execute([studio_exe] + arguments, cwd=studio_directory, launcher=launcher)
