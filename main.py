@@ -1,7 +1,7 @@
 import argparse
-import requests
 import json
 import os
+from urllib.request import urlopen
 from platformdirs import user_config_dir, user_data_dir
 from roblox import RobloxSession
 
@@ -49,8 +49,9 @@ if __name__ == "__main__":
             remote_fflags = {}
             if settings["RemoteFFlags"] != "":
                 try:
-                    fflag_request = requests.get(settings["RemoteFFlags"])
-                    remote_fflags = fflag_request.json()
+                    fflag_request = urlopen(settings["RemoteFFlags"])
+                    remote_fflags = json.loads(
+                        fflag_request.read().decode('utf-8'))
                 except:
                     pass
 
