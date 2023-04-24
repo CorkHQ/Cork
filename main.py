@@ -60,7 +60,7 @@ if __name__ == "__main__":
                 session.execute_player(
                     arguments.args, launcher=settings["Launcher"])
             else:
-                session.execute_player(["-app"], launcher=settings["Launcher"])
+                session.execute_player(["--app"], launcher=settings["Launcher"])
 
             session.wait_prefix()
         case "studio":
