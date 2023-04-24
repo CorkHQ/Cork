@@ -7,6 +7,7 @@ from urllib.request import urlopen
 from io import BytesIO
 from typing import Tuple
 from wine import WineSession
+from desktop_notifier import DesktopNotifier
 
 
 class RobloxSession(WineSession):
@@ -27,6 +28,8 @@ class RobloxSession(WineSession):
         return version_response.read().decode('utf-8')
 
     def install_version(self, version, studio=False):
+        notifier = DesktopNotifier()
+
         packages = {
             "RobloxApp.zip":                 "",
             "WebView2.zip":                  "",
@@ -88,9 +91,9 @@ class RobloxSession(WineSession):
                 "redist.zip":                      ""
             }
 
-            print(f"Installing Studio {version}...")
+            notifier.send_sync(title="Roblox Studio", icon="roblox-studio", message=f"Installing {version}...")
         else:
-            print(f"Installing Player {version}...")
+            notifier.send_sync(title="Roblox Player", icon="roblox-player", message=f"Installing {version}...")
 
         version_directory = os.path.join(
             self.get_drive(), "Roblox", "Versions", version)
@@ -119,7 +122,8 @@ class RobloxSession(WineSession):
                        "        <BaseUrl>http://www.roblox.com</BaseUrl>\r\n" +
                        "</Settings>\r\n"
                        )
-
+        
+        notifier.send_sync(title="Cork", icon="roblox-studio" if studio else "roblox-player", message=f"{version} has been installed!")
         print(f"{version} has been installed!")
 
     def get_player(self, channel="live") -> Tuple[str, str]:
