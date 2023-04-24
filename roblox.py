@@ -91,9 +91,9 @@ class RobloxSession(WineSession):
                 "redist.zip":                      ""
             }
 
-            notifier.send_sync(title="Roblox Studio", icon="roblox-studio", message=f"Installing {version}...")
+            notifier.send_sync(title="Cork", icon="roblox-studio", message=f"Installing {version}...")
         else:
-            notifier.send_sync(title="Roblox Player", icon="roblox-player", message=f"Installing {version}...")
+            notifier.send_sync(title="Cork", icon="roblox-player", message=f"Installing {version}...")
 
         version_directory = os.path.join(
             self.get_drive(), "Roblox", "Versions", version)
