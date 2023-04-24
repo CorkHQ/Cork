@@ -4,7 +4,7 @@ import os
 import shutil
 from urllib.request import urlopen
 from platformdirs import user_config_dir, user_data_dir
-from roblox import RobloxSession
+from cork.roblox import RobloxSession
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

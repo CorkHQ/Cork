@@ -9,7 +9,7 @@ from urllib.request import urlopen
 from io import BytesIO
 from typing import Tuple
 from desktop_notifier.base import Urgency
-from wine import WineSession
+from cork.wine import WineSession
 from desktop_notifier import DesktopNotifier
 from joblib import Parallel, delayed
 
