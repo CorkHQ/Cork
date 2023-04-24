@@ -2,10 +2,12 @@ import os
 import json
 import shutil
 import urllib.parse
+import asyncio
 from zipfile import ZipFile
 from urllib.request import urlopen
 from io import BytesIO
 from typing import Tuple
+from desktop_notifier.base import Urgency
 from wine import WineSession
 from desktop_notifier import DesktopNotifier
 
@@ -91,9 +93,9 @@ class RobloxSession(WineSession):
                 "redist.zip":                      ""
             }
 
-            notifier.send_sync(title="Cork", icon="roblox-studio", message=f"Installing {version}...")
-        else:
-            notifier.send_sync(title="Cork", icon="roblox-player", message=f"Installing {version}...")
+        loop = asyncio.new_event_loop()
+        notification = loop.run_until_complete(notifier.send(
+            title="Cork", icon="roblox-studio" if studio else "roblox-player", message=f"Installing {version}...", urgency=Urgency.Critical))
 
         version_directory = os.path.join(
             self.get_drive(), "Roblox", "Versions", version)
@@ -104,6 +106,7 @@ class RobloxSession(WineSession):
         os.makedirs(version_directory)
 
         for package, target in packages.items():
+            print(f"Installing package {package}...")
             target_directory = os.path.join(version_directory, target)
             if not os.path.isdir(target_directory):
                 os.makedirs(target_directory)
@@ -122,9 +125,14 @@ class RobloxSession(WineSession):
                        "        <BaseUrl>http://www.roblox.com</BaseUrl>\r\n" +
                        "</Settings>\r\n"
                        )
-        
-        notifier.send_sync(title="Cork", icon="roblox-studio" if studio else "roblox-player", message=f"{version} has been installed!")
+
         print(f"{version} has been installed!")
+
+        loop.run_until_complete(notifier.clear(notification))
+        loop.run_until_complete(notifier.send(title="Cork", icon="roblox-studio" if studio else "roblox-player",
+                                message=f"{version} has been installed!", urgency=Urgency.Normal))
+
+        loop.close()
 
     def get_player(self, channel="live") -> Tuple[str, str]:
         version = self.get_version("version", channel=channel)
@@ -192,7 +200,7 @@ class RobloxSession(WineSession):
                 if argument_parts[0] in argument_dictionary:
                     arguments.append(
                         argument_dictionary[argument_parts[0]] + argument_parts[1])
-        
+
         player_exe, player_directory = self.get_player(channel=channel)
 
         self.apply_fflags(player_directory)
