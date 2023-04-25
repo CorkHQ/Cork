@@ -19,6 +19,8 @@ def main():
         os.makedirs(user_config_dir("cork"))
     if not os.path.isdir(user_data_dir("cork")):
         os.makedirs(user_data_dir("cork"))
+    if not os.path.isdir(os.path.join(user_data_dir("cork"), "prefix")):
+        os.makedirs(os.path.join(user_data_dir("cork"), "prefix"))
 
     settings = {
         "WineHome": "",
