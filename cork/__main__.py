@@ -89,9 +89,13 @@ def main():
             session.execute(arguments.args)
             session.shutdown_prefix()
         case "install":
+            session.initialize_prefix()
+            
             session.get_player()
             session.get_studio()
         case "cleanup":
+            session.initialize_prefix()
+
             versions_directory = os.path.join(
                 session.get_drive(), "Roblox", "Versions")
 
