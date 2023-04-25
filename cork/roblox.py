@@ -122,11 +122,9 @@ class RobloxSession(WineSession):
                 package_manifest[last_header].append(line)
             line_count += 1
         
-        def extract(package, target):
+        package_zips = {}
+        def download(package, target):
             print(f"Downloading package {package}...")
-            target_directory = os.path.join(version_directory, target)
-            if not os.path.isdir(target_directory):
-                os.makedirs(target_directory)
 
             response = urlopen(
                 f"https://setup.rbxcdn.com/{version}-{package}")
@@ -138,12 +136,24 @@ class RobloxSession(WineSession):
                 response_bytes = response.read()
 
             zip = ZipFile(BytesIO(response_bytes))
+            package_zips[(package, target)] = zip
+        
+        Parallel(n_jobs=len(packages), require='sharedmem')(delayed(download)(package, target) for package, target in packages.items())
+        print("Packages downloaded!")
+        
+        def install(package, target, zip):
             print(f"Installing package {package}...")
+
+            target_directory = os.path.join(version_directory, target)
+            if not os.path.isdir(target_directory):
+                os.makedirs(target_directory)
+            
             for zipinfo in zip.infolist():
                 zipinfo.filename = zipinfo.filename.replace("\\", "/")
                 zip.extract(zipinfo, target_directory)
-
-        Parallel(n_jobs=16)(delayed(extract)(package, target) for package, target in packages.items())
+        
+        Parallel(n_jobs=len(package_zips), require='sharedmem')(delayed(install)(package, target, zip) for (package, target), zip in package_zips.items())
+        print("Packages installed!")
 
         with open(os.path.join(version_directory, "AppSettings.xml"), "w") as file:
             file.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" +
