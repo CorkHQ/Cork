@@ -30,6 +30,8 @@ def main():
         "Environment": {
             "WINEDLLOVERRIDES": "winemenubuilder.exe=d"
         },
+        "StudioEnvironment": {
+        }
     }
 
     if os.path.exists(os.path.join(user_config_dir("cork"), "settings.json")):
@@ -69,6 +71,7 @@ def main():
 
             session.shutdown_prefix()
         case "studio":
+            session.environment = session.environment | settings["StudioEnvironment"]
             session.initialize_prefix()
 
             if len(arguments.args) > 0:
