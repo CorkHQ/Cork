@@ -34,7 +34,7 @@ If you want to make sure it's functional, install the Player and Studio with the
 ```sh
 cork install
 ```
-To alter any settings, edit the `~/.config/cork/settings.json` file, and the prefix is located in the `~/.local/share/cork/prefix` folder. Have fun tinkering!
+To alter any settings, edit the `~/.config/cork/settings.json` file, and the prefix is located in the `~/.local/share/cork/pfx` folder. Have fun tinkering!
 
 ## Acknowledgements
 Heavily inspired by:
