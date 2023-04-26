@@ -47,10 +47,10 @@ def main():
 
     session = RobloxSession(
         os.path.join(user_data_dir("cork"), "pfx"),
-        wine_home=settings["WineHome"],
+        dist=settings["WineHome"],
         environment=settings["Environment"],
         wine64=settings["Wine64"],
-        wine_type=settings["WineType"])
+        launch_type=settings["WineType"])
 
     match arguments.mode:
         case "player":

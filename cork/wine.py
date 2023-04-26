@@ -4,11 +4,11 @@ import pwd
 
 
 class WineSession:
-    def __init__(self, prefix, wine_home="", environment={}, wine_type="wine", wine64=False):
-        self.wine_home = wine_home
+    def __init__(self, prefix, dist="", environment={}, launch_type="wine", wine64=False):
+        self.dist = dist
         self.prefix = os.path.abspath(prefix)
         self.environment = environment
-        self.wine_type = wine_type
+        self.launch_type = launch_type
         self.wine64 = wine64
     
     def execute(self, arguments, binary_name="", cwd="", launcher=""):
@@ -17,26 +17,26 @@ class WineSession:
         if cwd == "":
             cwd = self.prefix
 
-        if self.wine_type != "proton" or self.wine_home == "":
+        if self.launch_type != "proton" or self.dist == "":
             if binary_name == "":
                 binary_name = "wine64" if self.wine64 else "wine"
 
             wine_binary = binary_name
 
-            if self.wine_home != "":
+            if self.dist != "":
                 wine_binary = os.path.join(os.path.abspath(
-                    self.wine_home), "bin", binary_name)
+                    self.dist), "bin", binary_name)
             
             wine_environment["WINEPREFIX"] = self.prefix
 
             return subprocess.run((launcher.split(" ") if launcher != "" else []) + [wine_binary] + arguments, env=wine_environment, cwd=cwd)
         else:
             proton_binary = os.path.join(os.path.abspath(
-                    self.wine_home), "..", "proton")
+                    self.dist), "..", "proton")
             
             if binary_name != "":
                 proton_binary = os.path.join(os.path.abspath(
-                    self.wine_home), "bin", binary_name)
+                    self.dist), "bin", binary_name)
             
             wine_environment["STEAM_COMPAT_DATA_PATH"] = os.path.join(self.prefix, "..")
             
