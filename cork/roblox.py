@@ -14,8 +14,8 @@ from desktop_notifier import DesktopNotifier
 from joblib import Parallel, delayed
 
 class RobloxSession(WineSession):
-    def __init__(self, prefix, wine_home="", environment={}, fflags={}, wine64=False):
-        WineSession.__init__(self, prefix, wine_home, environment, wine64)
+    def __init__(self, prefix, wine_home="", environment={}, fflags={}, wine_type="wine", wine64=False):
+        WineSession.__init__(self, prefix, wine_home, environment, wine_type, wine64)
         self.fflags = fflags
 
     def get_version(self, version_type, channel="live"):

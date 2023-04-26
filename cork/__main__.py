@@ -24,6 +24,7 @@ def main():
 
     settings = {
         "WineHome": "",
+        "WineType": "wine",
         "Wine64": False,
         "Channel": "live",
         "Launcher": "",
