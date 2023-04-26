@@ -8,6 +8,7 @@ Yet another Wine wrapper for Roblox
 * Multi-Threaded installation of Roblox
 * Highly customizable:
     * Custom Wine versions are fully supported
+    * Proton support
     * Roblox version channels can be customized
     * FFlags can be changed in the settings file
     * FFlags can be merged from an external remote source such as [RCO](https://github.com/L8X/Roblox-Client-Optimizer)
