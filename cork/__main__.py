@@ -2,7 +2,7 @@ import argparse
 import json
 import os
 import shutil
-from urllib.request import urlopen
+from urllib import request
 from platformdirs import user_config_dir, user_data_dir
 from cork.roblox import RobloxSession
 
@@ -55,7 +55,7 @@ def main():
             remote_fflags = {}
             if settings["RemoteFFlags"] != "":
                 try:
-                    fflag_request = urlopen(settings["RemoteFFlags"])
+                    fflag_request = request.urlopen(request.Request(settings["RemoteFFlags"], headers={"User-Agent": "Cork"}))
                     remote_fflags = json.loads(
                         fflag_request.read().decode('utf-8'))
                 except:

@@ -5,7 +5,7 @@ import urllib.parse
 import asyncio
 import hashlib
 from zipfile import ZipFile
-from urllib.request import urlopen
+from urllib import request
 from io import BytesIO
 from typing import Tuple
 from desktop_notifier.base import Urgency
@@ -27,7 +27,7 @@ class RobloxSession(WineSession):
         if channel != "":
             base_url = f"{base_url}channel/{channel}/"
 
-        version_response = urlopen(f"{base_url}{version_type}")
+        version_response = request.urlopen(request.Request(f"{base_url}{version_type}", headers={"User-Agent": "Cork"}))
         return version_response.read().decode('utf-8')
 
     def install_version(self, version, studio=False):
@@ -106,7 +106,7 @@ class RobloxSession(WineSession):
 
         os.makedirs(version_directory)
 
-        package_manifest_text = urlopen(f"https://setup.rbxcdn.com/{version}-rbxPkgManifest.txt").read().decode("utf-8").split("\n", 1)[1].splitlines()
+        package_manifest_text = request.urlopen(request.Request(f"https://setup.rbxcdn.com/{version}-rbxPkgManifest.txt", headers={"User-Agent": "Cork"})).read().decode("utf-8").split("\n", 1)[1].splitlines()
         package_manifest = {}
         line_count = 1
         last_header = ""
@@ -126,13 +126,13 @@ class RobloxSession(WineSession):
         def download(package, target):
             print(f"Downloading package {package}...")
 
-            response = urlopen(
-                f"https://setup.rbxcdn.com/{version}-{package}")
+            response = request.urlopen(request.Request(
+                f"https://setup.rbxcdn.com/{version}-{package}", headers={"User-Agent": "Cork"}))
             response_bytes = response.read()
             while package_manifest[package][0] != hashlib.md5(response_bytes).hexdigest():
                 print(f"Checksum failed for {package}, retrying...")
-                response = urlopen(
-                    f"https://setup.rbxcdn.com/{version}-{package}")
+                response = request.urlopen(request.Request(
+                    f"https://setup.rbxcdn.com/{version}-{package}", headers={"User-Agent": "Cork"}))
                 response_bytes = response.read()
 
             zip = ZipFile(BytesIO(response_bytes))
