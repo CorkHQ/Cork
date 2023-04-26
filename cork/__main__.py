@@ -19,8 +19,8 @@ def main():
         os.makedirs(user_config_dir("cork"))
     if not os.path.isdir(user_data_dir("cork")):
         os.makedirs(user_data_dir("cork"))
-    if not os.path.isdir(os.path.join(user_data_dir("cork"), "prefix")):
-        os.makedirs(os.path.join(user_data_dir("cork"), "prefix"))
+    if not os.path.isdir(os.path.join(user_data_dir("cork"), "pfx")):
+        os.makedirs(os.path.join(user_data_dir("cork"), "pfx"))
 
     settings = {
         "WineHome": "",
@@ -46,10 +46,11 @@ def main():
         file.write(json.dumps(settings, indent=4))
 
     session = RobloxSession(
-        os.path.join(user_data_dir("cork"), "prefix"),
+        os.path.join(user_data_dir("cork"), "pfx"),
         wine_home=settings["WineHome"],
         environment=settings["Environment"],
-        wine64=settings["Wine64"])
+        wine64=settings["Wine64"],
+        wine_type=settings["WineType"])
 
     match arguments.mode:
         case "player":

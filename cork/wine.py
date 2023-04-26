@@ -17,7 +17,7 @@ class WineSession:
         if cwd == "":
             cwd = self.prefix
 
-        if self.wine_type != "proton" and self.wine_home != "":
+        if self.wine_type != "proton" or self.wine_home == "":
             if binary_name == "":
                 binary_name = "wine64" if self.wine64 else "wine"
 
@@ -38,7 +38,7 @@ class WineSession:
                 proton_binary = os.path.join(os.path.abspath(
                     self.wine_home), "bin", binary_name)
             
-            wine_environment["STEAM_COMPAT_DATA_PATH"] = self.prefix
+            wine_environment["STEAM_COMPAT_DATA_PATH"] = os.path.join(self.prefix, "..")
             
             return subprocess.run((launcher.split(" ") if launcher != "" else []) + [proton_binary, "run"] + arguments, env=wine_environment, cwd=cwd)
 
