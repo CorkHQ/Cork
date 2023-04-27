@@ -102,7 +102,7 @@ def main():
             session.wait_prefix()
         case "wine":
             session.initialize_prefix()
-            session.execute(arguments.args)
+            session.execute(arguments.args, launcher=settings["wine"]["launcher"])
             session.shutdown_prefix()
         case "install":
             session.initialize_prefix()
