@@ -37,11 +37,13 @@ def main():
         "roblox": {
             "channel": "live",
             "player": {
+                "version": "",
                 "environment": {},
                 "remotefflags": "",
                 "fflags": {}
             },
             "studio": {
+                "version": "",
                 "environment": {}
             }
         }
@@ -80,10 +82,10 @@ def main():
 
             if len(arguments.args) > 0:
                 session.execute_player(
-                    arguments.args, launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"])
+                    arguments.args, launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
             else:
                 session.execute_player(
-                    ["--app"], launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"])
+                    ["--app"], launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
 
             session.shutdown_prefix()
         case "studio":
@@ -92,10 +94,10 @@ def main():
 
             if len(arguments.args) > 0:
                 session.execute_studio(
-                    arguments.args, launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"])
+                    arguments.args, launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
             else:
                 session.execute_studio(
-                    ["-ide"], launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"])
+                    ["-ide"], launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
 
             session.wait_prefix()
         case "wine":
