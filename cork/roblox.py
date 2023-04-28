@@ -1,10 +1,8 @@
 import os
 import json
 import urllib.parse
-import asyncio
 from typing import Tuple
-from desktop_notifier.base import Urgency
-from cork import rbxcdn, splash
+from cork import rbxcdn
 from cork.wine import WineSession
 
 
