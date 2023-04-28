@@ -4,6 +4,7 @@ import os
 import shutil
 from urllib import request
 from platformdirs import user_config_dir, user_data_dir
+from cork import splash
 from cork.roblox import RobloxSession
 from cork.utils import deep_merge
 
@@ -66,38 +67,47 @@ def main():
 
     match arguments.mode:
         case "player":
+            this_splash = splash.CorkSplash()
+            this_splash.show("roblox-player")
+
             remote_fflags = {}
             if settings["roblox"]["player"]["remotefflags"] != "":
                 try:
+                    this_splash.set_text("Acquiring Remote FFlags...")
                     fflag_request = request.urlopen(request.Request(
                         settings["roblox"]["player"]["remotefflags"], headers={"User-Agent": "Cork"}))
                     remote_fflags = json.loads(
                         fflag_request.read().decode('utf-8'))
                 except:
                     pass
-
+            
+            this_splash.set_text("Starting Roblox...")
             session.fflags = remote_fflags | settings["roblox"]["player"]["fflags"]
             session.environment = session.environment | settings["roblox"]["player"]["environment"]
             session.initialize_prefix()
 
             if len(arguments.args) > 0:
                 session.execute_player(
-                    arguments.args, launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
+                    arguments.args, splash=this_splash, launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
             else:
                 session.execute_player(
-                    ["--app"], launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
+                    ["--app"], splash=this_splash, launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
 
             session.shutdown_prefix()
         case "studio":
+            this_splash = splash.CorkSplash()
+            this_splash.show("roblox-studio")
+
+            this_splash.set_text("Starting Roblox Studio...")
             session.environment = session.environment | settings["roblox"]["studio"]["environment"]
             session.initialize_prefix()
 
             if len(arguments.args) > 0:
                 session.execute_studio(
-                    arguments.args, launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
+                    arguments.args, splash=this_splash, launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
             else:
                 session.execute_studio(
-                    ["-ide"], launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
+                    ["-ide"], splash=this_splash, launcher=settings["wine"]["launcher"], channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
 
             session.wait_prefix()
         case "wine":

@@ -4,9 +4,8 @@ import urllib.parse
 import asyncio
 from typing import Tuple
 from desktop_notifier.base import Urgency
-from cork import rbxcdn
+from cork import rbxcdn, splash
 from cork.wine import WineSession
-from desktop_notifier import DesktopNotifier
 
 
 class RobloxSession(WineSession):
@@ -15,7 +14,10 @@ class RobloxSession(WineSession):
                              environment, launch_type, wine64)
         self.fflags = fflags
 
-    def get_player(self, channel="", version_override="") -> Tuple[str, str]:
+    def get_player(self, splash=None, channel="", version_override="") -> Tuple[str, str]:
+        if splash is not None:
+            splash.set_text("Gathering version data...")
+        
         version = version_override if version_override != "" else rbxcdn.get_version(
             "WindowsPlayer", channel)["clientVersionUpload"]
 
@@ -23,24 +25,21 @@ class RobloxSession(WineSession):
             self.get_drive(), "Roblox", "Versions", version)
 
         if not os.path.isdir(version_directory) or not os.path.exists(os.path.join(version_directory, "RobloxPlayerBeta.exe")):
-            notifier = DesktopNotifier()
-            loop = asyncio.new_event_loop()
-            notification = loop.run_until_complete(notifier.send(
-                title="Cork", icon="roblox-player", message=f"Installing {version}...", urgency=Urgency.Critical))
-
+            if splash is not None:
+                splash.set_text(f"Installing Roblox {version}...")
+            
             rbxcdn.install_version(
                 version, version_directory, channel, rbxcdn.package_dictionaries["Player"])
 
-            loop.run_until_complete(notifier.clear(notification))
-            loop.run_until_complete(notifier.send(title="Cork", icon="roblox-player",
-                                                  message=f"{version} has been installed!", urgency=Urgency.Normal))
-
         exe_path = os.path.join("C:/", os.path.relpath(os.path.join(
             version_directory, "RobloxPlayerBeta.exe"), self.get_drive()))
-
+        
         return exe_path, version_directory
 
-    def get_studio(self, channel="", version_override="") -> Tuple[str, str]:
+    def get_studio(self, splash=None, channel="", version_override="") -> Tuple[str, str]:
+        if splash is not None:
+            splash.set_text("Gathering version data...")
+        
         version = version_override if version_override != "" else rbxcdn.get_version(
             "WindowsStudio", channel)["clientVersionUpload"]
 
@@ -48,17 +47,10 @@ class RobloxSession(WineSession):
             self.get_drive(), "Roblox", "Versions", version)
 
         if not os.path.isdir(version_directory) or not os.path.exists(os.path.join(version_directory, "RobloxStudioBeta.exe")):
-            notifier = DesktopNotifier()
-            loop = asyncio.new_event_loop()
-            notification = loop.run_until_complete(notifier.send(
-                title="Cork", icon="roblox-studio", message=f"Installing {version}...", urgency=Urgency.Critical))
-            
+            if splash is not None:
+                splash.set_text(f"Installing Roblox Studio {version}...")
             rbxcdn.install_version(
                 version, version_directory, channel, rbxcdn.package_dictionaries["Studio"])
-            
-            loop.run_until_complete(notifier.clear(notification))
-            loop.run_until_complete(notifier.send(title="Cork", icon="roblox-studio",
-                                                  message=f"{version} has been installed!", urgency=Urgency.Normal))
 
         exe_path = os.path.join("C:/", os.path.relpath(os.path.join(
             version_directory, "RobloxStudioBeta.exe"), self.get_drive()))
@@ -72,7 +64,7 @@ class RobloxSession(WineSession):
         with open(os.path.join(player_directory, "ClientSettings", "ClientAppSettings.json"), "w") as file:
             file.write(json.dumps(self.fflags, indent=4))
 
-    def execute_player(self, arguments, launcher="", channel="live", version=""):
+    def execute_player(self, arguments, splash=None, launcher="", channel="live", version=""):
         if len(arguments) > 0 and arguments[0].startswith("roblox-player:1+launchmode:"):
             argument_dictionary = {
                 "launchmode":       "--",
@@ -104,18 +96,27 @@ class RobloxSession(WineSession):
                     arguments.append(
                         argument_dictionary[argument_parts[0]] + argument_parts[1])
 
+        if channel == "live":
+            channel = ""
+        
         player_exe, player_directory = self.get_player(
-            channel=channel, version_override=version)
+            splash=splash, channel=channel, version_override=version)
 
         self.apply_fflags(player_directory)
 
+        if splash is not None:
+            splash.close()
+        
         return self.execute([player_exe] + arguments, cwd=player_directory, launcher=launcher)
 
-    def execute_studio(self, arguments, launcher="", channel="live", version=""):
+    def execute_studio(self, arguments, splash=None, launcher="", channel="live", version=""):
         if channel == "live":
             channel = ""
-
+        
         studio_exe, studio_directory = self.get_studio(
-            channel=channel, version_override=version)
+            splash=splash, channel=channel, version_override=version)
 
+        if splash is not None:
+            splash.close()
+        
         return self.execute([studio_exe] + arguments, cwd=studio_directory, launcher=launcher)
