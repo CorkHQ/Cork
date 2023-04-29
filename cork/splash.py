@@ -54,6 +54,9 @@ class GtkCorkSplash(Gtk.Window):
             self.progressbar.set_fraction(progress)
     
     def set_progress_mode(self, mode):
+        if mode == False and self.activity_mode == True:
+            self.progressbar.set_fraction(0)
+        
         self.activity_mode = mode
     
     def on_timeout(self, user_data):
