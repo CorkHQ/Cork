@@ -81,7 +81,7 @@ def get_version(binary_type, channel):
     return json.loads(version_response.read().decode('utf-8'))
 
 
-def install_version(version, version_directory, version_channel, package_dictionary):
+def install_version(version, version_directory, version_channel, package_dictionary, state_dictionary={}):
     if os.path.isdir(version_directory):
         shutil.rmtree(version_directory)
 
@@ -125,6 +125,12 @@ def install_version(version, version_directory, version_channel, package_diction
         zip = ZipFile(BytesIO(response_bytes))
         package_zips[(package, target)] = zip
 
+        state_dictionary["packages_downloaded"] += 1
+
+    state_dictionary["packages_downloaded"] = 0
+    state_dictionary["packages_installed"] = 0
+    state_dictionary["packages_total"] = len(package_dictionary)
+
     Parallel(n_jobs=len(package_dictionary), require='sharedmem')(
         delayed(download)(package, target) for package, target in package_dictionary.items())
 
@@ -138,6 +144,8 @@ def install_version(version, version_directory, version_channel, package_diction
         for zipinfo in zip.infolist():
             zipinfo.filename = zipinfo.filename.replace("\\", "/")
             zip.extract(zipinfo, target_directory)
+        
+        state_dictionary["packages_installed"] += 1
 
     Parallel(n_jobs=len(package_zips), require='sharedmem')(delayed(install)(
         package, target, zip) for (package, target), zip in package_zips.items())
