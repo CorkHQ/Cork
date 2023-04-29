@@ -25,13 +25,14 @@ class GtkCorkSplash(Gtk.Window):
         self.image.set_hexpand(True)
 
         self.progressbar = Gtk.ProgressBar()
+        self.progressbar.set_pulse_step(0.05)
 
         self.label = Gtk.Label(label="")
         self.label.set_hexpand(True)
 
         self.grid = Gtk.Grid()
 
-        self.grid.attach(self.image, 1, 0, 1, 3)
+        self.grid.attach(self.image, 1, 0, 1, 4)
         self.grid.attach_next_to(
             self.progressbar, self.image, Gtk.PositionType.BOTTOM, 1, 1
         )
