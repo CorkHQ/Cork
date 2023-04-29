@@ -89,6 +89,7 @@ def main():
                     pass
             
             this_splash.set_text("Initializing prefix...")
+            this_splash.set_progress_mode(True)
             session.fflags = remote_fflags | settings["roblox"]["player"]["fflags"]
             session.environment = session.environment | settings["roblox"]["player"]["environment"]
             session.initialize_prefix()
