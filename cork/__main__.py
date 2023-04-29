@@ -52,13 +52,17 @@ def main():
         }
     }
 
+    data_settings = ""
     if os.path.exists(os.path.join(user_config_dir("cork"), "settings.json")):
         with open(os.path.join(user_config_dir("cork"), "settings.json"), "r") as file:
-            data = json.loads(file.read())
+            data_settings = file.read()
+            data = json.loads(data_settings)
             settings = deep_merge(data, settings)
 
-    with open(os.path.join(user_config_dir("cork"), "settings.json"), "w") as file:
-        file.write(json.dumps(settings, indent=4))
+    new_data_settings = json.dumps(settings, indent=4)
+    if data_settings != new_data_settings:
+        with open(os.path.join(user_config_dir("cork"), "settings.json"), "w") as file:
+            file.write(json.dumps(settings, indent=4))
 
     session = RobloxSession(
         os.path.join(user_data_dir("cork"), "pfx"),
