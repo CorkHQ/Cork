@@ -42,20 +42,33 @@ class GtkCorkSplash(Gtk.Window):
 
         self.add(self.grid)
         self.show_all()
+        self.activity_mode = False
         self.timeout_id = GLib.timeout_add(50, self.on_timeout, None)
     
     def set_text(self, text):
-        self.label.set_text(text)
+        if self.label.get_label() != text:
+            self.label.set_text(text)
+    
+    def set_progress(self, progress):
+        if self.progressbar.get_fraction() != progress:
+            self.progressbar.set_fraction(progress)
+    
+    def set_progress_mode(self, mode):
+        self.activity_mode = mode
     
     def on_timeout(self, user_data):
-        self.progressbar.pulse()
+        if self.activity_mode:
+            self.progressbar.pulse()
+        
         return True
 
 class CorkSplash():
     def __init__(self):
-        pass
+        self.is_showing = False
     
     def show(self, icon):
+        self.is_showing = True
+
         self.gtk_splash = GtkCorkSplash(icon)
         def gtk_function():
             Gtk.main()
@@ -69,6 +82,20 @@ class CorkSplash():
 
         self.gtk_splash.set_text(text)
     
+    def set_progress(self, progress):
+        if self.gtk_splash is None:
+            return
+
+        self.gtk_splash.set_progress(progress)
+    
+    def set_progress_mode(self, mode):
+        if self.gtk_splash is None:
+            return
+
+        self.gtk_splash.set_progress_mode(mode)
+    
     def close(self):
+        self.is_showing = False
+        
         self.gtk_splash.destroy()
         Gtk.main_quit()
