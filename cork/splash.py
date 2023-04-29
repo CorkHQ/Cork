@@ -11,10 +11,9 @@ class GtkCorkSplash(Gtk.Window):
     def __init__(self, icon):
 
         super().__init__(title="Cork")
-        self.set_default_size(450, 300)
+        self.set_default_size(450, 270)
         self.set_resizable(False)
         self.set_position(Gtk.WindowPosition.CENTER)
-        self.set_decorated(False)
         self.set_border_width(16)
 
         self.set_deletable(False)
@@ -32,7 +31,7 @@ class GtkCorkSplash(Gtk.Window):
 
         self.grid = Gtk.Grid()
 
-        self.grid.attach(self.image, 1, 0, 1, 4)
+        self.grid.attach(self.image, 1, 0, 1, 2)
         self.grid.attach_next_to(
             self.progressbar, self.image, Gtk.PositionType.BOTTOM, 1, 1
         )
