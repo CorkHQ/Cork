@@ -8,6 +8,8 @@ from gi.repository.GdkPixbuf import Pixbuf
 from gi.repository import GLib, Gtk
 
 class GtkCorkSplash(Gtk.Window):
+    def ignore(self, *args):
+        return Gtk.TRUE
     def __init__(self, icon):
 
         super().__init__(title="Cork")
@@ -17,6 +19,7 @@ class GtkCorkSplash(Gtk.Window):
         self.set_border_width(16)
 
         self.set_deletable(False)
+        self.connect('delete_event', self.ignore)
 
         self.image = Gtk.Image()
         self.image.set_from_pixbuf(
