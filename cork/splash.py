@@ -13,7 +13,7 @@ class GtkCorkSplash(Gtk.Window):
     def __init__(self, icon):
 
         super().__init__(title="Cork")
-        self.set_default_size(450, 270)
+        self.set_default_size(380, 240)
         self.set_resizable(False)
         self.set_position(Gtk.WindowPosition.CENTER)
         self.set_border_width(16)
