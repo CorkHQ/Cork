@@ -33,8 +33,8 @@ setuptools.setup(
     data_files = [
         ('share/applications', ['resources/roblox-player.desktop']),
         ('share/applications', ['resources/roblox-studio.desktop']),
-        ('share/icons/hicolor/scalable', ['resources/roblox-player.svg']),
-        ('share/icons/hicolor/scalable', ['resources/roblox-studio.svg'])
+        ('share/icons/hicolor/scalable/apps', ['resources/roblox-player.svg']),
+        ('share/icons/hicolor/scalable/apps', ['resources/roblox-studio.svg'])
     ],
     install_requires=install_requires(),
     python_requires='>=3.10',
