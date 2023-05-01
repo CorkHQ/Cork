@@ -7,8 +7,8 @@ from cork.wine import WineSession
 
 
 class RobloxSession(WineSession):
-    def __init__(self, prefix, dist="", environment={}, fflags={}, launch_type="wine", wine64=False):
-        WineSession.__init__(self, prefix, dist,
+    def __init__(self, prefix, dist="", launcher=[], environment={}, fflags={}, launch_type="wine", wine64=False):
+        WineSession.__init__(self, prefix, dist, launcher,
                              environment, launch_type, wine64)
         self.fflags = fflags
 
@@ -61,7 +61,7 @@ class RobloxSession(WineSession):
         with open(os.path.join(player_directory, "ClientSettings", "ClientAppSettings.json"), "w") as file:
             file.write(json.dumps(self.fflags, indent=4))
 
-    def execute_player(self, arguments, state_dictionary={}, launcher=[], channel="live", version=""):
+    def execute_player(self, arguments, state_dictionary={}, channel="live", version=""):
         if len(arguments) > 0 and arguments[0].startswith("roblox-player:1+launchmode:"):
             argument_dictionary = {
                 "launchmode":       "--",
@@ -102,9 +102,45 @@ class RobloxSession(WineSession):
         self.apply_fflags(player_directory)
         
         state_dictionary["state"] = "done"
-        return self.execute([player_exe] + arguments, cwd=player_directory, launcher=launcher)
+        return self.execute([player_exe] + arguments, cwd=player_directory)
 
-    def execute_studio(self, arguments, state_dictionary={}, launcher=[], channel="live", version=""):
+    def execute_studio(self, arguments, state_dictionary={}, channel="live", version=""):
+        if len(arguments) > 0 and arguments[0].startswith("roblox-studio:"):
+            startup_argument = arguments[0]
+
+            argument_map = {}
+            arguments = []
+            for argument_piece in startup_argument.split("+"):
+                argument_parts = argument_piece.split(":")
+                
+                if argument_parts[0] == "channel":
+                    if channel == "live":
+                        channel = argument_parts[1].lower()
+                    else:
+                        argument_parts[1] = channel
+                
+                if argument_parts[0] == "gameinfo":
+                    arguments.append("-url https://www.roblox.com/Login/Negotiate.ashx")
+                    arguments.append(f"-ticket {argument_parts[1]}")
+                else:
+                    if len(argument_parts) > 1:
+                        arguments.append(f"-{argument_parts[0]} {argument_parts[1]}")
+                    else:
+                        arguments.append(f"-{argument_parts[0]}")
+                
+                if len(argument_parts) > 1:
+                    argument_map[argument_parts[0]] = argument_parts[1]
+                else:
+                    argument_map[argument_parts[0]] = True
+            
+            if "launchmode" in argument_map and "task" not in argument_map:
+                if argument_map["launchmode"] == "plugin":
+                    arguments.append(f"-task InstallPlugin -pluginId {argument_map['pluginid']}")
+                elif argument_map["launchmode"] == "edit":
+                    arguments.append("-task EditPlace")
+                elif argument_map["launchmode"] == "asset":
+                    arguments.append(f"-task TryAsset -assetId {argument_map['assetid']}")
+        
         if channel == "live":
             channel = ""
         
@@ -112,4 +148,4 @@ class RobloxSession(WineSession):
             state_dictionary=state_dictionary, channel=channel, version_override=version)
         
         state_dictionary["state"] = "done"
-        return self.execute([studio_exe] + arguments, cwd=studio_directory, launcher=launcher)
+        return self.execute([studio_exe] + arguments, cwd=studio_directory)
