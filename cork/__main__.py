@@ -71,10 +71,13 @@ def main():
         dist=settings["wine"]["dist"],
         environment=settings["wine"]["environment"],
         wine64=settings["wine"]["wine64"],
+        launcher= [x for x in settings["wine"]["launcher"].split(" ") if x],
         launch_type=settings["wine"]["type"])
 
     match arguments.mode:
         case "player":
+            session.launcher += [x for x in settings["roblox"]["player"]["launcher"].split(" ") if x]
+
             this_splash = splash.CorkSplash()
             this_splash.show("roblox-player")
 
@@ -98,14 +101,13 @@ def main():
 
             state_dictionary = {"state": "none"}
 
-            launcher_arguments = [x for x in settings["wine"]["launcher"].split(" ") + settings["roblox"]["player"]["launcher"].split(" ") if x]
             def run_thread():
                 if len(arguments.args) > 0:
                     session.execute_player(
-                        arguments.args, state_dictionary=state_dictionary, launcher=launcher_arguments, channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
+                        arguments.args, state_dictionary=state_dictionary, channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
                 else:
                     session.execute_player(
-                        ["--app"], state_dictionary=state_dictionary, launcher=launcher_arguments, channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
+                        ["--app"], state_dictionary=state_dictionary, channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
                 return
 
             thread = threading.Thread(target=run_thread)
@@ -134,6 +136,8 @@ def main():
 
             session.shutdown_prefix()
         case "studio":
+            session.launcher += [x for x in settings["roblox"]["studio"]["launcher"].split(" ") if x]
+
             this_splash = splash.CorkSplash()
             this_splash.show("roblox-studio")
 
@@ -143,14 +147,13 @@ def main():
 
             state_dictionary = {"state": "none"}
 
-            launcher_arguments = [x for x in settings["wine"]["launcher"].split(" ") + settings["roblox"]["studio"]["launcher"].split(" ") if x]
             def run_thread():
                 if len(arguments.args) > 0:
                     session.execute_studio(
-                        arguments.args, state_dictionary=state_dictionary, launcher=launcher_arguments, channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
+                        arguments.args, state_dictionary=state_dictionary, channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
                 else:
                     session.execute_studio(
-                        ["-ide"], state_dictionary=state_dictionary, launcher=launcher_arguments, channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
+                        ["-ide"], state_dictionary=state_dictionary, channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
 
             thread = threading.Thread(target=run_thread)
             thread.start()
@@ -179,8 +182,7 @@ def main():
             session.wait_prefix()
         case "wine":
             session.initialize_prefix()
-            launcher_arguments = [x for x in settings["wine"]["launcher"].split(" ") if x]
-            session.execute(arguments.args, launcher=launcher_arguments)
+            session.execute(arguments.args)
             session.shutdown_prefix()
         case "install":
             session.initialize_prefix()
