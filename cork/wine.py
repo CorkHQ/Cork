@@ -11,7 +11,7 @@ class WineSession:
         self.launch_type = launch_type
         self.wine64 = wine64
     
-    def execute(self, arguments, binary_name="", cwd="", launcher=""):
+    def execute(self, arguments, binary_name="", cwd="", launcher=[]):
         wine_environment = os.environ.copy() | self.environment
 
         if cwd == "":
@@ -29,7 +29,7 @@ class WineSession:
             
             wine_environment["WINEPREFIX"] = self.prefix
 
-            return subprocess.run((launcher.split(" ") if launcher != "" else []) + [wine_binary] + arguments, env=wine_environment, cwd=cwd)
+            return subprocess.run(launcher + [wine_binary] + arguments, env=wine_environment, cwd=cwd)
         else:
             proton_binary = os.path.join(os.path.abspath(
                     self.dist), "..", "proton")
@@ -40,7 +40,7 @@ class WineSession:
             
             wine_environment["STEAM_COMPAT_DATA_PATH"] = os.path.join(self.prefix, "..")
             
-            return subprocess.run((launcher.split(" ") if launcher != "" else []) + [proton_binary, "run"] + arguments, env=wine_environment, cwd=cwd)
+            return subprocess.run(launcher + [proton_binary, "run"] + arguments, env=wine_environment, cwd=cwd)
 
 
     def initialize_prefix(self):
