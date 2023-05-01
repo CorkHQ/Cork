@@ -16,7 +16,7 @@ def main():
         prog='Cork',
         description='A Roblox Wine Wrapper')
     parser.add_argument("mode", type=str, choices=[
-                        "player", "studio", "wine", "install", "cleanup"])
+                        "player", "studio", "wine", "install", "cleanup", "kill"])
     parser.add_argument("args", nargs='*')
     arguments = parser.parse_args()
 
@@ -193,6 +193,8 @@ def main():
             for version in [f for f in os.listdir(versions_directory) if not os.path.isfile(os.path.join(versions_directory, f))]:
                 print(f"Removing {version}...")
                 shutil.rmtree(os.path.join(versions_directory, version))
+        case "kill":
+            session.shutdown_prefix()
 
 
 if __name__ == "__main__":
