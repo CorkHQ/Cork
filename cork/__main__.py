@@ -133,8 +133,6 @@ def main():
                 time.sleep(0.1)
                 
             thread.join()
-
-            session.shutdown_prefix()
         case "studio":
             session.launcher += [x for x in settings["roblox"]["studio"]["launcher"].split(" ") if x]
 
@@ -178,12 +176,9 @@ def main():
                 time.sleep(0.1)
                 
             thread.join()
-
-            session.wait_prefix()
         case "wine":
             session.initialize_prefix()
             session.execute(arguments.args)
-            session.shutdown_prefix()
         case "install":
             session.initialize_prefix()
 
