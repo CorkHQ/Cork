@@ -5,7 +5,7 @@ import shutil
 import threading
 import time
 from urllib import request
-from platformdirs import user_config_dir, user_data_dir
+from platformdirs import user_config_dir, user_data_dir, user_cache_dir
 from cork import splash
 from cork.roblox import RobloxSession
 from cork.utils import deep_merge
@@ -24,8 +24,13 @@ def main():
         os.makedirs(user_config_dir("cork"))
     if not os.path.isdir(user_data_dir("cork")):
         os.makedirs(user_data_dir("cork"))
+    if not os.path.isdir(user_cache_dir("cork")):
+        os.makedirs(user_cache_dir("cork"))
+
     if not os.path.isdir(os.path.join(user_data_dir("cork"), "pfx")):
         os.makedirs(os.path.join(user_data_dir("cork"), "pfx"))
+    if not os.path.isdir(os.path.join(user_cache_dir("cork"), "logs")):
+        os.makedirs(os.path.join(user_cache_dir("cork"), "logs"))
 
     settings = {
         "wine": {
@@ -65,14 +70,15 @@ def main():
     if data_settings != new_data_settings:
         with open(os.path.join(user_config_dir("cork"), "settings.json"), "w") as file:
             file.write(json.dumps(settings, indent=4))
-
+    
     session = RobloxSession(
         os.path.join(user_data_dir("cork"), "pfx"),
         dist=settings["wine"]["dist"],
         environment=settings["wine"]["environment"],
         wine64=settings["wine"]["wine64"],
         launcher= [x for x in settings["wine"]["launcher"].split(" ") if x],
-        launch_type=settings["wine"]["type"])
+        launch_type=settings["wine"]["type"],
+        log_directory=os.path.join(user_cache_dir("cork"), "logs"))
 
     match arguments.mode:
         case "player":
