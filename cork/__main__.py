@@ -84,8 +84,6 @@ def main():
 
     match arguments.mode:
         case "player":
-            session.launcher = [x for x in settings["roblox"]["player"]["prelauncher"].split(" ") if x] + session.launcher + [x for x in settings["roblox"]["player"]["postlauncher"].split(" ") if x]
-
             this_splash = splash.CorkSplash()
             this_splash.show("roblox-player")
 
@@ -107,6 +105,8 @@ def main():
             session.environment = session.environment | settings["roblox"]["player"]["environment"]
             session.initialize_prefix()
 
+            session.launcher = [x for x in settings["roblox"]["player"]["prelauncher"].split(" ") if x] + session.launcher + [x for x in settings["roblox"]["player"]["postlauncher"].split(" ") if x]
+            
             state_dictionary = {"state": "none"}
 
             def run_thread():
@@ -142,14 +142,14 @@ def main():
                 
             thread.join()
         case "studio":
-            session.launcher = [x for x in settings["roblox"]["studio"]["prelauncher"].split(" ") if x] + session.launcher + [x for x in settings["roblox"]["studio"]["postlauncher"].split(" ") if x]
-
             this_splash = splash.CorkSplash()
             this_splash.show("roblox-studio")
 
             this_splash.set_text("Starting Roblox Studio...")
             session.environment = session.environment | settings["roblox"]["studio"]["environment"]
             session.initialize_prefix()
+
+            session.launcher = [x for x in settings["roblox"]["studio"]["prelauncher"].split(" ") if x] + session.launcher + [x for x in settings["roblox"]["studio"]["postlauncher"].split(" ") if x]
 
             state_dictionary = {"state": "none"}
 
