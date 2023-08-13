@@ -45,14 +45,16 @@ def main():
         "roblox": {
             "channel": "live",
             "player": {
-                "launcher": "",
+                "prelauncher": "",
+                "postlauncher": "",
                 "version": "",
                 "environment": {},
                 "remotefflags": "",
                 "fflags": {}
             },
             "studio": {
-                "launcher": "",
+                "prelauncher": "",
+                "postlauncher": "",
                 "version": "",
                 "environment": {}
             }
@@ -82,7 +84,7 @@ def main():
 
     match arguments.mode:
         case "player":
-            session.launcher = [x for x in settings["roblox"]["player"]["launcher"].split(" ") if x] + [x for x in settings["wine"]["launcher"].split(" ") if x]
+            session.launcher = [x for x in settings["roblox"]["player"]["prelauncher"].split(" ") if x] + session.launcher + [x for x in settings["roblox"]["player"]["postlauncher"].split(" ") if x]
 
             this_splash = splash.CorkSplash()
             this_splash.show("roblox-player")
@@ -140,7 +142,7 @@ def main():
                 
             thread.join()
         case "studio":
-            session.launcher = [x for x in settings["roblox"]["studio"]["launcher"].split(" ") if x] + [x for x in settings["wine"]["launcher"].split(" ") if x]
+            session.launcher = [x for x in settings["roblox"]["studio"]["prelauncher"].split(" ") if x] + session.launcher + [x for x in settings["roblox"]["studio"]["postlauncher"].split(" ") if x]
 
             this_splash = splash.CorkSplash()
             this_splash.show("roblox-studio")
