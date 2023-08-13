@@ -37,7 +37,7 @@ class RobloxSession(WineSession):
         state_dictionary["state"] = "getting_version"
         
         version = version_override if version_override != "" else rbxcdn.get_version(
-            "WindowsStudio", channel)["clientVersionUpload"]
+            "WindowsStudio64", channel)["clientVersionUpload"]
 
         version_directory = os.path.join(
             self.get_drive(), "Roblox", "Versions", version)
