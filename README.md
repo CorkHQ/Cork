@@ -24,4 +24,4 @@ Heavily inspired and based on:
 * [Grapejuice](https://gitlab.com/brinkervii/grapejuice)
 * [Vinegar](https://github.com/vinegarhq/vinegar)
 * [Bloxstrap](https://github.com/pizzaboxer/bloxstrap)
-* [Roblox Studio Mod Manager](Roblox-Studio-Mod-Manager)
+* [Roblox Studio Mod Manager](https://github.com/MaximumADHD/Roblox-Studio-Mod-Manager)
