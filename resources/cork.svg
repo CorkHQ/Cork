@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="380"
+   height="380"
+   overflow="hidden"
+   version="1.1"
+   id="svg31"
+   xml:space="preserve"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs23"><style
+       type="text/css"
+       id="style1">&#10;   <![CDATA[
+    .fil70 {fill:black}
+    .fil0 {fill:#D66A27}
+    .fil1 {fill:#D66B27}
+    .fil2 {fill:#D66B28}
+    .fil3 {fill:#D76B28}
+    .fil4 {fill:#D76C28}
+    .fil5 {fill:#D76D28}
+    .fil6 {fill:#D76D29}
+    .fil7 {fill:#D86D29}
+    .fil8 {fill:#D86E29}
+    .fil9 {fill:#D86F29}
+    .fil10 {fill:#D86F2A}
+    .fil11 {fill:#D96F2A}
+    .fil12 {fill:#D9702A}
+    .fil13 {fill:#D9712B}
+    .fil14 {fill:#DA712B}
+    .fil15 {fill:#DA722B}
+    .fil16 {fill:#DA732C}
+    .fil17 {fill:#DB732C}
+    .fil18 {fill:#DB742C}
+    .fil19 {fill:#DB742D}
+    .fil20 {fill:#DB752D}
+    .fil21 {fill:#DC752D}
+    .fil22 {fill:#DC762D}
+    .fil23 {fill:#DC762E}
+    .fil24 {fill:#DC772E}
+    .fil25 {fill:#DD772E}
+    .fil26 {fill:#DD782E}
+    .fil27 {fill:#DD782F}
+    .fil28 {fill:#DD792F}
+    .fil29 {fill:#DE792F}
+    .fil30 {fill:#DE7A2F}
+    .fil31 {fill:#DE7A30}
+    .fil32 {fill:#DE7B30}
+    .fil33 {fill:#DF7B30}
+    .fil34 {fill:#DF7C30}
+    .fil35 {fill:#DF7C31}
+    .fil36 {fill:#DF7D31}
+    .fil37 {fill:#E07D31}
+    .fil38 {fill:#E07E31}
+    .fil39 {fill:#E07E32}
+    .fil40 {fill:#E07F32}
+    .fil41 {fill:#E17F32}
+    .fil42 {fill:#E18032}
+    .fil43 {fill:#E18033}
+    .fil44 {fill:#E18133}
+    .fil45 {fill:#E28133}
+    .fil46 {fill:#E28233}
+    .fil47 {fill:#E28234}
+    .fil48 {fill:#E28334}
+    .fil49 {fill:#E38334}
+    .fil50 {fill:#E38434}
+    .fil51 {fill:#E38435}
+    .fil52 {fill:#E38535}
+    .fil53 {fill:#E48535}
+    .fil54 {fill:#E48636}
+    .fil55 {fill:#E48736}
+    .fil56 {fill:#E58736}
+    .fil57 {fill:#E58837}
+    .fil58 {fill:#E58937}
+    .fil59 {fill:#E68937}
+    .fil60 {fill:#E68938}
+    .fil61 {fill:#E68A38}
+    .fil62 {fill:#E68B38}
+    .fil63 {fill:#E78B38}
+    .fil64 {fill:#E78B39}
+    .fil65 {fill:#E78C39}
+    .fil66 {fill:#E78D39}
+    .fil67 {fill:#E88D39}
+    .fil68 {fill:#E88D3A}
+    .fil69 {fill:#E88E3A}
+   ]]>&#10;  </style><mask
+       id="id1">&#10;  <linearGradient
+   id="id2"
+   gradientUnits="userSpaceOnUse"
+   x1="168.3217"
+   y1="328.19839"
+   x2="248.565"
+   y2="65.791496">&#10;   <stop
+   offset="0"
+   style="stop-opacity:0.2; stop-color:white"
+   id="stop1" />&#10;   <stop
+   offset="0.721569"
+   style="stop-opacity:0.152941; stop-color:white"
+   id="stop2" />&#10;   <stop
+   offset="1"
+   style="stop-opacity:0.101961; stop-color:white"
+   id="stop3" />&#10;  </linearGradient>&#10;    <rect
+   style="fill:url(#id2)"
+   x="67.413597"
+   y="66.253502"
+   width="265.39719"
+   height="269.95499"
+   id="rect3" />&#10;   </mask><linearGradient
+       id="grad1"><stop
+         offset="0%"
+         stop-color="#d66a27"
+         stop-opacity="1.0000"
+         id="stop1-3" /><stop
+         offset="100%"
+         stop-color="#e88e3a"
+         stop-opacity="1.0000"
+         id="stop2-6" /></linearGradient><style
+       type="text/css"
+       id="style1-5">&#10;   <![CDATA[
+    .fil70 {fill:black}
+    .fil0 {fill:#D66A27}
+    .fil1 {fill:#D66B27}
+    .fil2 {fill:#D66B28}
+    .fil3 {fill:#D76B28}
+    .fil4 {fill:#D76C28}
+    .fil5 {fill:#D76D28}
+    .fil6 {fill:#D76D29}
+    .fil7 {fill:#D86D29}
+    .fil8 {fill:#D86E29}
+    .fil9 {fill:#D86F29}
+    .fil10 {fill:#D86F2A}
+    .fil11 {fill:#D96F2A}
+    .fil12 {fill:#D9702A}
+    .fil13 {fill:#D9712B}
+    .fil14 {fill:#DA712B}
+    .fil15 {fill:#DA722B}
+    .fil16 {fill:#DA732C}
+    .fil17 {fill:#DB732C}
+    .fil18 {fill:#DB742C}
+    .fil19 {fill:#DB742D}
+    .fil20 {fill:#DB752D}
+    .fil21 {fill:#DC752D}
+    .fil22 {fill:#DC762D}
+    .fil23 {fill:#DC762E}
+    .fil24 {fill:#DC772E}
+    .fil25 {fill:#DD772E}
+    .fil26 {fill:#DD782E}
+    .fil27 {fill:#DD782F}
+    .fil28 {fill:#DD792F}
+    .fil29 {fill:#DE792F}
+    .fil30 {fill:#DE7A2F}
+    .fil31 {fill:#DE7A30}
+    .fil32 {fill:#DE7B30}
+    .fil33 {fill:#DF7B30}
+    .fil34 {fill:#DF7C30}
+    .fil35 {fill:#DF7C31}
+    .fil36 {fill:#DF7D31}
+    .fil37 {fill:#E07D31}
+    .fil38 {fill:#E07E31}
+    .fil39 {fill:#E07E32}
+    .fil40 {fill:#E07F32}
+    .fil41 {fill:#E17F32}
+    .fil42 {fill:#E18032}
+    .fil43 {fill:#E18033}
+    .fil44 {fill:#E18133}
+    .fil45 {fill:#E28133}
+    .fil46 {fill:#E28233}
+    .fil47 {fill:#E28234}
+    .fil48 {fill:#E28334}
+    .fil49 {fill:#E38334}
+    .fil50 {fill:#E38434}
+    .fil51 {fill:#E38435}
+    .fil52 {fill:#E38535}
+    .fil53 {fill:#E48535}
+    .fil54 {fill:#E48636}
+    .fil55 {fill:#E48736}
+    .fil56 {fill:#E58736}
+    .fil57 {fill:#E58837}
+    .fil58 {fill:#E58937}
+    .fil59 {fill:#E68937}
+    .fil60 {fill:#E68938}
+    .fil61 {fill:#E68A38}
+    .fil62 {fill:#E68B38}
+    .fil63 {fill:#E78B38}
+    .fil64 {fill:#E78B39}
+    .fil65 {fill:#E78C39}
+    .fil66 {fill:#E78D39}
+    .fil67 {fill:#E88D39}
+    .fil68 {fill:#E88D3A}
+    .fil69 {fill:#E88E3A}
+   ]]>&#10;  </style><style
+       type="text/css"
+       id="style1-7">&#10;   <![CDATA[
+    .fil70 {fill:black}
+    .fil0 {fill:#D66A27}
+    .fil1 {fill:#D66B27}
+    .fil2 {fill:#D66B28}
+    .fil3 {fill:#D76B28}
+    .fil4 {fill:#D76C28}
+    .fil5 {fill:#D76D28}
+    .fil6 {fill:#D76D29}
+    .fil7 {fill:#D86D29}
+    .fil8 {fill:#D86E29}
+    .fil9 {fill:#D86F29}
+    .fil10 {fill:#D86F2A}
+    .fil11 {fill:#D96F2A}
+    .fil12 {fill:#D9702A}
+    .fil13 {fill:#D9712B}
+    .fil14 {fill:#DA712B}
+    .fil15 {fill:#DA722B}
+    .fil16 {fill:#DA732C}
+    .fil17 {fill:#DB732C}
+    .fil18 {fill:#DB742C}
+    .fil19 {fill:#DB742D}
+    .fil20 {fill:#DB752D}
+    .fil21 {fill:#DC752D}
+    .fil22 {fill:#DC762D}
+    .fil23 {fill:#DC762E}
+    .fil24 {fill:#DC772E}
+    .fil25 {fill:#DD772E}
+    .fil26 {fill:#DD782E}
+    .fil27 {fill:#DD782F}
+    .fil28 {fill:#DD792F}
+    .fil29 {fill:#DE792F}
+    .fil30 {fill:#DE7A2F}
+    .fil31 {fill:#DE7A30}
+    .fil32 {fill:#DE7B30}
+    .fil33 {fill:#DF7B30}
+    .fil34 {fill:#DF7C30}
+    .fil35 {fill:#DF7C31}
+    .fil36 {fill:#DF7D31}
+    .fil37 {fill:#E07D31}
+    .fil38 {fill:#E07E31}
+    .fil39 {fill:#E07E32}
+    .fil40 {fill:#E07F32}
+    .fil41 {fill:#E17F32}
+    .fil42 {fill:#E18032}
+    .fil43 {fill:#E18033}
+    .fil44 {fill:#E18133}
+    .fil45 {fill:#E28133}
+    .fil46 {fill:#E28233}
+    .fil47 {fill:#E28234}
+    .fil48 {fill:#E28334}
+    .fil49 {fill:#E38334}
+    .fil50 {fill:#E38434}
+    .fil51 {fill:#E38435}
+    .fil52 {fill:#E38535}
+    .fil53 {fill:#E48535}
+    .fil54 {fill:#E48636}
+    .fil55 {fill:#E48736}
+    .fil56 {fill:#E58736}
+    .fil57 {fill:#E58837}
+    .fil58 {fill:#E58937}
+    .fil59 {fill:#E68937}
+    .fil60 {fill:#E68938}
+    .fil61 {fill:#E68A38}
+    .fil62 {fill:#E68B38}
+    .fil63 {fill:#E78B38}
+    .fil64 {fill:#E78B39}
+    .fil65 {fill:#E78C39}
+    .fil66 {fill:#E78D39}
+    .fil67 {fill:#E88D39}
+    .fil68 {fill:#E88D3A}
+    .fil69 {fill:#E88E3A}
+   ]]>&#10;  </style><style
+       type="text/css"
+       id="style1-0">&#10;   <![CDATA[
+    .fil70 {fill:black}
+    .fil0 {fill:#D66A27}
+    .fil1 {fill:#D66B27}
+    .fil2 {fill:#D66B28}
+    .fil3 {fill:#D76B28}
+    .fil4 {fill:#D76C28}
+    .fil5 {fill:#D76D28}
+    .fil6 {fill:#D76D29}
+    .fil7 {fill:#D86D29}
+    .fil8 {fill:#D86E29}
+    .fil9 {fill:#D86F29}
+    .fil10 {fill:#D86F2A}
+    .fil11 {fill:#D96F2A}
+    .fil12 {fill:#D9702A}
+    .fil13 {fill:#D9712B}
+    .fil14 {fill:#DA712B}
+    .fil15 {fill:#DA722B}
+    .fil16 {fill:#DA732C}
+    .fil17 {fill:#DB732C}
+    .fil18 {fill:#DB742C}
+    .fil19 {fill:#DB742D}
+    .fil20 {fill:#DB752D}
+    .fil21 {fill:#DC752D}
+    .fil22 {fill:#DC762D}
+    .fil23 {fill:#DC762E}
+    .fil24 {fill:#DC772E}
+    .fil25 {fill:#DD772E}
+    .fil26 {fill:#DD782E}
+    .fil27 {fill:#DD782F}
+    .fil28 {fill:#DD792F}
+    .fil29 {fill:#DE792F}
+    .fil30 {fill:#DE7A2F}
+    .fil31 {fill:#DE7A30}
+    .fil32 {fill:#DE7B30}
+    .fil33 {fill:#DF7B30}
+    .fil34 {fill:#DF7C30}
+    .fil35 {fill:#DF7C31}
+    .fil36 {fill:#DF7D31}
+    .fil37 {fill:#E07D31}
+    .fil38 {fill:#E07E31}
+    .fil39 {fill:#E07E32}
+    .fil40 {fill:#E07F32}
+    .fil41 {fill:#E17F32}
+    .fil42 {fill:#E18032}
+    .fil43 {fill:#E18033}
+    .fil44 {fill:#E18133}
+    .fil45 {fill:#E28133}
+    .fil46 {fill:#E28233}
+    .fil47 {fill:#E28234}
+    .fil48 {fill:#E28334}
+    .fil49 {fill:#E38334}
+    .fil50 {fill:#E38434}
+    .fil51 {fill:#E38435}
+    .fil52 {fill:#E38535}
+    .fil53 {fill:#E48535}
+    .fil54 {fill:#E48636}
+    .fil55 {fill:#E48736}
+    .fil56 {fill:#E58736}
+    .fil57 {fill:#E58837}
+    .fil58 {fill:#E58937}
+    .fil59 {fill:#E68937}
+    .fil60 {fill:#E68938}
+    .fil61 {fill:#E68A38}
+    .fil62 {fill:#E68B38}
+    .fil63 {fill:#E78B38}
+    .fil64 {fill:#E78B39}
+    .fil65 {fill:#E78C39}
+    .fil66 {fill:#E78D39}
+    .fil67 {fill:#E88D39}
+    .fil68 {fill:#E88D3A}
+    .fil69 {fill:#E88E3A}
+   ]]>&#10;  </style><style
+       type="text/css"
+       id="style1-3">&#10;   <![CDATA[
+    .fil70 {fill:black}
+    .fil0 {fill:#D66A27}
+    .fil1 {fill:#D66B27}
+    .fil2 {fill:#D66B28}
+    .fil3 {fill:#D76B28}
+    .fil4 {fill:#D76C28}
+    .fil5 {fill:#D76D28}
+    .fil6 {fill:#D76D29}
+    .fil7 {fill:#D86D29}
+    .fil8 {fill:#D86E29}
+    .fil9 {fill:#D86F29}
+    .fil10 {fill:#D86F2A}
+    .fil11 {fill:#D96F2A}
+    .fil12 {fill:#D9702A}
+    .fil13 {fill:#D9712B}
+    .fil14 {fill:#DA712B}
+    .fil15 {fill:#DA722B}
+    .fil16 {fill:#DA732C}
+    .fil17 {fill:#DB732C}
+    .fil18 {fill:#DB742C}
+    .fil19 {fill:#DB742D}
+    .fil20 {fill:#DB752D}
+    .fil21 {fill:#DC752D}
+    .fil22 {fill:#DC762D}
+    .fil23 {fill:#DC762E}
+    .fil24 {fill:#DC772E}
+    .fil25 {fill:#DD772E}
+    .fil26 {fill:#DD782E}
+    .fil27 {fill:#DD782F}
+    .fil28 {fill:#DD792F}
+    .fil29 {fill:#DE792F}
+    .fil30 {fill:#DE7A2F}
+    .fil31 {fill:#DE7A30}
+    .fil32 {fill:#DE7B30}
+    .fil33 {fill:#DF7B30}
+    .fil34 {fill:#DF7C30}
+    .fil35 {fill:#DF7C31}
+    .fil36 {fill:#DF7D31}
+    .fil37 {fill:#E07D31}
+    .fil38 {fill:#E07E31}
+    .fil39 {fill:#E07E32}
+    .fil40 {fill:#E07F32}
+    .fil41 {fill:#E17F32}
+    .fil42 {fill:#E18032}
+    .fil43 {fill:#E18033}
+    .fil44 {fill:#E18133}
+    .fil45 {fill:#E28133}
+    .fil46 {fill:#E28233}
+    .fil47 {fill:#E28234}
+    .fil48 {fill:#E28334}
+    .fil49 {fill:#E38334}
+    .fil50 {fill:#E38434}
+    .fil51 {fill:#E38435}
+    .fil52 {fill:#E38535}
+    .fil53 {fill:#E48535}
+    .fil54 {fill:#E48636}
+    .fil55 {fill:#E48736}
+    .fil56 {fill:#E58736}
+    .fil57 {fill:#E58837}
+    .fil58 {fill:#E58937}
+    .fil59 {fill:#E68937}
+    .fil60 {fill:#E68938}
+    .fil61 {fill:#E68A38}
+    .fil62 {fill:#E68B38}
+    .fil63 {fill:#E78B38}
+    .fil64 {fill:#E78B39}
+    .fil65 {fill:#E78C39}
+    .fil66 {fill:#E78D39}
+    .fil67 {fill:#E88D39}
+    .fil68 {fill:#E88D3A}
+    .fil69 {fill:#E88E3A}
+   ]]>&#10;  </style><linearGradient
+       xlink:href="#grad1"
+       id="linearGradient6"
+       x1="110.23349"
+       y1="319.87775"
+       x2="186.56461"
+       y2="52.499207"
+       gradientUnits="userSpaceOnUse" /><linearGradient
+       id="linearGradient11"><stop
+         style="stop-color:#000000;stop-opacity:0.15000001;"
+         offset="0"
+         id="stop10" /><stop
+         style="stop-color:#000000;stop-opacity:0.09507665;"
+         offset="1"
+         id="stop11-9" /></linearGradient><style
+       type="text/css"
+       id="style1-59">&#10;   <![CDATA[
+    .fil70 {fill:black}
+    .fil0 {fill:#D66A27}
+    .fil1 {fill:#D66B27}
+    .fil2 {fill:#D66B28}
+    .fil3 {fill:#D76B28}
+    .fil4 {fill:#D76C28}
+    .fil5 {fill:#D76D28}
+    .fil6 {fill:#D76D29}
+    .fil7 {fill:#D86D29}
+    .fil8 {fill:#D86E29}
+    .fil9 {fill:#D86F29}
+    .fil10 {fill:#D86F2A}
+    .fil11 {fill:#D96F2A}
+    .fil12 {fill:#D9702A}
+    .fil13 {fill:#D9712B}
+    .fil14 {fill:#DA712B}
+    .fil15 {fill:#DA722B}
+    .fil16 {fill:#DA732C}
+    .fil17 {fill:#DB732C}
+    .fil18 {fill:#DB742C}
+    .fil19 {fill:#DB742D}
+    .fil20 {fill:#DB752D}
+    .fil21 {fill:#DC752D}
+    .fil22 {fill:#DC762D}
+    .fil23 {fill:#DC762E}
+    .fil24 {fill:#DC772E}
+    .fil25 {fill:#DD772E}
+    .fil26 {fill:#DD782E}
+    .fil27 {fill:#DD782F}
+    .fil28 {fill:#DD792F}
+    .fil29 {fill:#DE792F}
+    .fil30 {fill:#DE7A2F}
+    .fil31 {fill:#DE7A30}
+    .fil32 {fill:#DE7B30}
+    .fil33 {fill:#DF7B30}
+    .fil34 {fill:#DF7C30}
+    .fil35 {fill:#DF7C31}
+    .fil36 {fill:#DF7D31}
+    .fil37 {fill:#E07D31}
+    .fil38 {fill:#E07E31}
+    .fil39 {fill:#E07E32}
+    .fil40 {fill:#E07F32}
+    .fil41 {fill:#E17F32}
+    .fil42 {fill:#E18032}
+    .fil43 {fill:#E18033}
+    .fil44 {fill:#E18133}
+    .fil45 {fill:#E28133}
+    .fil46 {fill:#E28233}
+    .fil47 {fill:#E28234}
+    .fil48 {fill:#E28334}
+    .fil49 {fill:#E38334}
+    .fil50 {fill:#E38434}
+    .fil51 {fill:#E38435}
+    .fil52 {fill:#E38535}
+    .fil53 {fill:#E48535}
+    .fil54 {fill:#E48636}
+    .fil55 {fill:#E48736}
+    .fil56 {fill:#E58736}
+    .fil57 {fill:#E58837}
+    .fil58 {fill:#E58937}
+    .fil59 {fill:#E68937}
+    .fil60 {fill:#E68938}
+    .fil61 {fill:#E68A38}
+    .fil62 {fill:#E68B38}
+    .fil63 {fill:#E78B38}
+    .fil64 {fill:#E78B39}
+    .fil65 {fill:#E78C39}
+    .fil66 {fill:#E78D39}
+    .fil67 {fill:#E88D39}
+    .fil68 {fill:#E88D3A}
+    .fil69 {fill:#E88E3A}
+   ]]>&#10;  </style><linearGradient
+       xlink:href="#linearGradient11"
+       id="linearGradient10"
+       x1="163.7821"
+       y1="334.29919"
+       x2="235.57794"
+       y2="66.3535"
+       gradientUnits="userSpaceOnUse" /><filter
+       style="color-interpolation-filters:sRGB"
+       id="filter42"
+       x="-0.04443751"
+       y="-0.043962455"
+       width="1.1135625"
+       height="1.1123485"><feFlood
+         result="flood"
+         in="SourceGraphic"
+         flood-opacity="0.250980"
+         flood-color="rgb(0,0,0)"
+         id="feFlood41" /><feGaussianBlur
+         result="blur"
+         in="SourceGraphic"
+         stdDeviation="6.000000"
+         id="feGaussianBlur41" /><feOffset
+         result="offset"
+         in="blur"
+         dx="8.000000"
+         dy="8.000000"
+         id="feOffset41" /><feComposite
+         result="comp1"
+         operator="in"
+         in="flood"
+         in2="offset"
+         id="feComposite41" /><feComposite
+         result="comp2"
+         operator="over"
+         in="SourceGraphic"
+         in2="comp1"
+         id="feComposite42" /></filter></defs><style
+     type="text/css"
+     id="style301">&#10;	.st0{fill:#FFFFFF;}&#10;</style><g
+     style="clip-rule:evenodd;display:inline;fill-rule:evenodd;filter:url(#filter42);image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+     id="g7"
+     transform="matrix(0.99185607,0,0,0.99185607,-8.304498,-8.4379546)"><g
+       id="g1"
+       style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"><path
+         d="M 42.5527,249.8688 88.8492,77.9644 C 93.14,62.0321 101.8517,29.6847 130.8195,37.4862 l 210.528,56.6984 c 28.9678,7.8014 20.2559,40.1498 15.9654,56.0812 l -46.2965,171.9044 c -4.2905,15.9313 -13.0025,48.2797 -41.9703,40.4782 L 58.5181,305.95 C 29.5503,298.1486 38.2619,265.8011 42.5527,249.8688 Z M 162.091,215.7317 175.076,167.517 c 1.0727,-3.9831 5.2092,-6.3643 9.1923,-5.2916 l 48.2147,12.985 c 3.9831,1.0727 6.3643,5.2092 5.2916,9.1923 l -12.9849,48.2147 c -1.0727,3.9831 -5.2093,6.3643 -9.1924,5.2916 l -48.2147,-12.985 c -3.983,-1.0727 -6.3643,-5.2092 -5.2916,-9.1923 z"
+         id="path1-7"
+         style="fill:url(#linearGradient6);fill-opacity:1" /><path
+         class="fil70"
+         style="display:inline;fill:url(#linearGradient10);fill-opacity:1"
+         d="m 121.5026,250.0662 c 6.4509,0 11.6804,5.2295 11.6804,11.6804 0,6.4509 -5.2295,11.6804 -11.6804,11.6804 -6.4509,0 -11.6804,-5.2295 -11.6804,-11.6804 0,-6.4509 5.2295,-11.6804 11.6804,-11.6804 z m 152.4452,55.6772 c 6.4509,0 11.6804,5.2295 11.6804,11.6804 0,6.4509 -5.2295,11.6804 -11.6804,11.6804 -6.4509,0 -11.6804,-5.2295 -11.6804,-11.6804 0,-6.4509 5.2295,-11.6804 11.6804,-11.6804 z M 96.2191,157.1178 c 6.4509,0 11.6804,5.2295 11.6804,11.6804 0,6.4509 -5.2295,11.6804 -11.6804,11.6804 -6.4509,0 -11.6804,-5.2295 -11.6804,-11.6804 0,-6.4509 5.2295,-11.6804 11.6804,-11.6804 z m 113.6355,-39.8094 c 6.4509,0 11.6804,5.2295 11.6804,11.6804 0,6.4509 -5.2295,11.6804 -11.6804,11.6804 -6.4509,0 -11.6804,-5.2295 -11.6804,-11.6804 0,-6.4509 5.2295,-11.6804 11.6804,-11.6804 z m 111.1758,-11.4659 c 6.4509,0 11.6804,5.2295 11.6804,11.6804 0,6.4509 -5.2295,11.6804 -11.6804,11.6804 -6.4509,0 -11.6804,-5.2295 -11.6804,-11.6804 0,-6.4509 5.2295,-11.6804 11.6804,-11.6804 z m -47.2705,107.564 c 6.4509,0 11.6804,5.2295 11.6804,11.6804 0,6.4509 -5.2295,11.6804 -11.6804,11.6804 -6.4509,0 -11.6804,-5.2295 -11.6804,-11.6804 0,-6.4509 5.2295,-11.6804 11.6804,-11.6804 z M 123.8828,66.3535 c 6.4509,0 11.6804,5.2295 11.6804,11.6804 0,6.4509 -5.2295,11.6804 -11.6804,11.6804 -6.4509,0 -11.6804,-5.2295 -11.6804,-11.6804 0,-6.4509 5.2295,-11.6804 11.6804,-11.6804 z m 108.1391,258.075 c 3.2254,0 5.8402,2.6147 5.8402,5.84 0,3.2253 -2.6148,5.84 -5.8402,5.84 -3.2254,0 -5.8402,-2.6147 -5.8402,-5.84 0,-3.2253 2.6148,-5.84 5.8402,-5.84 z M 311.5,184.9212 c 3.2254,0 5.8402,2.6148 5.8402,5.8402 0,3.2254 -2.6148,5.8402 -5.8402,5.8402 -3.2254,0 -5.8402,-2.6148 -5.8402,-5.8402 0,-3.2254 2.6148,-5.8402 5.8402,-5.8402 z m -168.73,-45.927 c 3.2254,0 5.8402,2.6148 5.8402,5.8402 0,3.2254 -2.6148,5.8402 -5.8402,5.8402 -3.2254,0 -5.8402,-2.6148 -5.8402,-5.8402 0,-3.2254 2.6148,-5.8402 5.8402,-5.8402 z m 14.3065,157.7366 c 3.2254,0 5.8402,2.6148 5.8402,5.8402 0,3.2254 -2.6148,5.8402 -5.8402,5.8402 -3.2254,0 -5.8402,-2.6148 -5.8402,-5.8402 0,-3.2254 2.6148,-5.8402 5.8402,-5.8402 z m -23.7007,-89.0183 c 3.2254,0 5.8402,2.6148 5.8402,5.8402 0,3.2254 -2.6148,5.8402 -5.8402,5.8402 -3.2254,0 -5.8402,-2.6148 -5.8402,-5.8402 0,-3.2254 2.6148,-5.8402 5.8402,-5.8402 z M 244.8631,106.2892 c 3.2254,0 5.8402,2.6148 5.8402,5.8402 0,3.2254 -2.6148,5.8402 -5.8402,5.8402 -3.2254,0 -5.8402,-2.6148 -5.8402,-5.8402 0,-3.2254 2.6148,-5.8402 5.8402,-5.8402 z M 174.9658,70.1836 c 3.2254,0 5.8402,2.6148 5.8402,5.8402 0,3.2254 -2.6148,5.8402 -5.8402,5.8402 -3.2254,0 -5.8402,-2.6148 -5.8402,-5.8402 0,-3.2254 2.6148,-5.8402 5.8402,-5.8402 z M 73.3538,271.0374 c 3.2254,0 5.8402,2.6148 5.8402,5.8402 0,3.2254 -2.6148,5.8402 -5.8402,5.8402 -3.2254,0 -5.8402,-2.6148 -5.8402,-5.8402 0,-3.2254 2.6148,-5.8402 5.8402,-5.8402 z M 275.646,143.8299 c 3.2254,0 5.8402,2.6148 5.8402,5.8402 0,3.2254 -2.6148,5.8402 -5.8402,5.8402 -3.2254,0 -5.8402,-2.6148 -5.8402,-5.8402 0,-3.2254 2.6148,-5.8402 5.8402,-5.8402 z m 16.7982,125.4214 c 3.2254,0 5.8402,2.6148 5.8402,5.8402 0,3.2254 -2.6148,5.8402 -5.8402,5.8402 -3.2254,0 -5.8402,-2.6148 -5.8402,-5.8402 0,-3.2254 2.6148,-5.8402 5.8402,-5.8402 z m -85.755,-14.3535 c 6.4509,0 11.6804,5.2295 11.6804,11.6804 0,6.4509 -5.2295,11.6804 -11.6804,11.6804 -6.4509,0 -11.6804,-5.2295 -11.6804,-11.6804 0,-6.4509 5.2295,-11.6804 11.6804,-11.6804 z"
+         mask="none"
+         id="path4" /></g></g></svg>
