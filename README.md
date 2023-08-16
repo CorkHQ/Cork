@@ -19,6 +19,9 @@ A bootstrapper for Roblox and Roblox Studio on Linux using Wine
     * FFlags can be changed in the settings file
     * FFlags can be merged from an external remote source such as [RCO](https://github.com/L8X/Roblox-Client-Optimizer)
 
+## See also
+* [Wiki](https://github.com/Bugadinho/Cork/wiki)
+
 ## Acknowledgements
 Heavily inspired and based on:
 * [Grapejuice](https://gitlab.com/brinkervii/grapejuice)
