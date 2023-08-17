@@ -5,6 +5,16 @@ from typing import Tuple
 from cork import rbxcdn
 from cork.wine import WineSession
 
+player_arguments = {
+    "launchmode":       "--",
+    "gameinfo":         "-t ",
+    "placelauncherurl": "-j ",
+    "launchtime":       "--launchtime=",
+    "browsertrackerid": "-b ",
+    "robloxLocale":     "--rloc ",
+    "gameLocale":       "--gloc ",
+    "channel":          "-channel "
+}
 
 class RobloxSession(WineSession):
     def __init__(self, prefix, dist="", launcher=[], environment={}, fflags={}, launch_type="wine", wine64=False, log_directory=""):
@@ -63,16 +73,6 @@ class RobloxSession(WineSession):
 
     def execute_player(self, arguments, state_dictionary={}, channel="live", version=""):
         if len(arguments) > 0 and arguments[0].startswith("roblox-player:1+launchmode:"):
-            argument_dictionary = {
-                "launchmode":       "--",
-                "gameinfo":         "-t ",
-                "placelauncherurl": "-j ",
-                "launchtime":       "--launchtime=",
-                "browsertrackerid": "-b ",
-                "robloxLocale":     "--rloc ",
-                "gameLocale":       "--gloc ",
-                "channel":          "-channel "
-            }
             startup_argument = arguments[0]
 
             arguments = []
@@ -89,9 +89,9 @@ class RobloxSession(WineSession):
                     else:
                         argument_parts[1] = channel
 
-                if argument_parts[0] in argument_dictionary:
+                if argument_parts[0] in player_arguments:
                     arguments.append(
-                        argument_dictionary[argument_parts[0]] + argument_parts[1])
+                        player_arguments[argument_parts[0]] + argument_parts[1])
 
         if channel == "live":
             channel = ""
