@@ -4,12 +4,13 @@ import os
 import shutil
 import threading
 import time
+import logging
 from urllib import request
+from datetime import datetime
 from platformdirs import user_config_dir, user_data_dir, user_cache_dir
 from cork import splash
 from cork.roblox import RobloxSession
 from cork.utils import deep_merge
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -33,6 +34,9 @@ def main():
         os.makedirs(os.path.join(user_cache_dir("cork"), "logs"))
 
     settings = {
+        "cork": {
+            "loglevel": "info"
+        },
         "wine": {
             "dist": "",
             "type": "wine",
@@ -73,6 +77,24 @@ def main():
         with open(os.path.join(user_config_dir("cork"), "settings.json"), "w") as file:
             file.write(json.dumps(settings, indent=4))
     
+    log_level = logging.INFO
+    match settings["cork"]["loglevel"]:
+        case "debug":
+            log_level = logging.DEBUG
+        case "info":
+            log_level = logging.INFO
+        case "error":
+            log_level = logging.ERROR
+    
+    start_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    logging.basicConfig(
+        level=log_level,
+        format='%(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler(os.path.join(user_cache_dir("cork"), "logs", f"cork-{start_time}.log")),
+            logging.StreamHandler()
+        ])
+
     session = RobloxSession(
         os.path.join(user_data_dir("cork"), "pfx"),
         dist=settings["wine"]["dist"],
@@ -108,38 +130,42 @@ def main():
             
             state_dictionary = {"state": "none"}
 
-            def run_thread():
-                if len(arguments.args) > 0:
-                    session.execute_player(
-                        arguments.args, state_dictionary=state_dictionary, channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
-                else:
-                    session.execute_player(
-                        ["--app"], state_dictionary=state_dictionary, channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
+            def splash_function():
+                while this_splash.is_showing:
+                    match state_dictionary["state"]:
+                        case "none":
+                            pass
+                        case "getting_version":
+                            this_splash.set_progress_mode(True)
+                            this_splash.set_text("Getting version...")
+                        case "installing":
+                            this_splash.set_text(f"Installing {state_dictionary['version']}...")
+                            if "packages_total" in state_dictionary:
+                                this_splash.set_progress_mode(False)
+                                progress = (state_dictionary["packages_downloaded"] + state_dictionary["packages_installed"]) / (state_dictionary["packages_total"] * 2)
+                                this_splash.set_progress(progress)
+                            else:
+                                this_splash.set_progress_mode(True)
+                        case "done":
+                            this_splash.close()
+                    time.sleep(0.1)
                 return
 
-            thread = threading.Thread(target=run_thread)
-            thread.start()
+            splash_thread = threading.Thread(target=splash_function)
+            splash_thread.start()
 
-            while thread.is_alive() and this_splash.is_showing:
-                match state_dictionary["state"]:
-                    case "none":
-                        pass
-                    case "getting_version":
-                        this_splash.set_progress_mode(True)
-                        this_splash.set_text("Getting version...")
-                    case "installing":
-                        this_splash.set_text(f"Installing {state_dictionary['version']}...")
-                        if "packages_total" in state_dictionary:
-                            this_splash.set_progress_mode(False)
-                            progress = (state_dictionary["packages_downloaded"] + state_dictionary["packages_installed"]) / (state_dictionary["packages_total"] * 2)
-                            this_splash.set_progress(progress)
-                        else:
-                            this_splash.set_progress_mode(True)
-                    case "done":
-                        this_splash.close()
-                time.sleep(0.1)
-                
-            thread.join()
+            if len(arguments.args) > 0:
+                process = session.execute_player(
+                    arguments.args, state_dictionary=state_dictionary, channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
+            else:
+                process = session.execute_player(
+                    ["--app"], state_dictionary=state_dictionary, channel=settings["roblox"]["channel"], version=settings["roblox"]["player"]["version"])
+            
+            with process.stdout:
+                for line in iter(process.stdout.readline, b''):
+                    logging.warn(line.decode("utf-8").strip())
+            process.wait()
+            splash_thread.join()
         case "studio":
             this_splash = splash.CorkSplash()
             this_splash.show("roblox-studio")
@@ -152,40 +178,48 @@ def main():
 
             state_dictionary = {"state": "none"}
 
-            def run_thread():
-                if len(arguments.args) > 0:
-                    session.execute_studio(
-                        arguments.args, state_dictionary=state_dictionary, channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
-                else:
-                    session.execute_studio(
-                        ["-ide"], state_dictionary=state_dictionary, channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
-
-            thread = threading.Thread(target=run_thread)
-            thread.start()
-
-            while thread.is_alive() and this_splash.is_showing:
-                match state_dictionary["state"]:
-                    case "none":
-                        pass
-                    case "getting_version":
-                        this_splash.set_progress_mode(True)
-                        this_splash.set_text("Getting version...")
-                    case "installing":
-                        this_splash.set_text(f"Installing {state_dictionary['version']}...")
-                        if "packages_total" in state_dictionary:
-                            this_splash.set_progress_mode(False)
-                            progress = (state_dictionary["packages_downloaded"] + state_dictionary["packages_installed"]) / (state_dictionary["packages_total"] * 2)
-                            this_splash.set_progress(progress)
-                        else:
+            def splash_function():
+                while this_splash.is_showing:
+                    match state_dictionary["state"]:
+                        case "none":
+                            pass
+                        case "getting_version":
                             this_splash.set_progress_mode(True)
-                    case "done":
-                        this_splash.close()
-                time.sleep(0.1)
-                
-            thread.join()
+                            this_splash.set_text("Getting version...")
+                        case "installing":
+                            this_splash.set_text(f"Installing {state_dictionary['version']}...")
+                            if "packages_total" in state_dictionary:
+                                this_splash.set_progress_mode(False)
+                                progress = (state_dictionary["packages_downloaded"] + state_dictionary["packages_installed"]) / (state_dictionary["packages_total"] * 2)
+                                this_splash.set_progress(progress)
+                            else:
+                                this_splash.set_progress_mode(True)
+                        case "done":
+                            this_splash.close()
+                    time.sleep(0.1)
+                return
+
+            splash_thread = threading.Thread(target=splash_function)
+            splash_thread.start()
+
+            if len(arguments.args) > 0:
+                process = session.execute_studio(
+                    arguments.args, state_dictionary=state_dictionary, channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
+            else:
+                process = session.execute_studio(
+                    ["-ide"], state_dictionary=state_dictionary, channel=settings["roblox"]["channel"], version=settings["roblox"]["studio"]["version"])
+            
+            with process.stdout:
+                for line in iter(process.stdout.readline, b''):
+                    logging.warn(line.decode("utf-8").strip())
+            process.wait()
+            splash_thread.join()
         case "wine":
             session.initialize_prefix()
-            session.execute(arguments.args)
+            process = session.execute(arguments.args)
+            with process.stdout:
+                for line in iter(process.stdout.readline, b''):
+                    logging.warn(line.decode("utf-8").strip())
         case "install":
             session.initialize_prefix()
 
@@ -198,10 +232,12 @@ def main():
                 session.get_drive(), "Roblox", "Versions")
 
             for version in [f for f in os.listdir(versions_directory) if not os.path.isfile(os.path.join(versions_directory, f))]:
-                print(f"Removing {version}...")
+                logging.info(f"Removing {version}...")
                 shutil.rmtree(os.path.join(versions_directory, version))
         case "kill":
             session.shutdown_prefix()
+    
+    logging.info("End")
 
 
 if __name__ == "__main__":

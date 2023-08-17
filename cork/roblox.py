@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 import urllib.parse
 from typing import Tuple
 from cork import rbxcdn
@@ -27,6 +28,7 @@ class RobloxSession(WineSession):
         
         version = version_override if version_override != "" else rbxcdn.get_version(
             "WindowsPlayer", channel)["clientVersionUpload"]
+        logging.info(f'Player Version: {version}')
 
         version_directory = os.path.join(
             self.get_drive(), "Roblox", "Versions", version)
@@ -48,6 +50,7 @@ class RobloxSession(WineSession):
         
         version = version_override if version_override != "" else rbxcdn.get_version(
             "WindowsStudio64", channel)["clientVersionUpload"]
+        logging.info(f'Studio Version: {version}')
 
         version_directory = os.path.join(
             self.get_drive(), "Roblox", "Versions", version)
@@ -102,6 +105,7 @@ class RobloxSession(WineSession):
         self.apply_fflags(player_directory)
         
         state_dictionary["state"] = "done"
+        logging.info("Executing Player")
         return self.execute([player_exe] + arguments, cwd=player_directory)
 
     def execute_studio(self, arguments, state_dictionary={}, channel="live", version=""):
@@ -148,4 +152,5 @@ class RobloxSession(WineSession):
             state_dictionary=state_dictionary, channel=channel, version_override=version)
         
         state_dictionary["state"] = "done"
+        logging.info("Executing Studio")
         return self.execute([studio_exe] + arguments, cwd=studio_directory)

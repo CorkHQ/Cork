@@ -2,6 +2,7 @@ from zipfile import ZipFile
 from urllib import request
 from joblib import Parallel, delayed
 from io import BytesIO
+import logging
 import hashlib
 import shutil
 import json
@@ -111,13 +112,13 @@ def install_version(version, version_directory, version_channel, package_diction
     package_zips = {}
 
     def download(package, target):
-        print(f"Downloading package {package}...")
+        logging.info(f"Downloading package {package}...")
 
         response = request.urlopen(request.Request(
             f"{url_base}{version}-{package}", headers={"User-Agent": "Cork"}))
         response_bytes = response.read()
         while package_manifest[package][0] != hashlib.md5(response_bytes).hexdigest():
-            print(f"Checksum failed for {package}, retrying...")
+            logging.error(f"Checksum failed for {package}, retrying...")
             response = request.urlopen(request.Request(
                 f"{url_base}{version}-{package}", headers={"User-Agent": "Cork"}))
             response_bytes = response.read()
@@ -135,7 +136,7 @@ def install_version(version, version_directory, version_channel, package_diction
         delayed(download)(package, target) for package, target in package_dictionary.items())
 
     def install(package, target, zip):
-        print(f"Installing package {package}...")
+        logging.info(f"Installing package {package}...")
 
         target_directory = os.path.join(version_directory, target)
         if not os.path.isdir(target_directory):

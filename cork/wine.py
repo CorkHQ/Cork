@@ -1,6 +1,7 @@
-import subprocess
 import os
 import pwd
+import logging
+from subprocess import Popen, PIPE, STDOUT
 
 class WineSession:
     def __init__(self, prefix, dist="", launcher=[], environment={}, launch_type="wine", wine64=False):
@@ -30,8 +31,9 @@ class WineSession:
             wine_environment["WINEPREFIX"] = self.prefix
 
             command = self.launcher + [wine_binary] + arguments
+            logging.debug(f'Executing "{command}"')
 
-            return subprocess.run(command, env=wine_environment, cwd=cwd)
+            return Popen(command, env=wine_environment, cwd=cwd, stdout=PIPE, stderr=STDOUT, stdin=PIPE)
         else:
             proton_binary = os.path.join(os.path.abspath(
                     self.dist), "..", "proton")
@@ -43,8 +45,9 @@ class WineSession:
             wine_environment["STEAM_COMPAT_DATA_PATH"] = os.path.join(self.prefix, "..")
 
             command = self.launcher + [proton_binary, "run"] + arguments
+            logging.debug(f'Executing "{command}"')
             
-            return subprocess.run(command, env=wine_environment, cwd=cwd)
+            return Popen(command, env=wine_environment, cwd=cwd, stdout=PIPE, stderr=STDOUT, stdin=PIPE)
 
 
     def initialize_prefix(self):
