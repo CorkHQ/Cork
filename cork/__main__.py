@@ -79,8 +79,7 @@ def main():
         environment=settings["wine"]["environment"],
         wine64=settings["wine"]["wine64"],
         launcher= [x for x in settings["wine"]["launcher"].split(" ") if x],
-        launch_type=settings["wine"]["type"],
-        log_directory=os.path.join(user_cache_dir("cork"), "logs"))
+        launch_type=settings["wine"]["type"])
 
     match arguments.mode:
         case "player":

@@ -17,9 +17,9 @@ player_arguments = {
 }
 
 class RobloxSession(WineSession):
-    def __init__(self, prefix, dist="", launcher=[], environment={}, fflags={}, launch_type="wine", wine64=False, log_directory=""):
+    def __init__(self, prefix, dist="", launcher=[], environment={}, fflags={}, launch_type="wine", wine64=False):
         WineSession.__init__(self, prefix, dist, launcher,
-                             environment, launch_type, wine64, log_directory)
+                             environment, launch_type, wine64)
         self.fflags = fflags
 
     def get_player(self, state_dictionary={}, channel="", version_override="") -> Tuple[str, str]:

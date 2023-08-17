@@ -1,27 +1,21 @@
 import subprocess
 import os
 import pwd
-import time
-from datetime import datetime
-
 
 class WineSession:
-    def __init__(self, prefix, dist="", launcher=[], environment={}, launch_type="wine", wine64=False, log_directory=""):
+    def __init__(self, prefix, dist="", launcher=[], environment={}, launch_type="wine", wine64=False):
         self.dist = dist
         self.prefix = os.path.abspath(prefix)
         self.environment = environment
         self.launch_type = launch_type
         self.launcher = launcher
         self.wine64 = wine64
-        self.log_directory = log_directory
     
     def execute(self, arguments, binary_name="", cwd=""):
         wine_environment = os.environ.copy() | self.environment
 
         if cwd == "":
             cwd = self.prefix
-
-        start_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
         if self.launch_type != "proton" or self.dist == "":
             if binary_name == "":
@@ -35,8 +29,7 @@ class WineSession:
             
             wine_environment["WINEPREFIX"] = self.prefix
 
-            return subprocess.run(self.launcher + [wine_binary] + arguments, env=wine_environment, cwd=cwd,
-                                  stderr=None if self.log_directory == "" else open(os.path.join(self.log_directory, f"{binary_name}-{start_time}-stderr.log"), "w+"))
+            return subprocess.run(self.launcher + [wine_binary] + arguments, env=wine_environment, cwd=cwd)
         else:
             proton_binary = os.path.join(os.path.abspath(
                     self.dist), "..", "proton")
