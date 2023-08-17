@@ -22,8 +22,11 @@ class GtkCorkSplash(Gtk.Window):
         self.connect('delete_event', self.ignore)
 
         self.image = Gtk.Image()
-        self.image.set_from_pixbuf(
-            Gtk.IconTheme.get_default().load_icon(icon, 112, 0))
+        try:
+            self.image.set_from_pixbuf(
+                Gtk.IconTheme.get_default().load_icon(icon, 112, 0))
+        except:
+            print("failed to load image")
         self.image.set_hexpand(True)
 
         self.progressbar = Gtk.ProgressBar()
