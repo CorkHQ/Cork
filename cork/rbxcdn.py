@@ -5,6 +5,7 @@ from io import BytesIO
 import logging
 import hashlib
 import shutil
+import time
 import json
 import os
 
@@ -70,6 +71,12 @@ package_dictionaries = {
     }
 }
 
+cdn_urls = [
+    "https://setup.rbxcdn.com/",
+	"https://setup-ak.rbxcdn.com/",
+	"https://setup-cfly.rbxcdn.com/",
+	"https://s3.amazonaws.com/setup.roblox.com/"
+]
 
 def get_version(binary_type, channel):
     request_url = f"https://clientsettings.roblox.com/v2/client-version/{binary_type}"
@@ -88,7 +95,24 @@ def install_version(version, version_directory, version_channel, package_diction
 
     os.makedirs(version_directory)
 
-    url_base = "https://setup.rbxcdn.com/"
+    logging.debug("Trying to find fastest mirror")
+    working_urls = {}
+    for url in cdn_urls:
+        start_time = time.time()
+        try:
+            request.urlopen(f"{url}version")
+        except:
+            logging.warning(f"Failed to access {url}")
+        else:
+            working_urls[url] = time.time() - start_time
+    
+    sorted_urls = sorted(working_urls)
+    if len(sorted_urls) <= 0:
+        raise ConnectionError("No mirror was found")
+    
+    url_base = sorted_urls[0]
+    logging.debug(f"Fastest mirror is {url_base}")
+    
     if version_channel != "":
         url_base = f"{url_base}channel/{version_channel}/"
 
