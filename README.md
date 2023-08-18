@@ -7,6 +7,9 @@
 
 [![License](https://img.shields.io/github/license/Bugadinho/Cork)](https://github.com/Bugadinho/Cork/blob/master/LICENSE)
 
+> **⚠️ Warning**<br>
+> Please refrain from using internal version channels, they are not supported and unexpected issues may arise.
+
 A bootstrapper for Roblox and Roblox Studio on Linux using Wine
 
 ## Features
