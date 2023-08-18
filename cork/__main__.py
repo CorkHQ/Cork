@@ -95,8 +95,10 @@ def main():
             logging.StreamHandler()
         ])
 
+    versions_directory = os.path.join(user_data_dir("cork"), "versions")
     session = RobloxSession(
         os.path.join(user_data_dir("cork"), "pfx"),
+        versions_directory,
         dist=settings["wine"]["dist"],
         environment=settings["wine"]["environment"],
         wine64=settings["wine"]["wine64"],
@@ -227,9 +229,6 @@ def main():
             session.get_studio()
         case "cleanup":
             session.initialize_prefix()
-
-            versions_directory = os.path.join(
-                session.get_drive(), "Roblox", "Versions")
 
             for version in [f for f in os.listdir(versions_directory) if not os.path.isfile(os.path.join(versions_directory, f))]:
                 logging.info(f"Removing {version}...")

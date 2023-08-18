@@ -18,10 +18,11 @@ player_arguments = {
 }
 
 class RobloxSession(WineSession):
-    def __init__(self, prefix, dist="", launcher=[], environment={}, fflags={}, launch_type="wine", wine64=False):
+    def __init__(self, prefix, versions_directory, dist="", launcher=[], environment={}, fflags={}, launch_type="wine", wine64=False):
         WineSession.__init__(self, prefix, dist, launcher,
                              environment, launch_type, wine64)
         self.fflags = fflags
+        self.versions_directory = versions_directory
 
     def get_player(self, state_dictionary={}, channel="", version_override="") -> Tuple[str, str]:
         state_dictionary["state"] = "getting_version"
@@ -30,8 +31,7 @@ class RobloxSession(WineSession):
             "WindowsPlayer", channel)["clientVersionUpload"]
         logging.info(f'Player Version: {version}')
 
-        version_directory = os.path.join(
-            self.get_drive(), "Roblox", "Versions", version)
+        version_directory = os.path.join(self.versions_directory, version)
 
         if not os.path.isdir(version_directory) or not os.path.exists(os.path.join(version_directory, "RobloxPlayerBeta.exe")):
             state_dictionary["state"] = "installing"
@@ -40,8 +40,7 @@ class RobloxSession(WineSession):
             rbxcdn.install_version(
                 version, version_directory, channel, rbxcdn.package_dictionaries["Player"], state_dictionary=state_dictionary)
 
-        exe_path = os.path.join("C:/", os.path.relpath(os.path.join(
-            version_directory, "RobloxPlayerBeta.exe"), self.get_drive()))
+        exe_path = os.path.join(version_directory, "RobloxPlayerBeta.exe")
         
         return exe_path, version_directory
 
@@ -52,8 +51,7 @@ class RobloxSession(WineSession):
             "WindowsStudio64", channel)["clientVersionUpload"]
         logging.info(f'Studio Version: {version}')
 
-        version_directory = os.path.join(
-            self.get_drive(), "Roblox", "Versions", version)
+        version_directory = os.path.join(self.versions_directory, version)
 
         if not os.path.isdir(version_directory) or not os.path.exists(os.path.join(version_directory, "RobloxStudioBeta.exe")):
             state_dictionary["state"] = "installing"
@@ -62,8 +60,7 @@ class RobloxSession(WineSession):
             rbxcdn.install_version(
                 version, version_directory, channel, rbxcdn.package_dictionaries["Studio"], state_dictionary=state_dictionary)
 
-        exe_path = os.path.join("C:/", os.path.relpath(os.path.join(
-            version_directory, "RobloxStudioBeta.exe"), self.get_drive()))
+        exe_path = os.path.join(version_directory, "RobloxStudioBeta.exe")
 
         return exe_path, version_directory
 
