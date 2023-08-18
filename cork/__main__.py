@@ -124,7 +124,6 @@ def main():
 
     session = RobloxSession(
         runner,
-        prefix_directory,
         versions_directory
     )
 
