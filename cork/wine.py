@@ -1,5 +1,4 @@
 import os
-import pwd
 import logging
 from subprocess import Popen, PIPE, STDOUT
 
@@ -55,12 +54,3 @@ class WineSession:
 
     def shutdown_prefix(self):
         return self.execute(["-k"], binary_name="wineserver")
-
-    def wait_prefix(self):
-        return self.execute(["-wk"], binary_name="wineserver")
-
-    def get_drive(self) -> str:
-        return os.path.join(self.prefix, "drive_c")
-
-    def get_user(self) -> str:
-        return pwd.getpwuid(os.getuid())[0]
