@@ -4,7 +4,6 @@ import logging
 import urllib.parse
 from typing import Tuple
 from cork import rbxcdn
-from cork.wine import WineSession
 
 player_arguments = {
     "launchmode":       "--",
@@ -17,10 +16,9 @@ player_arguments = {
     "channel":          "-channel "
 }
 
-class RobloxSession(WineSession):
-    def __init__(self, prefix, versions_directory, dist="", launcher=[], environment={}, fflags={}, launch_type="wine", wine64=False):
-        WineSession.__init__(self, prefix, dist, launcher,
-                             environment, launch_type, wine64)
+class RobloxSession():
+    def __init__(self, runner, versions_directory, fflags={}):
+        self.runner = runner
         self.fflags = fflags
         self.versions_directory = versions_directory
 
@@ -103,7 +101,7 @@ class RobloxSession(WineSession):
         
         state_dictionary["state"] = "done"
         logging.info("Executing Player")
-        return self.execute([player_exe] + arguments, cwd=player_directory)
+        return self.runner.execute([player_exe] + arguments, cwd=player_directory)
 
     def execute_studio(self, arguments, state_dictionary={}, channel="live", version=""):
         if len(arguments) > 0 and arguments[0].startswith("roblox-studio:"):
@@ -150,4 +148,4 @@ class RobloxSession(WineSession):
         
         state_dictionary["state"] = "done"
         logging.info("Executing Studio")
-        return self.execute([studio_exe] + arguments, cwd=studio_directory)
+        return self.runner.execute([studio_exe] + arguments, cwd=studio_directory)

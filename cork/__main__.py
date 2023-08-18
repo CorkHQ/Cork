@@ -11,37 +11,45 @@ from platformdirs import user_config_dir, user_data_dir, user_cache_dir
 from cork import splash
 from cork.roblox import RobloxSession
 from cork.utils import deep_merge
+from cork.runners.native import NativeRunner
+from cork.runners.wine import WineRunner
 
 def main():
     parser = argparse.ArgumentParser(
         prog='Cork',
         description='A Roblox Wine Wrapper')
     parser.add_argument("mode", type=str, choices=[
-                        "player", "studio", "wine", "install", "cleanup", "kill"])
+                        "player", "studio", "runner", "install", "cleanup", "kill"])
     parser.add_argument("args", nargs='*')
     arguments = parser.parse_args()
 
-    if not os.path.isdir(user_config_dir("cork")):
-        os.makedirs(user_config_dir("cork"))
-    if not os.path.isdir(user_data_dir("cork")):
-        os.makedirs(user_data_dir("cork"))
-    if not os.path.isdir(user_cache_dir("cork")):
-        os.makedirs(user_cache_dir("cork"))
+    data_directory = user_data_dir("cork")
+    config_directory = user_config_dir("cork")
+    cache_directory = user_cache_dir("cork")
 
-    if not os.path.isdir(os.path.join(user_data_dir("cork"), "pfx")):
-        os.makedirs(os.path.join(user_data_dir("cork"), "pfx"))
-    if not os.path.isdir(os.path.join(user_cache_dir("cork"), "logs")):
-        os.makedirs(os.path.join(user_cache_dir("cork"), "logs"))
+    log_directory = os.path.join(cache_directory, "logs")
+    prefix_directory = os.path.join(data_directory, "pfx")
+    versions_directory = os.path.join(data_directory, "versions")
+
+    if not os.path.isdir(config_directory):
+        os.makedirs(config_directory)
+    if not os.path.isdir(data_directory):
+        os.makedirs(data_directory)
+    if not os.path.isdir(cache_directory):
+        os.makedirs(cache_directory)
+    
+    if not os.path.isdir(log_directory):
+        os.makedirs(log_directory)
 
     settings = {
         "cork": {
-            "loglevel": "info"
+            "loglevel": "info",
+            "launcher": "",
+            "environment": {}
         },
         "wine": {
             "dist": "",
             "type": "wine",
-            "wine64": False,
-            "launcher": "",
             "environment": {
                 "WINEDLLOVERRIDES": "winemenubuilder.exe=d"
             }
@@ -66,15 +74,15 @@ def main():
     }
 
     data_settings = ""
-    if os.path.exists(os.path.join(user_config_dir("cork"), "settings.json")):
-        with open(os.path.join(user_config_dir("cork"), "settings.json"), "r") as file:
+    if os.path.exists(os.path.join(config_directory, "settings.json")):
+        with open(os.path.join(config_directory, "settings.json"), "r") as file:
             data_settings = file.read()
             data = json.loads(data_settings)
             settings = deep_merge(data, settings)
 
     new_data_settings = json.dumps(settings, indent=4)
     if data_settings != new_data_settings:
-        with open(os.path.join(user_config_dir("cork"), "settings.json"), "w") as file:
+        with open(os.path.join(config_directory, "settings.json"), "w") as file:
             file.write(json.dumps(settings, indent=4))
     
     log_level = logging.INFO
@@ -91,19 +99,33 @@ def main():
         level=log_level,
         format='%(levelname)s - %(message)s',
         handlers=[
-            logging.FileHandler(os.path.join(user_cache_dir("cork"), "logs", f"cork-{start_time}.log")),
+            logging.FileHandler(os.path.join(log_directory, f"cork-{start_time}.log")),
             logging.StreamHandler()
         ])
 
-    versions_directory = os.path.join(user_data_dir("cork"), "versions")
+    runner = NativeRunner(
+        environment=settings["cork"]["environment"],
+        launcher=[x for x in settings["cork"]["launcher"].split(" ") if x]
+    )
+    if os.name != "nt":
+        logging.info("Using Wine")
+
+        if not os.path.isdir(prefix_directory):
+            os.makedirs(prefix_directory)
+        
+        runner = WineRunner(
+            prefix = prefix_directory,
+            dist=settings["wine"]["dist"],
+            launch_type=settings["wine"]["type"],
+            environment=settings["cork"]["environment"] | settings["wine"]["environment"],
+            launcher=[x for x in settings["cork"]["launcher"].split(" ") if x]
+        )
+
     session = RobloxSession(
-        os.path.join(user_data_dir("cork"), "pfx"),
-        versions_directory,
-        dist=settings["wine"]["dist"],
-        environment=settings["wine"]["environment"],
-        wine64=settings["wine"]["wine64"],
-        launcher= [x for x in settings["wine"]["launcher"].split(" ") if x],
-        launch_type=settings["wine"]["type"])
+        runner,
+        prefix_directory,
+        versions_directory
+    )
 
     match arguments.mode:
         case "player":
@@ -125,10 +147,9 @@ def main():
             this_splash.set_text("Initializing prefix...")
             this_splash.set_progress_mode(True)
             session.fflags = remote_fflags | settings["roblox"]["player"]["fflags"]
-            session.environment = session.environment | settings["roblox"]["player"]["environment"]
-            session.initialize_prefix()
+            session.runner.environment = session.runner.environment | settings["roblox"]["player"]["environment"]
 
-            session.launcher = [x for x in settings["roblox"]["player"]["prelauncher"].split(" ") if x] + session.launcher + [x for x in settings["roblox"]["player"]["postlauncher"].split(" ") if x]
+            session.runner.launcher = [x for x in settings["roblox"]["player"]["prelauncher"].split(" ") if x] + session.runner.launcher + [x for x in settings["roblox"]["player"]["postlauncher"].split(" ") if x]
             
             state_dictionary = {"state": "none"}
 
@@ -173,10 +194,9 @@ def main():
             this_splash.show("roblox-studio")
 
             this_splash.set_text("Starting Roblox Studio...")
-            session.environment = session.environment | settings["roblox"]["studio"]["environment"]
-            session.initialize_prefix()
+            session.runner.environment = session.runner.environment | settings["roblox"]["studio"]["environment"]
 
-            session.launcher = [x for x in settings["roblox"]["studio"]["prelauncher"].split(" ") if x] + session.launcher + [x for x in settings["roblox"]["studio"]["postlauncher"].split(" ") if x]
+            session.runner.launcher = [x for x in settings["roblox"]["studio"]["prelauncher"].split(" ") if x] + session.runner.launcher + [x for x in settings["roblox"]["studio"]["postlauncher"].split(" ") if x]
 
             state_dictionary = {"state": "none"}
 
@@ -216,25 +236,20 @@ def main():
                     logging.warn(line.decode("utf-8").strip())
             process.wait()
             splash_thread.join()
-        case "wine":
-            session.initialize_prefix()
+        case "runner":
             process = session.execute(arguments.args)
             with process.stdout:
                 for line in iter(process.stdout.readline, b''):
                     logging.warn(line.decode("utf-8").strip())
         case "install":
-            session.initialize_prefix()
-
             session.get_player()
             session.get_studio()
         case "cleanup":
-            session.initialize_prefix()
-
             for version in [f for f in os.listdir(versions_directory) if not os.path.isfile(os.path.join(versions_directory, f))]:
                 logging.info(f"Removing {version}...")
                 shutil.rmtree(os.path.join(versions_directory, version))
         case "kill":
-            session.shutdown_prefix()
+            pass
     
     logging.info("End")
 
