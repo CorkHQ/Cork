@@ -43,6 +43,7 @@ def main():
 
     settings = {
         "cork": {
+            "splash": True if os.name != "nt" else False,
             "loglevel": "info",
             "launcher": "",
             "environment": {}
@@ -129,14 +130,17 @@ def main():
 
     match arguments.mode:
         case "player":
-            this_splash = splash.CorkSplash()
-            this_splash.show("roblox-player")
+            if settings["cork"]["splash"] == True:
+                this_splash = splash.CorkSplash()
+                this_splash.show("roblox-player")
 
             remote_fflags = {}
             if settings["roblox"]["player"]["remotefflags"] != "":
                 try:
-                    this_splash.set_text("Acquiring Remote FFlags...")
-                    this_splash.set_progress_mode(True)
+                    if settings["cork"]["splash"] == True:
+                        this_splash.set_text("Acquiring Remote FFlags...")
+                        this_splash.set_progress_mode(True)
+                    
                     fflag_request = request.urlopen(request.Request(
                         settings["roblox"]["player"]["remotefflags"], headers={"User-Agent": "Cork"}))
                     remote_fflags = json.loads(
@@ -144,8 +148,6 @@ def main():
                 except:
                     pass
             
-            this_splash.set_text("Initializing prefix...")
-            this_splash.set_progress_mode(True)
             session.fflags = remote_fflags | settings["roblox"]["player"]["fflags"]
             session.runner.environment = session.runner.environment | settings["roblox"]["player"]["environment"]
 
@@ -153,29 +155,32 @@ def main():
             
             state_dictionary = {"state": "none"}
 
-            def splash_function():
-                while this_splash.is_showing:
-                    match state_dictionary["state"]:
-                        case "none":
-                            pass
-                        case "getting_version":
-                            this_splash.set_progress_mode(True)
-                            this_splash.set_text("Getting version...")
-                        case "installing":
-                            this_splash.set_text(f"Installing {state_dictionary['version']}...")
-                            if "packages_total" in state_dictionary:
-                                this_splash.set_progress_mode(False)
-                                progress = (state_dictionary["packages_downloaded"] + state_dictionary["packages_installed"]) / (state_dictionary["packages_total"] * 2)
-                                this_splash.set_progress(progress)
-                            else:
+            if settings["cork"]["splash"] == True:
+                this_splash.set_text("Starting Roblox...")
+                this_splash.set_progress_mode(True)
+                def splash_function():
+                    while this_splash.is_showing:
+                        match state_dictionary["state"]:
+                            case "none":
+                                pass
+                            case "getting_version":
                                 this_splash.set_progress_mode(True)
-                        case "done":
-                            this_splash.close()
-                    time.sleep(0.1)
-                return
+                                this_splash.set_text("Getting version...")
+                            case "installing":
+                                this_splash.set_text(f"Installing {state_dictionary['version']}...")
+                                if "packages_total" in state_dictionary:
+                                    this_splash.set_progress_mode(False)
+                                    progress = (state_dictionary["packages_downloaded"] + state_dictionary["packages_installed"]) / (state_dictionary["packages_total"] * 2)
+                                    this_splash.set_progress(progress)
+                                else:
+                                    this_splash.set_progress_mode(True)
+                            case "done":
+                                this_splash.close()
+                        time.sleep(0.1)
+                    return
 
-            splash_thread = threading.Thread(target=splash_function)
-            splash_thread.start()
+                splash_thread = threading.Thread(target=splash_function)
+                splash_thread.start()
 
             if len(arguments.args) > 0:
                 process = session.execute_player(
@@ -188,41 +193,46 @@ def main():
                 for line in iter(process.stdout.readline, b''):
                     logging.warning(line.decode("utf-8").strip())
             process.wait()
-            splash_thread.join()
-        case "studio":
-            this_splash = splash.CorkSplash()
-            this_splash.show("roblox-studio")
 
-            this_splash.set_text("Starting Roblox Studio...")
+            if settings["cork"]["splash"] == True:
+                splash_thread.join()
+        case "studio":
+            if settings["cork"]["splash"] == True:
+                this_splash = splash.CorkSplash()
+                this_splash.show("roblox-studio")
+
+                this_splash.set_text("Starting Roblox Studio...")
+            
             session.runner.environment = session.runner.environment | settings["roblox"]["studio"]["environment"]
 
             session.runner.launcher = [x for x in settings["roblox"]["studio"]["prelauncher"].split(" ") if x] + session.runner.launcher + [x for x in settings["roblox"]["studio"]["postlauncher"].split(" ") if x]
 
             state_dictionary = {"state": "none"}
 
-            def splash_function():
-                while this_splash.is_showing:
-                    match state_dictionary["state"]:
-                        case "none":
-                            pass
-                        case "getting_version":
-                            this_splash.set_progress_mode(True)
-                            this_splash.set_text("Getting version...")
-                        case "installing":
-                            this_splash.set_text(f"Installing {state_dictionary['version']}...")
-                            if "packages_total" in state_dictionary:
-                                this_splash.set_progress_mode(False)
-                                progress = (state_dictionary["packages_downloaded"] + state_dictionary["packages_installed"]) / (state_dictionary["packages_total"] * 2)
-                                this_splash.set_progress(progress)
-                            else:
+            if settings["cork"]["splash"] == True:
+                def splash_function():
+                    while this_splash.is_showing:
+                        match state_dictionary["state"]:
+                            case "none":
+                                pass
+                            case "getting_version":
                                 this_splash.set_progress_mode(True)
-                        case "done":
-                            this_splash.close()
-                    time.sleep(0.1)
-                return
+                                this_splash.set_text("Getting version...")
+                            case "installing":
+                                this_splash.set_text(f"Installing {state_dictionary['version']}...")
+                                if "packages_total" in state_dictionary:
+                                    this_splash.set_progress_mode(False)
+                                    progress = (state_dictionary["packages_downloaded"] + state_dictionary["packages_installed"]) / (state_dictionary["packages_total"] * 2)
+                                    this_splash.set_progress(progress)
+                                else:
+                                    this_splash.set_progress_mode(True)
+                            case "done":
+                                this_splash.close()
+                        time.sleep(0.1)
+                    return
 
-            splash_thread = threading.Thread(target=splash_function)
-            splash_thread.start()
+                splash_thread = threading.Thread(target=splash_function)
+                splash_thread.start()
 
             if len(arguments.args) > 0:
                 process = session.execute_studio(
@@ -235,7 +245,9 @@ def main():
                 for line in iter(process.stdout.readline, b''):
                     logging.warning(line.decode("utf-8").strip())
             process.wait()
-            splash_thread.join()
+
+            if settings["cork"]["splash"] == True:
+                splash_thread.join()
         case "runner":
             process = session.runner.execute(arguments.args, cwd=os.getcwd())
             with process.stdout:
