@@ -100,17 +100,17 @@ def install_version(version, version_directory, version_channel, package_diction
     for url in cdn_urls:
         start_time = time.time()
         try:
-            request.urlopen(f"{url}version")
+            request.urlopen(f"{url}version", timeout=5)
         except:
             logging.warning(f"Failed to access {url}")
         else:
-            working_urls[url] = time.time() - start_time
+            working_urls[url] = (time.time() - start_time) * 1000
     
-    sorted_urls = sorted(working_urls)
+    sorted_urls = sorted(working_urls.items(), key=lambda x: (x[1],x[0]))
     if len(sorted_urls) <= 0:
         raise ConnectionError("No mirror was found")
     
-    url_base = sorted_urls[0]
+    url_base = sorted_urls[0][0]
     logging.debug(f"Fastest mirror is {url_base}")
     
     if version_channel != "":
@@ -132,7 +132,6 @@ def install_version(version, version_directory, version_channel, package_diction
         else:
             package_manifest[last_header].append(line)
         line_count += 1
-
     package_zips = {}
 
     def download(package, target):
