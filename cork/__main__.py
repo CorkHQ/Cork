@@ -186,7 +186,7 @@ def main():
             
             with process.stdout:
                 for line in iter(process.stdout.readline, b''):
-                    logging.warn(line.decode("utf-8").strip())
+                    logging.warning(line.decode("utf-8").strip())
             process.wait()
             splash_thread.join()
         case "studio":
@@ -233,14 +233,14 @@ def main():
             
             with process.stdout:
                 for line in iter(process.stdout.readline, b''):
-                    logging.warn(line.decode("utf-8").strip())
+                    logging.warning(line.decode("utf-8").strip())
             process.wait()
             splash_thread.join()
         case "runner":
             process = session.runner.execute(arguments.args, cwd=os.getcwd())
             with process.stdout:
                 for line in iter(process.stdout.readline, b''):
-                    logging.warn(line.decode("utf-8").strip())
+                    logging.warning(line.decode("utf-8").strip())
         case "install":
             session.get_player()
             session.get_studio()
