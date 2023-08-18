@@ -237,7 +237,7 @@ def main():
             process.wait()
             splash_thread.join()
         case "runner":
-            process = session.execute(arguments.args)
+            process = session.runner.execute(arguments.args, cwd=os.getcwd())
             with process.stdout:
                 for line in iter(process.stdout.readline, b''):
                     logging.warn(line.decode("utf-8").strip())
