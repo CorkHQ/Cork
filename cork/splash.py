@@ -2,9 +2,7 @@ import gi
 import threading
 
 gi.require_version("Gtk", "3.0")
-gi.require_version('GdkPixbuf', '2.0')
 
-from gi.repository.GdkPixbuf import Pixbuf
 from gi.repository import GLib, Gtk
 
 class GtkCorkSplash(Gtk.Window):
