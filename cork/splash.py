@@ -21,9 +21,8 @@ class GtkCorkSplash(Gtk.Window):
         self.set_deletable(False)
         self.connect('delete_event', self.ignore)
 
-        self.image = Gtk.Image()
-        self.image.set_from_pixbuf(
-            Gtk.IconTheme.get_default().load_icon(icon, 112, 0))
+        self.image = Gtk.Image.new_from_icon_name(icon, Gtk.IconSize.DIALOG)
+        self.image.set_pixel_size(112)
         self.image.set_hexpand(True)
 
         self.progressbar = Gtk.ProgressBar()
