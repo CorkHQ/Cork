@@ -33,7 +33,7 @@ class RobloxSession():
         version_directory = os.path.join(self.versions_directory, version)
 
         if not os.path.isdir(version_directory) or not os.path.exists(os.path.join(version_directory, "RobloxPlayerBeta.exe")):
-            state_dictionary["state"] = "installing"
+            state_dictionary["state"] = "preparing"
             state_dictionary["version"] = version
             
             installer.install(version, version_directory, channel, "WindowsPlayer", state_dictionary)
@@ -52,7 +52,7 @@ class RobloxSession():
         version_directory = os.path.join(self.versions_directory, version)
 
         if not os.path.isdir(version_directory) or not os.path.exists(os.path.join(version_directory, "RobloxStudioBeta.exe")):
-            state_dictionary["state"] = "installing"
+            state_dictionary["state"] = "preparing"
             state_dictionary["version"] = version
 
             installer.install(version, version_directory, channel, "WindowsStudio64", state_dictionary)

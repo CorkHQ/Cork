@@ -17,6 +17,7 @@ def install(version, version_directory, version_channel, version_type, state_dic
     package_dictionary, package_manifest = packages.get(version_type, version, version_channel, cdn.get())
     package_zips = {}
 
+    state_dictionary["state"] = "downloading"
     def download(package, package_url, target):
         logging.info(f"Downloading package {package}...")
 
@@ -54,6 +55,7 @@ def install(version, version_directory, version_channel, version_type, state_dic
         
         state_dictionary["packages_installed"] += 1
 
+    state_dictionary["state"] = "installing"
     Parallel(n_jobs=len(package_zips), require='sharedmem')(delayed(install)(
         package, target, zip) for (package, target), zip in package_zips.items())
 

@@ -166,11 +166,22 @@ def main():
                             case "getting_version":
                                 this_splash.set_progress_mode(True)
                                 this_splash.set_text("Getting version...")
+                            case "preparing":
+                                this_splash.set_progress_mode(True)
+                                this_splash.set_text("Preparing...")
+                            case "downloading":
+                                this_splash.set_text(f"Downloading {state_dictionary['version']}...")
+                                if "packages_total" in state_dictionary:
+                                    this_splash.set_progress_mode(False)
+                                    progress = state_dictionary["packages_downloaded"] / state_dictionary["packages_total"]
+                                    this_splash.set_progress(progress)
+                                else:
+                                    this_splash.set_progress_mode(True)
                             case "installing":
                                 this_splash.set_text(f"Installing {state_dictionary['version']}...")
                                 if "packages_total" in state_dictionary:
                                     this_splash.set_progress_mode(False)
-                                    progress = (state_dictionary["packages_downloaded"] + state_dictionary["packages_installed"]) / (state_dictionary["packages_total"] * 2)
+                                    progress = state_dictionary["packages_installed"] / state_dictionary["packages_total"]
                                     this_splash.set_progress(progress)
                                 else:
                                     this_splash.set_progress_mode(True)
@@ -218,11 +229,22 @@ def main():
                             case "getting_version":
                                 this_splash.set_progress_mode(True)
                                 this_splash.set_text("Getting version...")
+                            case "preparing":
+                                this_splash.set_progress_mode(True)
+                                this_splash.set_text("Preparing...")
+                            case "downloading":
+                                this_splash.set_text(f"Downloading {state_dictionary['version']}...")
+                                if "packages_total" in state_dictionary:
+                                    this_splash.set_progress_mode(False)
+                                    progress = state_dictionary["packages_downloaded"] / state_dictionary["packages_total"]
+                                    this_splash.set_progress(progress)
+                                else:
+                                    this_splash.set_progress_mode(True)
                             case "installing":
                                 this_splash.set_text(f"Installing {state_dictionary['version']}...")
                                 if "packages_total" in state_dictionary:
                                     this_splash.set_progress_mode(False)
-                                    progress = (state_dictionary["packages_downloaded"] + state_dictionary["packages_installed"]) / (state_dictionary["packages_total"] * 2)
+                                    progress = state_dictionary["packages_installed"] / state_dictionary["packages_total"]
                                     this_splash.set_progress(progress)
                                 else:
                                     this_splash.set_progress_mode(True)
