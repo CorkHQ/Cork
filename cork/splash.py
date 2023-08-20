@@ -29,18 +29,19 @@ class QtSplash(QWidget):
         pixmap = QIcon.fromTheme(icon).pixmap(112, 112)
         icon_label.setPixmap(pixmap)
         icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        icon_label.setContentsMargins(0, 0, 0, 20)
+        icon_label.setContentsMargins(0, 15, 0, 15)
         layout.addWidget(icon_label)
+
+        self.label = QLabel("")
+        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.label.setContentsMargins(0, 5, 0, 5)
+        layout.addWidget(self.label)
 
         self.progress_bar = QProgressBar()
         self.progress_bar.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.progress_bar.setTextVisible(False)
         self.progress_bar.setRange(0, 0)
         layout.addWidget(self.progress_bar)
-
-        self.label = QLabel("")
-        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(self.label)
         
         qr = self.frameGeometry()
         cp = self.screen().availableGeometry().center()
