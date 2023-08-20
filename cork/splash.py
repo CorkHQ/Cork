@@ -1,104 +1,120 @@
-import gi
 import threading
+from PySide6.QtWidgets import QApplication, QVBoxLayout, QWidget, QLabel, QProgressBar
+from PySide6.QtGui import QIcon
+from PySide6.QtCore import Qt, Signal, QObject
 
-gi.require_version("Gtk", "3.0")
+class QtCommunicator(QObject):
+    progress_signal = Signal(int)
+    type_signal = Signal(bool)
+    text_signal = Signal(str)
+    close_signal = Signal(bool)
 
-from gi.repository import GLib, Gtk
-
-class GtkCorkSplash(Gtk.Window):
-    def ignore(self, *args):
-        return Gtk.TRUE
+class QtSplash(QWidget):
     def __init__(self, icon):
+        self.should_close = False
 
-        super().__init__(title="Cork")
-        self.set_default_size(380, 240)
-        self.set_resizable(False)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        self.set_border_width(16)
+        super().__init__()
+        self.resize(380, 240)
+        self.setFixedSize(380, 240)
 
-        self.set_deletable(False)
-        self.connect('delete_event', self.ignore)
+        self.closeEvent = self.close_event
+        self.setWindowTitle("Cork")
+        self.setWindowIcon(QIcon.fromTheme("cork"))
 
-        self.image = Gtk.Image.new_from_icon_name(icon, Gtk.IconSize.DIALOG)
-        self.image.set_pixel_size(112)
-        self.image.set_hexpand(True)
+        layout = QVBoxLayout()
+        layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.setLayout(layout)
 
-        self.progressbar = Gtk.ProgressBar()
-        self.progressbar.set_pulse_step(0.05)
+        icon_label = QLabel()
+        pixmap = QIcon.fromTheme(icon).pixmap(112, 112)
+        icon_label.setPixmap(pixmap)
+        icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        icon_label.setContentsMargins(0, 0, 0, 20)
+        layout.addWidget(icon_label)
 
-        self.label = Gtk.Label(label="")
-        self.label.set_hexpand(True)
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.progress_bar.setTextVisible(False)
+        self.progress_bar.setRange(0, 0)
+        layout.addWidget(self.progress_bar)
 
-        self.grid = Gtk.Grid()
+        self.label = QLabel("")
+        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.label)
+        
+        qr = self.frameGeometry()
+        cp = self.screen().availableGeometry().center()
 
-        self.grid.attach(self.image, 1, 0, 1, 2)
-        self.grid.attach_next_to(
-            self.progressbar, self.image, Gtk.PositionType.BOTTOM, 1, 1
-        )
-        self.grid.attach_next_to(
-            self.label, self.image, Gtk.PositionType.BOTTOM, 1, 1
-        )
-        self.grid.set_row_homogeneous(True)
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
 
-        self.add(self.grid)
-        self.show_all()
-        self.activity_mode = False
-        self.timeout_id = GLib.timeout_add(50, self.on_timeout, None)
+        self.communicator = QtCommunicator()
+
+        self.communicator.progress_signal.connect(self.set_progress)
+        self.communicator.type_signal.connect(self.set_progress_mode)
+        self.communicator.text_signal.connect(self.set_text)
+        self.communicator.close_signal.connect(self.set_close)
     
+    def close_event(self, event):
+        if self.should_close == True:
+            event.accept()
+        else:
+            event.ignore()
+
     def set_text(self, text):
-        if self.label.get_label() != text:
-            self.label.set_text(text)
+        self.label.setText(text)
     
     def set_progress(self, progress):
-        if self.progressbar.get_fraction() != progress:
-            self.progressbar.set_fraction(progress)
+        self.progress_bar.setValue(progress)
     
     def set_progress_mode(self, mode):
-        if mode == False and self.activity_mode == True:
-            self.progressbar.set_fraction(0)
-        
-        self.activity_mode = mode
+        if mode == True:
+            self.progress_bar.setRange(0, 0)
+        else:
+            self.progress_bar.setRange(0, 100)
     
-    def on_timeout(self, user_data):
-        if self.activity_mode:
-            self.progressbar.pulse()
-        
-        return True
+    def set_close(self, boolean):
+        if boolean == True:
+            self.close()
 
 class CorkSplash():
     def __init__(self):
+        self.window = None
         self.is_showing = False
     
     def show(self, icon):
         self.is_showing = True
 
-        self.gtk_splash = GtkCorkSplash(icon)
-        def gtk_function():
-            Gtk.main()
+        def qt_function():
+            self.app = QApplication()
+
+            self.window = QtSplash(icon)
+            self.window.show()
+            self.app.exec_()
         
-        self.gtk_thread = threading.Thread(target=gtk_function, daemon=True)
-        self.gtk_thread.start()
+        self.qt_thread = threading.Thread(target=qt_function, daemon=True)
+        self.qt_thread.start()
     
     def set_text(self, text):
-        if self.gtk_splash is None:
+        if self.window is None:
             return
 
-        self.gtk_splash.set_text(text)
+        self.window.communicator.text_signal.emit(text)
     
     def set_progress(self, progress):
-        if self.gtk_splash is None:
+        if self.window is None:
             return
 
-        self.gtk_splash.set_progress(progress)
+        self.window.communicator.progress_signal.emit(progress * 100)
     
     def set_progress_mode(self, mode):
-        if self.gtk_splash is None:
+        if self.window is None:
             return
 
-        self.gtk_splash.set_progress_mode(mode)
+        self.window.communicator.type_signal.emit(mode)
     
     def close(self):
         self.is_showing = False
-        
-        self.gtk_splash.destroy()
-        Gtk.main_quit()
+
+        self.window.should_close = True
+        self.window.communicator.close_signal.emit(True)
