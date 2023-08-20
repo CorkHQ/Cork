@@ -9,10 +9,10 @@ from urllib import request
 from datetime import datetime
 from platformdirs import user_config_dir, user_data_dir, user_cache_dir
 from cork import splash, __version__, __codename__
-from cork.bootstrapper.session import RobloxSession
 from cork.utils import deep_merge
 from cork.runners.native import NativeRunner
 from cork.runners.wine import WineRunner
+from cork.bootstrapper.session import RobloxSession
 
 def main():
     parser = argparse.ArgumentParser(
