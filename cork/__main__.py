@@ -43,7 +43,7 @@ def main():
 
     settings = {
         "cork": {
-            "splash": True if os.name != "nt" else False,
+            "splash": True,
             "loglevel": "info",
             "launcher": "",
             "environment": {}
