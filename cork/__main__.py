@@ -17,7 +17,7 @@ from cork.bootstrapper.session import RobloxSession
 def main():
     parser = argparse.ArgumentParser(
         prog='Cork',
-        description='A Roblox Wine Wrapper')
+        description='A bootstrapper for Roblox and Roblox Studio')
     parser.add_argument("mode", type=str, choices=[
                         "player", "studio", "runner", "install", "cleanup", "kill"])
     parser.add_argument("args", nargs='*')
