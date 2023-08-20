@@ -103,7 +103,7 @@ def main():
             logging.FileHandler(os.path.join(log_directory, f"cork-{start_time}.log")),
             logging.StreamHandler()
         ])
-    logging.info(f"Cork {__version__} {__codename__}")
+    logging.info(f"Cork {__version__} ({__codename__})")
 
     runner = NativeRunner(
         environment=settings["cork"]["environment"],
