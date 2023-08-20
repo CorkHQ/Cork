@@ -3,7 +3,8 @@ import json
 import logging
 import urllib.parse
 from typing import Tuple
-from cork import rbxcdn
+from cork.roblox import version as client_version
+from cork.bootstrapper import installer
 
 player_arguments = {
     "launchmode":       "--",
@@ -25,7 +26,7 @@ class RobloxSession():
     def get_player(self, state_dictionary={}, channel="", version_override="") -> Tuple[str, str]:
         state_dictionary["state"] = "getting_version"
         
-        version = version_override if version_override != "" else rbxcdn.get_version(
+        version = version_override if version_override != "" else client_version.get(
             "WindowsPlayer", channel)["clientVersionUpload"]
         logging.info(f'Player Version: {version}')
 
@@ -35,8 +36,7 @@ class RobloxSession():
             state_dictionary["state"] = "installing"
             state_dictionary["version"] = version
             
-            rbxcdn.install_version(
-                version, version_directory, channel, rbxcdn.package_dictionaries["Player"], state_dictionary=state_dictionary)
+            installer.install(version, version_directory, channel, "WindowsPlayer", state_dictionary)
 
         exe_path = os.path.join(version_directory, "RobloxPlayerBeta.exe")
         
@@ -45,7 +45,7 @@ class RobloxSession():
     def get_studio(self, state_dictionary={}, channel="", version_override="") -> Tuple[str, str]:
         state_dictionary["state"] = "getting_version"
         
-        version = version_override if version_override != "" else rbxcdn.get_version(
+        version = version_override if version_override != "" else client_version.get(
             "WindowsStudio64", channel)["clientVersionUpload"]
         logging.info(f'Studio Version: {version}')
 
@@ -55,8 +55,7 @@ class RobloxSession():
             state_dictionary["state"] = "installing"
             state_dictionary["version"] = version
 
-            rbxcdn.install_version(
-                version, version_directory, channel, rbxcdn.package_dictionaries["Studio"], state_dictionary=state_dictionary)
+            installer.install(version, version_directory, channel, "WindowsStudio64", state_dictionary)
 
         exe_path = os.path.join(version_directory, "RobloxStudioBeta.exe")
 
