@@ -4,9 +4,9 @@ from urllib import request
 
 urls = [
     "https://setup.rbxcdn.com/",
-	"https://setup-ak.rbxcdn.com/",
-	"https://setup-cfly.rbxcdn.com/",
-	"https://s3.amazonaws.com/setup.roblox.com/"
+    "https://setup-ak.rbxcdn.com/",
+    "https://setup-cfly.rbxcdn.com/",
+    "https://s3.amazonaws.com/setup.roblox.com/"
 ]
 
 def get():
