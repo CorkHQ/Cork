@@ -3,7 +3,6 @@ Type=Application
 Name=Roblox Player
 Exec=cork player %u
 Terminal=false
-MimeType=x-scheme-handler/roblox-player
 Categories=Game
 Icon=roblox-player
 MimeType=x-scheme-handler/roblox-player;x-scheme-handler/roblox
