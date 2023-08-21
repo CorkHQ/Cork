@@ -1,13 +1,14 @@
 import threading
-from PySide6.QtWidgets import QApplication, QVBoxLayout, QWidget, QLabel, QProgressBar
-from PySide6.QtGui import QIcon
-from PySide6.QtCore import Qt, Signal, QObject
+from PyQt6.QtWidgets import QApplication, QVBoxLayout, QWidget, QLabel, QProgressBar
+from PyQt6.QtGui import QIcon
+from PyQt6.QtCore import Qt, pyqtSignal, QObject
+from math import floor
 
 class QtCommunicator(QObject):
-    progress_signal = Signal(int)
-    type_signal = Signal(bool)
-    text_signal = Signal(str)
-    close_signal = Signal(bool)
+    progress_signal = pyqtSignal(int)
+    type_signal = pyqtSignal(bool)
+    text_signal = pyqtSignal(str)
+    close_signal = pyqtSignal(bool)
 
 class QtSplash(QWidget):
     def __init__(self, icon):
@@ -87,11 +88,11 @@ class CorkSplash():
         self.is_showing = True
 
         def qt_function():
-            self.app = QApplication()
+            self.app = QApplication([])
 
             self.window = QtSplash(icon)
             self.window.show()
-            self.app.exec_()
+            self.app.exec()
         
         self.qt_thread = threading.Thread(target=qt_function, daemon=True)
         self.qt_thread.start()
@@ -106,7 +107,7 @@ class CorkSplash():
         if self.window is None:
             return
 
-        self.window.communicator.progress_signal.emit(progress * 100)
+        self.window.communicator.progress_signal.emit(floor(progress * 100))
     
     def set_progress_mode(self, mode):
         if self.window is None:
