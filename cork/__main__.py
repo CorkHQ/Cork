@@ -8,7 +8,7 @@ import logging
 from urllib import request
 from datetime import datetime
 from platformdirs import user_config_dir, user_data_dir, user_cache_dir
-from cork import splash, __version__, __codename__
+from cork import splash, __version__, __codename__, __file__
 from cork.utils import deep_merge
 from cork.runners.native import NativeRunner
 from cork.runners.wine import WineRunner
@@ -74,6 +74,12 @@ def main():
         }
     }
 
+    if os.path.exists(os.path.join(os.path.dirname(__file__), "default.json")):
+        with open(os.path.join(os.path.dirname(__file__), "default.json"), "r") as file:
+            default_settings = file.read()
+            default = json.loads(default_settings)
+            settings = deep_merge(default, settings)
+    
     data_settings = ""
     if os.path.exists(os.path.join(config_directory, "settings.json")):
         with open(os.path.join(config_directory, "settings.json"), "r") as file:
