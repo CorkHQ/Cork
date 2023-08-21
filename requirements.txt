@@ -1,3 +1,3 @@
-platformdirs
-PySide6-Essentials
-joblib
+platformdirs==3.10.*
+PySide6-Essentials==6.5.*
+joblib==1.3.*
