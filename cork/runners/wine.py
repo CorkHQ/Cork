@@ -28,6 +28,7 @@ class WineRunner(NativeRunner):
             proton_binary = os.path.join(os.path.abspath(
                     self.dist), "..", "proton")
             
+            self.environment["STEAM_COMPAT_CLIENT_INSTALL_PATH"] = ""
             self.environment["STEAM_COMPAT_DATA_PATH"] = os.path.join(self.prefix, "..")
 
             wine_arguments = [proton_binary, "run"] + arguments
