@@ -116,7 +116,10 @@ def main():
         launcher=[x for x in settings["cork"]["launcher"].split(" ") if x]
     )
     if os.name != "nt":
-        logging.info("Using Wine")
+        logging.info(f"Using Wine ({settings['wine']['type']})")
+        
+        if settings['wine']['dist'] != "":
+            logging.info(f"Wine Distribution: {settings['wine']['dist']}")
 
         if not os.path.isdir(prefix_directory):
             os.makedirs(prefix_directory)
