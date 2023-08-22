@@ -27,10 +27,10 @@ class QtSplash(QWidget):
         self.setLayout(layout)
 
         icon_label = QLabel()
-        pixmap = QIcon.fromTheme(icon).pixmap(112, 112)
+        pixmap = QIcon.fromTheme(icon).pixmap(131, 131)
         icon_label.setPixmap(pixmap)
         icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        icon_label.setContentsMargins(0, 0, 0, 15)
+        icon_label.setContentsMargins(0, 0, 0, 10)
         layout.addWidget(icon_label)
 
         self.label = QLabel("")
