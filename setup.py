@@ -17,7 +17,7 @@ setuptools.setup(
     name="cork-launcher",
     version="1.0.0",
     author="Bugadinho",
-    description="A Roblox Wine Wrapper",
+    description="A bootstrapper for Roblox and Roblox Studio",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Bugadinho/Cork",
