@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import platform
 import shutil
 import threading
 import time
@@ -119,7 +120,7 @@ def main():
         environment=settings["cork"]["environment"],
         launcher=[x for x in settings["cork"]["launcher"].split(" ") if x]
     )
-    if os.name != "nt":
+    if platform.system() != "Windows":
         logging.info(f"Using Wine ({settings['wine']['type']})")
         
         if settings['wine']['dist'] != "":
