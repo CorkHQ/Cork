@@ -99,6 +99,8 @@ class CorkSplash():
 
         def qt_function():
             self.app = QApplication([])
+            if platform.system() == "Windows":
+                self.app.setStyle("fusion")
 
             self.window = QtSplash(icon)
             self.window.show()
