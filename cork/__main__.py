@@ -76,22 +76,24 @@ def main():
         }
     }
 
-    if os.path.exists(os.path.join(os.path.dirname(__file__), "default.json")):
-        with open(os.path.join(os.path.dirname(__file__), "default.json"), "r") as file:
+    defaults_path = os.path.join(os.path.dirname(__file__), "default.json")
+    if os.path.exists(defaults_path):
+        with open(defaults_path, "r") as file:
             default_settings = file.read()
             default = json.loads(default_settings)
             settings = deep_merge(default, settings)
     
     data_settings = ""
-    if os.path.exists(os.path.join(config_directory, "settings.json")):
-        with open(os.path.join(config_directory, "settings.json"), "r") as file:
+    settings_path = os.path.join(config_directory, "settings.json")
+    if os.path.exists(settings_path):
+        with open(settings_path, "r") as file:
             data_settings = file.read()
             data = json.loads(data_settings)
             settings = deep_merge(data, settings)
 
     new_data_settings = json.dumps(settings, indent=4)
     if data_settings != new_data_settings:
-        with open(os.path.join(config_directory, "settings.json"), "w") as file:
+        with open(settings_path, "w") as file:
             file.write(json.dumps(settings, indent=4))
     
     log_level = logging.INFO
