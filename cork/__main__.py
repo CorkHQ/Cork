@@ -44,6 +44,8 @@ def main():
     settings = {
         "cork": {
             "splash": True,
+            "downloadthreads": 2,
+            "installthreads": -1,
             "loglevel": "info",
             "launcher": "",
             "environment": {}
@@ -134,7 +136,9 @@ def main():
 
     session = RobloxSession(
         runner,
-        versions_directory
+        versions_directory,
+        settings["cork"]["downloadthreads"],
+        settings["cork"]["installthreads"]
     )
 
     match arguments.mode:

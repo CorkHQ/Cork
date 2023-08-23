@@ -18,10 +18,12 @@ player_arguments = {
 }
 
 class RobloxSession():
-    def __init__(self, runner, versions_directory, fflags={}):
+    def __init__(self, runner, versions_directory, download_threads = 2, install_threads = -1, fflags={}):
         self.runner = runner
-        self.fflags = fflags
         self.versions_directory = versions_directory
+        self.download_threads = download_threads
+        self.install_threads = install_threads
+        self.fflags = fflags
 
     def get_player(self, state_dictionary={}, channel="", version_override="") -> Tuple[str, str]:
         state_dictionary["state"] = "getting_version"
@@ -36,7 +38,7 @@ class RobloxSession():
             state_dictionary["state"] = "preparing"
             state_dictionary["version"] = version
             
-            installer.install(version, version_directory, channel, "WindowsPlayer", state_dictionary)
+            installer.install(version, version_directory, channel, "WindowsPlayer", state_dictionary, self.download_threads, self.install_threads)
 
         exe_path = os.path.join(version_directory, "RobloxPlayerBeta.exe")
         
@@ -55,7 +57,7 @@ class RobloxSession():
             state_dictionary["state"] = "preparing"
             state_dictionary["version"] = version
 
-            installer.install(version, version_directory, channel, "WindowsStudio64", state_dictionary)
+            installer.install(version, version_directory, channel, "WindowsStudio64", state_dictionary, self.download_threads, self.install_threads)
 
         exe_path = os.path.join(version_directory, "RobloxStudioBeta.exe")
 

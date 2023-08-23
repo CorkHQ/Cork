@@ -8,7 +8,7 @@ import shutil
 import os
 from cork.roblox import packages, cdn
 
-def install(version, version_directory, version_channel, version_type, state_dictionary={}):
+def install(version, version_directory, version_channel, version_type, state_dictionary={}, download_threads = 2, install_threads = -1):
     if os.path.isdir(version_directory):
         shutil.rmtree(version_directory)
 
@@ -49,7 +49,10 @@ def install(version, version_directory, version_channel, version_type, state_dic
     state_dictionary["packages_installed"] = 0
     state_dictionary["packages_total"] = len(package_dictionary)
 
-    Parallel(n_jobs=len(package_dictionary), require='sharedmem')(
+    if download_threads == 0:
+        download_threads = len(package_dictionary)
+    
+    Parallel(n_jobs=download_threads, require='sharedmem')(
         delayed(download)(package, package_url, target) for (package, package_url), target in package_dictionary.items())
 
     def install(package, target, zip):
@@ -65,8 +68,11 @@ def install(version, version_directory, version_channel, version_type, state_dic
         
         state_dictionary["packages_installed"] += 1
 
+    if install_threads == 0:
+        install_threads = len(package_dictionary)
+    
     state_dictionary["state"] = "installing"
-    Parallel(n_jobs=len(package_zips), require='sharedmem')(delayed(install)(
+    Parallel(n_jobs=install_threads, require='sharedmem')(delayed(install)(
         package, target, zip) for (package, target), zip in package_zips.items())
 
     with open(os.path.join(version_directory, "AppSettings.xml"), "w") as file:
