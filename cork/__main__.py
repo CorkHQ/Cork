@@ -19,7 +19,7 @@ def main():
         prog='Cork',
         description='A bootstrapper for Roblox and Roblox Studio')
     parser.add_argument("mode", type=str, choices=[
-                        "player", "studio", "runner", "install", "cleanup", "kill"])
+                        "player", "studio", "runner", "install", "cleanup", "reset", "kill"])
     parser.add_argument("args", nargs='*')
     arguments = parser.parse_args()
 
@@ -297,6 +297,11 @@ def main():
             for version in [f for f in os.listdir(versions_directory) if not os.path.isfile(os.path.join(versions_directory, f))]:
                 logging.info(f"Removing {version}...")
                 shutil.rmtree(os.path.join(versions_directory, version))
+        case "reset":
+            logging.info("Resetting settings file...")
+            with open(settings_path, "w") as file:
+                file.write("{}")
+            logging.info("Settings file has been reset")
         case "kill":
             pass
     
