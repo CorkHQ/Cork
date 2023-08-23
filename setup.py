@@ -15,7 +15,7 @@ long_description = read_file("README.md")
 
 setuptools.setup(
     name="cork-launcher",
-    version="1.0.0",
+    version="1.0.1",
     author="Bugadinho",
     description="A bootstrapper for Roblox and Roblox Studio",
     long_description=long_description,
