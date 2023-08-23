@@ -2,7 +2,7 @@ import json
 from urllib import request
 
 def get(binary_type, channel):
-    request_url = f"https://clientsettings.roblox.com/v2/client-version/{binary_type}"
+    request_url = f"https://clientsettingscdn.roblox.com/v2/client-version/{binary_type}"
 
     if channel != "":
         request_url = f"{request_url}/channel/{channel}"
