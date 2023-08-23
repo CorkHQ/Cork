@@ -1,8 +1,11 @@
 import threading
+import platform
+import os
 from PyQt6.QtWidgets import QApplication, QVBoxLayout, QWidget, QLabel, QProgressBar
 from PyQt6.QtGui import QIcon
 from PyQt6.QtCore import Qt, pyqtSignal, QObject
 from math import floor
+from cork import __file__
 
 class QtCommunicator(QObject):
     progress_signal = pyqtSignal(int)
@@ -16,18 +19,18 @@ class QtSplash(QWidget):
 
         super().__init__()
         self.resize(380, 240)
-        self.setFixedSize(380, 240)
+        self.setFixedSize(400, 240)
 
         self.closeEvent = self.close_event
         self.setWindowTitle("Cork")
-        self.setWindowIcon(QIcon.fromTheme("cork"))
+        self.setWindowIcon(self.get_icon("cork"))
 
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.setLayout(layout)
 
         icon_label = QLabel()
-        pixmap = QIcon.fromTheme(icon).pixmap(131, 131)
+        pixmap = self.get_icon(icon).pixmap(134, 134)
         icon_label.setPixmap(pixmap)
         icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         icon_label.setContentsMargins(0, 0, 0, 10)
@@ -78,6 +81,13 @@ class QtSplash(QWidget):
     def set_close(self, boolean):
         if boolean == True:
             self.close()
+    
+    def get_icon(self, icon_name):
+        if platform.system() == "Linux":
+            return QIcon.fromTheme(icon_name)
+        else:
+            return QIcon(os.path.join(os.path.dirname(__file__), "resources", icon_name, ".svg"))
+
 
 class CorkSplash():
     def __init__(self):
