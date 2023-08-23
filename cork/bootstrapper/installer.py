@@ -21,14 +21,24 @@ def install(version, version_directory, version_channel, version_type, state_dic
     def download(package, package_url, target):
         logging.info(f"Downloading package {package}...")
 
-        response = request.urlopen(request.Request(
-            package_url, headers={"User-Agent": "Cork"}))
-        response_bytes = response.read()
-        while package_manifest[package][0] != hashlib.md5(response_bytes).hexdigest():
-            logging.error(f"Checksum failed for {package}, retrying...")
-            response = request.urlopen(request.Request(
-                package_url, headers={"User-Agent": "Cork"}))
-            response_bytes = response.read()
+        attempts = 0
+        success = False
+        while attempts < 3 and success == False:
+            try:
+                response = request.urlopen(request.Request(
+                    package_url, headers={"User-Agent": "Cork"}))
+                response_bytes = response.read()
+
+                if package_manifest[package][0] != hashlib.md5(response_bytes).hexdigest():
+                    raise ConnectionError(f"Checksum failed for {package}")
+                
+                success = True
+            except:
+                attempts += 1
+                if attempts >= 3:
+                    raise ConnectionError(f"Failed to download {package}")
+                else:
+                    logging.error(f"Download failed for {package}, retrying...")
 
         zip = ZipFile(BytesIO(response_bytes))
         package_zips[(package, target)] = zip
