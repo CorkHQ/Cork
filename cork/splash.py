@@ -130,5 +130,8 @@ class CorkSplash():
     def close(self):
         self.is_showing = False
 
+        if self.window is None:
+            return
+
         self.window.should_close = True
         self.window.communicator.close_signal.emit(True)
