@@ -86,7 +86,7 @@ class QtSplash(QWidget):
         if platform.system() == "Linux":
             return QIcon.fromTheme(icon_name)
         else:
-            return QIcon(os.path.join(os.path.dirname(__file__), "resources", icon_name, ".svg"))
+            return QIcon(os.path.join(os.path.dirname(__file__), "..", "resources", f"{icon_name}.svg"))
 
 
 class CorkSplash():
