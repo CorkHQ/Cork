@@ -1,7 +1,8 @@
 #include <iostream>
 #include "roblox/cdn.hpp"
 #include "roblox/version.hpp"
+#include "roblox/packages.hpp"
 
 int main(int, char**){
-    std::cout << Cork::Roblox::GetVersion("WindowsPlayer", "").version;
+    Cork::Roblox::GetPackages("WindowsPlayer", Cork::Roblox::GetVersion("WindowsPlayer", "").clientVersionUpload, "");
 }

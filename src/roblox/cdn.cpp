@@ -9,7 +9,7 @@ std::string urls[] = {
     "https://setup-cfly.rbxcdn.com/",
     "https://s3.amazonaws.com/setup.roblox.com/"
 };
-    
+
 namespace Cork::Roblox {
     std::string GetCDN() {
         std::string fastestUrl = "";
@@ -34,6 +34,7 @@ namespace Cork::Roblox {
         if (fastestUrl == "") {
             throw std::runtime_error("No CDN URL has responded!");
         }
+        
         return fastestUrl;
     }
 }
