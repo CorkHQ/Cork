@@ -1,9 +1,9 @@
 #include <boost/process.hpp>
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include "native.hpp"
 
 namespace bp = boost::process;
-namespace fs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace cork::runners {
     NativeRunner::NativeRunner() {}

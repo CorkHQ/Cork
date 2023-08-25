@@ -1,8 +1,8 @@
 #include <boost/process.hpp>
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include "wine.hpp"
 
-namespace fs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace cork::runners {
     void WineRunner::SetPrefix(std::string newPrefix) {
