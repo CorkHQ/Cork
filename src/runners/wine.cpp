@@ -24,7 +24,9 @@ namespace cork::runners {
             if (dist != "") {
                 wineBinary = fs::canonical(fs::path(dist) / fs::path("bin") / fs::path(wineBinary)).string();
             }
-            SetEnvironment("WINEPREFIX", fs::canonical(fs::path(prefix)).string());
+            if (prefix != "") {
+                SetEnvironment("WINEPREFIX", fs::canonical(fs::path(prefix)).string());
+            }
 
             wineArguments.push_back(wineBinary);
         } else {
