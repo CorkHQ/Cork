@@ -1,8 +1,9 @@
 #include <iostream>
-#include "roblox/cdn.hpp"
-#include "roblox/version.hpp"
-#include "roblox/packages.hpp"
+#include "runners/wine.hpp"
 
 int main(int, char**){
-    cork::roblox::GetPackages("WindowsPlayer", cork::roblox::GetVersion("WindowsPlayer", "").clientVersionUpload, "");
+    cork::runners::WineRunner runner = cork::runners::WineRunner();
+    runner.SetPrefix("/var/home/miguel/sex");
+
+    runner.Execute({"winecfg"});
 }
