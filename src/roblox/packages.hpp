@@ -1,7 +1,7 @@
 #include <list>
 #include <iostream>
 
-namespace Cork::Roblox {
+namespace cork::roblox {
     struct base_package {
         std::string name;
         std::string target;

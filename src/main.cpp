@@ -4,5 +4,5 @@
 #include "roblox/packages.hpp"
 
 int main(int, char**){
-    Cork::Roblox::GetPackages("WindowsPlayer", Cork::Roblox::GetVersion("WindowsPlayer", "").clientVersionUpload, "");
+    cork::roblox::GetPackages("WindowsPlayer", cork::roblox::GetVersion("WindowsPlayer", "").clientVersionUpload, "");
 }

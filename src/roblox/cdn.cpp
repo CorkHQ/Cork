@@ -10,7 +10,7 @@ std::string urls[] = {
     "https://s3.amazonaws.com/setup.roblox.com/"
 };
 
-namespace Cork::Roblox {
+namespace cork::roblox {
     std::string GetCDN() {
         std::string fastestUrl = "";
         int fastestTime = 10000;

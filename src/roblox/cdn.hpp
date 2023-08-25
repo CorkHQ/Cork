@@ -1,5 +1,5 @@
 #include <iostream>
 
-namespace Cork::Roblox {
+namespace cork::roblox {
     std::string GetCDN();
 }

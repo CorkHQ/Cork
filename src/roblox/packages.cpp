@@ -5,7 +5,7 @@
 #include "cdn.hpp"
 #include "packages.hpp"
 
-std::map<std::string, std::list<Cork::Roblox::base_package>> packageDictionary{
+std::map<std::string, std::list<cork::roblox::base_package>> packageDictionary{
     {"WindowsPlayer", {
         {"RobloxApp.zip", ""},
         {"WebView2.zip", ""},
@@ -67,7 +67,7 @@ std::map<std::string, std::list<Cork::Roblox::base_package>> packageDictionary{
     }}
 };
 
-namespace Cork::Roblox {
+namespace cork::roblox {
     std::list<package> GetPackages(std::string versionType, std::string version, std::string channel, std::string cdn) {
         std::string baseUrl = cdn;
         

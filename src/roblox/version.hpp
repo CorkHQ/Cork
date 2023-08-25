@@ -1,6 +1,6 @@
 #include <iostream>
 
-namespace Cork::Roblox {
+namespace cork::roblox {
     struct version {
         std::string version;
         std::string clientVersionUpload;

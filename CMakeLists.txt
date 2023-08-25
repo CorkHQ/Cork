@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5.0)
-project(Cork VERSION 2.0.0 LANGUAGES C CXX)
+project(cork VERSION 2.0.0 LANGUAGES C CXX)
 
 include(CTest)
 enable_testing()

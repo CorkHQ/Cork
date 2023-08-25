@@ -5,7 +5,7 @@
     
 using json = nlohmann::json;
 
-namespace Cork::Roblox {
+namespace cork::roblox {
     version GetVersion(std::string binaryType, std::string channel) {
         std::string requestUrl = "https://clientsettingscdn.roblox.com/v2/client-version/" + binaryType;
 
