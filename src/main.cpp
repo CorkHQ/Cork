@@ -1,8 +1,12 @@
 #include <iostream>
-#include "runners/wine.hpp"
+#include "roblox/version.hpp"
+#include "bootstrapper/installer.hpp"
 
 int main(int, char**){
-    cork::runners::WineRunner runner = cork::runners::WineRunner();
+    std::string versionType = "WindowsPlayer";
+    std::string versionChannel = "";
+    std::string versionDirectory = "versiontest";
+    std::string version = cork::roblox::GetVersion(versionType, versionChannel).clientVersionUpload;
 
-    runner.Execute({"winecfg"});
+    cork::bootstrapper::Install(versionType, version, versionChannel, versionDirectory);
 }
