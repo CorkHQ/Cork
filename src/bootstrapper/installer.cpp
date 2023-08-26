@@ -8,6 +8,8 @@
 namespace cr = cork::roblox;
 namespace fs = std::filesystem;
 
+std::string appSettings = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<Settings>\r\n        <ContentFolder>content</ContentFolder>\r\n        <BaseUrl>http://www.roblox.com</BaseUrl>\r\n</Settings>\r\n";
+
 namespace cork::bootstrapper {
     void Install(std::string versionType, std::string version, std::string versionChannel, std::string versionDirectory) {
         std::list<cr::package> packages = cr::GetPackages(versionType, version, versionChannel, cr::GetCDN());
@@ -35,6 +37,10 @@ namespace cork::bootstrapper {
 
             std::cout << "Done!" << std::endl;
         }
+
+        std::ofstream ofstream = std::ofstream(versionPath / "AppSettings.xml");
+        ofstream << appSettings;
+        ofstream.close();
 
         fs::remove_all(temporaryPath);
     }
