@@ -18,6 +18,7 @@ target_include_directories(bootstrapper
 target_link_libraries(bootstrapper
   PRIVATE
     roblox
+    nlohmann_json::nlohmann_json
     cpr::cpr
     libzippp
 )
