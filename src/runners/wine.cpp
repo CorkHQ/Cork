@@ -22,10 +22,10 @@ namespace cork::runners {
             std::string wineBinary = "wine64";
 
             if (dist != "") {
-                wineBinary = fs::weakly_canonical(fs::path(dist) / fs::path("bin") / fs::path(wineBinary)).string();
+                wineBinary = (fs::path(dist) / fs::path("bin") / fs::path(wineBinary)).string();
             }
             if (prefix != "") {
-                SetEnvironment("WINEPREFIX", fs::weakly_canonical(fs::path(prefix)).string());
+                SetEnvironment("WINEPREFIX", (fs::path(prefix)).string());
             }
 
             wineArguments.push_back(wineBinary);
@@ -33,10 +33,10 @@ namespace cork::runners {
             std::string protonBinary = "proton";
 
             if (dist != "") {
-                protonBinary = fs::weakly_canonical(fs::path(dist) / fs::path(protonBinary)).string();
+                protonBinary = (fs::path(dist) / fs::path(protonBinary)).string();
             }
             SetEnvironment("STEAM_COMPAT_CLIENT_INSTALL_PATH", "");
-            SetEnvironment("STEAM_COMPAT_DATA_PATH", fs::weakly_canonical(fs::path(prefix)).parent_path().string());
+            SetEnvironment("STEAM_COMPAT_DATA_PATH", (fs::path(prefix)).parent_path().string());
 
             wineArguments.push_back(protonBinary);
             wineArguments.push_back("run");
