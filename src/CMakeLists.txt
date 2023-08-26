@@ -7,9 +7,8 @@ FetchContent_MakeAvailable(cpr)
 FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
 FetchContent_MakeAvailable(json)
 
-FetchContent_Declare(elzip GIT_REPOSITORY https://github.com/Sygmei/11Zip.git
-                           GIT_TAG 516e161d5c96aa8f2603fb30b10b7770a87332c2)
-FetchContent_MakeAvailable(elzip)
+FetchContent_Declare(libzippp URL https://github.com/ctabin/libzippp/archive/refs/tags/libzippp-v6.1-1.9.2.tar.gz)
+FetchContent_MakeAvailable(libzippp)
 
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 
@@ -23,7 +22,7 @@ target_link_libraries(cork
   PRIVATE
     cpr::cpr
     nlohmann_json::nlohmann_json
-    elzip
+    libzippp
     ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_SYSTEM_LIBRARY}
     roblox

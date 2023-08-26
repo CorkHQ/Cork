@@ -19,5 +19,5 @@ target_link_libraries(bootstrapper
   PRIVATE
     roblox
     cpr::cpr
-    elzip
+    libzippp
 )
