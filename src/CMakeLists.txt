@@ -12,6 +12,12 @@ FetchContent_MakeAvailable(libzippp)
 
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 
+if (WIN32)
+  add_compile_definitions(NATIVE_RUNNER)
+else()
+  add_compile_definitions(WINE_RUNNER)
+endif()
+
 add_executable(cork main.cpp)
 
 add_subdirectory(roblox)

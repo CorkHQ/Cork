@@ -1,12 +1,39 @@
 #include <iostream>
-#include "roblox/version.hpp"
-#include "bootstrapper/installer.hpp"
+#include "bootstrapper/environment.hpp"
 
-int main(int, char**){
-    std::string versionType = "WindowsPlayer";
-    std::string versionChannel = "";
-    std::string versionDirectory = "versiontest";
-    std::string version = cork::roblox::GetVersion(versionType, versionChannel).clientVersionUpload;
+#if defined(NATIVE_RUNNER)
+#include "runners/native.hpp"
+#elif defined(WINE_RUNNER)
+#include "runners/wine.hpp"
+#endif
 
-    cork::bootstrapper::Install(versionType, version, versionChannel, versionDirectory);
+namespace cb = cork::bootstrapper;
+namespace cr = cork::runners;
+
+int main(int argc, char *argv[]){
+    std::vector<std::string> arguments(argv + 1, argv + argc);
+
+    cb::RobloxEnvironment environment;
+    environment.SetVersionsDirectory("versions");
+    std::pair<std::string, std::string> playerData = environment.GetPlayer("");
+    
+    std::list<std::string> playerArguments;
+    playerArguments.push_back(playerData.second);
+
+    if (arguments.size() > 0) {
+        for (std::string argument: environment.ParsePlayer(arguments)) {
+            playerArguments.push_back(argument);
+        }
+    } else {
+        playerArguments.push_back("--app");
+    }
+
+#if defined(NATIVE_RUNNER)
+    cr::NativeRunner runner;
+#elif defined(WINE_RUNNER)
+    cr::WineRunner runner;
+    runner.SetType("wine");
+#endif
+
+    runner.Execute(playerArguments, playerData.first);
 }
