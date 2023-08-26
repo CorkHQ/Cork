@@ -2,10 +2,10 @@ add_library(bootstrapper "")
 
 target_sources(bootstrapper
   PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/session.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/environment.cpp
     ${CMAKE_CURRENT_LIST_DIR}/installer.cpp
   PUBLIC
-    ${CMAKE_CURRENT_LIST_DIR}/session.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/environment.hpp
     ${CMAKE_CURRENT_LIST_DIR}/installer.hpp
 )
 
