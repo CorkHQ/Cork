@@ -1,5 +1,6 @@
 #include <iostream>
 #include "bootstrapper/environment.hpp"
+#include "settings/settings.hpp"
 
 #if defined(NATIVE_RUNNER)
 #include "runners/native.hpp"
@@ -9,13 +10,17 @@
 
 namespace cb = cork::bootstrapper;
 namespace cr = cork::runners;
+namespace cs = cork::settings;
 
 int main(int argc, char *argv[]){
     std::vector<std::string> arguments(argv + 1, argv + argc);
 
+    cs::LoadSettings();
+    cs::SaveSettings();
+    
     cb::RobloxEnvironment environment;
-    environment.SetVersionsDirectory("versions");
-    std::pair<std::string, std::string> playerData = environment.GetPlayer("");
+    environment.SetVersionsDirectory(cs::GetVersionsPath());
+    std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("roblox", "channel"));
     
     std::list<std::string> playerArguments;
     playerArguments.push_back(playerData.second);
@@ -32,7 +37,8 @@ int main(int argc, char *argv[]){
     cr::NativeRunner runner;
 #elif defined(WINE_RUNNER)
     cr::WineRunner runner;
-    runner.SetType("wine");
+    runner.SetType(cs::GetString("wine", "type"));
+    runner.SetPrefix(cs::GetPrefixPath());
 #endif
 
     runner.Execute(playerArguments, playerData.first);
