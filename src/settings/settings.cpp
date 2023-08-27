@@ -2,15 +2,9 @@
 #include <filesystem>
 #include <toml++/toml.h>
 #include <platform_folders.h>
+#include "default.hpp"
 
 namespace fs = std::filesystem;
-
-static const std::string defaultSettings =
-"[wine]\n"
-"dist = \"\"\n"
-"type = \"wine\"\n"
-"[roblox]\n"
-"channel = \"\"\n";
 
 toml::table settingsTable;
 
