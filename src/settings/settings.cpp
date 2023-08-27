@@ -55,15 +55,18 @@ namespace cork::settings {
     }
     
     bool GetBool(std::string category, std::string setting) {
-        return false;
+        return settingsTable[category][setting].value<bool>().value_or(false);
     }
     int GetInt(std::string category, std::string setting) {
-        return 0;
+        return settingsTable[category][setting].value<int>().value_or(0);
     }
     float GetFloat(std::string category, std::string setting) {
-        return 0.0f;
+        return settingsTable[category][setting].value<float>().value_or(0.0f);
     }
     std::string GetString(std::string category, std::string setting) {
         return settingsTable[category][setting].value<std::string>().value_or("");
+    }
+    toml::table GetTable() {
+        return settingsTable;
     }
 }

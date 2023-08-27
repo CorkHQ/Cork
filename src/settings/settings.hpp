@@ -1,4 +1,5 @@
 #include <iostream>
+#include <toml++/toml.h>
 
 namespace cork::settings {
     std::string GetDataPath();
@@ -17,4 +18,5 @@ namespace cork::settings {
     int GetInt(std::string category, std::string setting);
     float GetFloat(std::string category, std::string setting);
     std::string GetString(std::string category, std::string setting);
+    toml::table GetTable();
 }
