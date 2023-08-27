@@ -37,6 +37,7 @@ int main(int argc, char *argv[]){
     cr::NativeRunner runner;
 #elif defined(WINE_RUNNER)
     cr::WineRunner runner;
+    runner.SetDist(cs::GetString("wine", "dist"));
     runner.SetType(cs::GetString("wine", "type"));
     runner.SetPrefix(cs::GetPrefixPath());
 #endif
