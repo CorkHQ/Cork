@@ -40,7 +40,7 @@ namespace cork::bootstrapper {
 
         fs::path versionPath = fs::weakly_canonical(versionsDirectory / version);
 
-        if (!fs::is_directory(versionPath)) {
+        if (!fs::is_regular_file(versionPath / "AppSettings.xml")) {
             Install(versionType, version, versionChannel, versionPath.string());
         }
 
@@ -53,7 +53,7 @@ namespace cork::bootstrapper {
 
         fs::path versionPath = fs::weakly_canonical(versionsDirectory / version);
 
-        if (!fs::is_directory(versionPath)) {
+        if (!fs::is_regular_file(versionPath / "AppSettings.xml")) {
             Install(versionType, version, versionChannel, versionPath.string());
         }
 
