@@ -80,6 +80,8 @@ int main(int argc, char *argv[]){
             runner.AddLaunchers(cs::GetString("studio.launcher.post"));
 
             runner.Execute(studioArguments, studioData.first);
+        } else if (operationMode == "runner") {
+            runner.Execute(arguments);
         }
     }
 }

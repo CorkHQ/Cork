@@ -13,7 +13,7 @@
 - [ ] Cork
     - [x] Launch Roblox Player
     - [x] Launch Roblox Studio
-    - [ ] Run arbitrary in Runner
+    - [x] Run arbitrary in Runner
     - [ ] Cleanup
     - [ ] Logging
 - [ ] Modules
