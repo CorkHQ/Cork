@@ -42,7 +42,7 @@
             - [x] Launchers
         - [ ] Roblox Settings
             - [x] Channels
-            - [ ] Version-Override
+            - [x] Version-Override
             - [x] FFlags
             - [ ] Remote FFlags
         
