@@ -13,25 +13,13 @@ namespace cr = cork::runners;
 namespace cs = cork::settings;
 
 int main(int argc, char *argv[]){
-    std::vector<std::string> arguments(argv + 1, argv + argc);
+    std::list<std::string> arguments(argv + 1, argv + argc);
 
     cs::LoadSettings();
     cs::SaveSettings();
     
     cb::RobloxEnvironment environment;
     environment.SetVersionsDirectory(cs::GetVersionsPath());
-    std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("player.channel"));
-    
-    std::list<std::string> playerArguments;
-    playerArguments.push_back(playerData.second);
-
-    if (arguments.size() > 0) {
-        for (std::string argument: environment.ParsePlayer(arguments)) {
-            playerArguments.push_back(argument);
-        }
-    } else {
-        playerArguments.push_back("--app");
-    }
 
 #if defined(NATIVE_RUNNER)
     cr::NativeRunner runner;
@@ -44,8 +32,28 @@ int main(int argc, char *argv[]){
     runner.SetEnvironment(cs::GetStringMap("cork.env"));
     runner.SetEnvironment(cs::GetStringMap("wine.env"));
 #endif
-    runner.SetEnvironment(cs::GetStringMap("player.env"));
 
-    cb::ApplyFFlags(playerData.first, cs::GetJson("player.fflags"));
-    runner.Execute(playerArguments, playerData.first);
+    if (arguments.size() > 0) {
+        std::string operationMode = arguments.front();
+        arguments.pop_front();
+        
+        if (operationMode == "player") {
+            std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("player.channel"));
+
+            std::list<std::string> playerArguments;
+            playerArguments.push_back(playerData.second);
+            if (arguments.size() > 0) {
+                for (std::string argument: environment.ParsePlayer(std::vector<std::string>{std::begin(arguments), std::end(arguments)})) {
+                    playerArguments.push_back(argument);
+                }
+            } else {
+                playerArguments.push_back("--app");
+            }
+
+            runner.SetEnvironment(cs::GetStringMap("player.env"));
+
+            cb::ApplyFFlags(playerData.first, cs::GetJson("player.fflags"));
+            runner.Execute(playerArguments, playerData.first);
+        }
+    }
 }
