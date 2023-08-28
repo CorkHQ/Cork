@@ -3,9 +3,7 @@
 static const std::string defaultSettings =
     "[cork]\n"
     "loglevel = \"info\"\n"
-    "[cork.launcher]\n"
-    "pre = \"\"\n"
-    "post = \"\"\n"
+    "launcher = \"\"\n"
     "[cork.env]\n"
     "\n"
     "\n"
