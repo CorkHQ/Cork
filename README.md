@@ -37,9 +37,9 @@
         - [x] Wine Settings
             - [x] Wine Distribution
             - [x] Wine Type
-        - [ ] Environment Settings
+        - [x] Environment Settings
             - [x] Environment Variables
-            - [ ] Launchers
+            - [x] Launchers
         - [ ] Roblox Settings
             - [x] Channels
             - [ ] Version-Override

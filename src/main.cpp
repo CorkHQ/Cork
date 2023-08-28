@@ -52,6 +52,10 @@ int main(int argc, char *argv[]){
 
             runner.SetEnvironment(cs::GetStringMap("player.env"));
 
+            runner.AddLaunchers(cs::GetString("player.launcher.pre"));
+            runner.AddLaunchers(cs::GetString("cork.launcher"));
+            runner.AddLaunchers(cs::GetString("player.launcher.post"));
+
             cb::ApplyFFlags(playerData.first, cs::GetJson("player.fflags"));
             runner.Execute(playerArguments, playerData.first);
         }
