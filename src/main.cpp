@@ -59,6 +59,27 @@ int main(int argc, char *argv[]){
 
             cb::ApplyFFlags(playerData.first, cs::GetJson("player.fflags"));
             runner.Execute(playerArguments, playerData.first);
+        } else if (operationMode == "studio") {
+            std::string versionOverride = cs::GetString("studio.version");
+            std::pair<std::string, std::string> studioData = environment.GetStudio(cs::GetString("studio.channel"), versionOverride);
+
+            std::list<std::string> studioArguments;
+            studioArguments.push_back(studioData.second);
+            if (arguments.size() > 0) {
+                for (std::string argument: environment.ParseStudio(std::vector<std::string>{std::begin(arguments), std::end(arguments)})) {
+                    studioArguments.push_back(argument);
+                }
+            } else {
+                studioArguments.push_back("-ide");
+            }
+
+            runner.SetEnvironment(cs::GetStringMap("studio.env"));
+
+            runner.AddLaunchers(cs::GetString("studio.launcher.pre"));
+            runner.AddLaunchers(cs::GetString("cork.launcher"));
+            runner.AddLaunchers(cs::GetString("studio.launcher.post"));
+
+            runner.Execute(studioArguments, studioData.first);
         }
     }
 }
