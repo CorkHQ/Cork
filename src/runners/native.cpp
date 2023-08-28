@@ -11,9 +11,25 @@ namespace cork::runners {
     void NativeRunner::AddLauncher(std:: string launcher) {
         launcherList.push_back(launcher);
     }
-    void NativeRunner::AddLauncher(std::list<std::string> list) {
+
+    void NativeRunner::AddLaunchers(std::list<std::string> list) {
         for (std::string launcher : list) {
             AddLauncher(launcher);
+        }
+    }
+    void NativeRunner::AddLaunchers(std:: string launchers) {
+        std::string lastArgument = "";
+        for(char c : launchers) {
+            if (c == ' ') {
+                AddLauncher(lastArgument);
+                lastArgument = "";
+            } else {
+                lastArgument += c;
+            }
+        }
+        if (lastArgument != "") {
+            AddLauncher(lastArgument);
+            lastArgument = "";
         }
     }
 

@@ -11,7 +11,8 @@ namespace cork::runners {
             NativeRunner();
 
             void AddLauncher(std:: string launcher);
-            void AddLauncher(std::list<std::string> list);
+            void AddLaunchers(std::list<std::string> list);
+            void AddLaunchers(std:: string launchers);
 
             void SetEnvironment(std:: string var, std:: string value);
             void SetEnvironment(std::map<std::string, std::string> map);
