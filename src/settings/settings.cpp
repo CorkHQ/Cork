@@ -8,6 +8,16 @@ namespace fs = std::filesystem;
 
 toml::table settingsTable;
 
+void mergeTable(toml::table* target, toml::table* source) {
+    for (auto element : *source) {
+        if (element.second.is_table() && (*target).contains(element.first) && (*target)[element.first].is_table()) {
+            mergeTable((*target)[element.first].as_table(), element.second.as_table());
+        } else {
+            (*target).insert_or_assign(element.first, element.second);
+        }
+    }
+}
+
 namespace cork::settings {
     std::string GetDataPath() {
         fs::path dataPath = fs::path(sago::getDataHome()) / "cork";
@@ -43,17 +53,7 @@ namespace cork::settings {
         std::string filePath = GetSettingsPath();
         if (fs::exists(filePath)) {
             toml::table storedTable = toml::parse_file(filePath);
-            for (auto element : storedTable) {
-                if (element.second.is_table() && settingsTable.contains(element.first) && settingsTable[element.first].is_table()) {
-                    toml::table targetTable = settingsTable[element.first].ref<toml::table>();
-                    for (auto tableElement : element.second.ref<toml::table>()) {
-                        targetTable.insert_or_assign(tableElement.first, tableElement.second);
-                    }
-                    settingsTable.insert_or_assign(element.first, targetTable);
-                } else {
-                    settingsTable.insert_or_assign(element.first, element.second);
-                }
-            }
+            mergeTable(&settingsTable, &storedTable);
         }
     }
     void SaveSettings() {
