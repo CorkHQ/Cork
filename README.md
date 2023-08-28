@@ -43,6 +43,6 @@
         - [ ] Roblox Settings
             - [x] Channels
             - [ ] Version-Override
-            - [ ] FFlags
+            - [x] FFlags
             - [ ] Remote FFlags
         

@@ -46,5 +46,6 @@ int main(int argc, char *argv[]){
 #endif
     runner.SetEnvironment(cs::GetStringMap("player.env"));
 
+    cb::ApplyFFlags(playerData.first, cs::GetJson("player.fflags"));
     runner.Execute(playerArguments, playerData.first);
 }
