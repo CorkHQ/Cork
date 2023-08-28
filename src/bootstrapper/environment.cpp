@@ -18,7 +18,7 @@ std::map<std::string, std::string> playerArguments{
 };
 
 namespace cork::bootstrapper {
-    void ApplyFFlags(std::string playerDirectory, nlohmann::json fflags) {
+    void ApplyFFlags(std::string playerDirectory, std::string fflagJson) {
         fs::path jsonPath = fs::weakly_canonical(fs::path(playerDirectory) / "ClientSettings" / "ClientAppSettings.json");
 
         if (!fs::is_directory(jsonPath.parent_path())) {
@@ -26,8 +26,13 @@ namespace cork::bootstrapper {
         }
 
         std::ofstream jsonStream = std::ofstream(jsonPath);
-        jsonStream << fflags.dump(4) << std::endl;
+        jsonStream << fflagJson << std::endl;
         jsonStream.close();
+    }
+    void ApplyFFlags(std::string playerDirectory, nlohmann::json fflags) {
+        std::ostringstream ss;
+        ss << fflags.dump(4);
+        ApplyFFlags(playerDirectory, ss.str());
     }
 
     void RobloxEnvironment::SetVersionsDirectory(std::string newVersionsDirectory) {
