@@ -43,8 +43,16 @@ namespace cork::settings {
         std::string filePath = GetSettingsPath();
         if (fs::exists(filePath)) {
             toml::table storedTable = toml::parse_file(filePath);
-            for (auto a : storedTable) {
-                settingsTable.insert_or_assign(a.first, a.second);
+            for (auto element : storedTable) {
+                if (element.second.is_table() && settingsTable.contains(element.first) && settingsTable[element.first].is_table()) {
+                    toml::table targetTable = settingsTable[element.first].ref<toml::table>();
+                    for (auto tableElement : element.second.ref<toml::table>()) {
+                        targetTable.insert_or_assign(tableElement.first, tableElement.second);
+                    }
+                    settingsTable.insert_or_assign(element.first, targetTable);
+                } else {
+                    settingsTable.insert_or_assign(element.first, element.second);
+                }
             }
         }
     }
