@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
     
     cb::RobloxEnvironment environment;
     environment.SetVersionsDirectory(cs::GetVersionsPath());
-    std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("roblox", "channel"));
+    std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("player", "channel"));
     
     std::list<std::string> playerArguments;
     playerArguments.push_back(playerData.second);
