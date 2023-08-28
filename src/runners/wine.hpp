@@ -1,7 +1,7 @@
 #include "native.hpp"
 
 namespace cork::runners {
-    class WineRunner: NativeRunner {
+    class WineRunner: public NativeRunner {
         private:
             std::string dist;
             std::string launchType;
