@@ -123,4 +123,77 @@ namespace cork::bootstrapper {
 
         return std::list<std::string>(arguments.begin(), arguments.end());
     }
+
+    std::list<std::string> RobloxEnvironment::ParseStudio(std::vector<std::string> arguments) {
+        if (arguments.size() == 1) {
+            std::string argument = arguments.front();
+            if (argument.rfind("roblox-studio:", 0) == 0) {
+                std::list<std::string> newArguments;
+                std::map<std::string, std::string> argumentMap;
+
+                std::stringstream ss(argument);
+                std::vector<std::string> result;
+
+                while( ss.good() )
+                {
+                    std::string substr;
+                    std::getline( ss, substr, '+' );
+                    result.push_back( substr );
+                }
+
+                for (std::string piece : result) {
+                    std::stringstream piecess(piece);
+                    std::vector<std::string> pieceresult;
+
+                    while( piecess.good() )
+                    {
+                        std::string piecesubstr;
+                        std::getline( piecess, piecesubstr, ':' );
+                        pieceresult.push_back( piecesubstr );
+
+                        if (pieceresult.size() >= 1) {
+                            if (pieceresult[0] == "channel" && pieceresult.size() > 1) {
+                                if (environmentChannel == "") {
+                                    environmentChannel = pieceresult[1];
+                                } else {
+                                    pieceresult[1] = environmentChannel;
+                                }
+                            }
+
+                            if (pieceresult[0] == "gameinfo" && pieceresult.size() > 1) {
+                                newArguments.push_back("-url https://www.roblox.com/Login/Negotiate.ashx");
+                                newArguments.push_back("-ticket " + pieceresult[1]);
+                            } else {
+                                if (pieceresult.size() > 1) {
+                                    newArguments.push_back("-" + pieceresult[0] + " " + pieceresult[1]);
+                                } else {
+                                    newArguments.push_back("-" + pieceresult[0]);
+                                }
+                            }
+
+                            if (pieceresult.size() > 1) {
+                                argumentMap[pieceresult[0]] = pieceresult[1];
+                            } else {
+                                argumentMap[pieceresult[0]] = "";
+                            }
+                        }
+                    }
+                }
+
+                if (argumentMap.count("launchmode") > 0 && argumentMap.count("task") == 0 ) {
+                    if (argumentMap["launchmode"] == "plugin") {
+                        newArguments.push_back("-task InstallPlugin");
+                        newArguments.push_back("-pluginId " + argumentMap["pluginid"]);
+                    } else if (argumentMap["launchmode"] == "edit") {
+                        newArguments.push_back("-task EditPlace");
+                    } else if (argumentMap["launchmode"] == "asset") {
+                        newArguments.push_back("-task TryAsset");
+                        newArguments.push_back("-assetId " + argumentMap["assetid"]);
+                    }
+                }
+
+                return newArguments;
+            }
+        }
+    }
 }
