@@ -12,15 +12,15 @@
 ## Progress
 - [ ] Cork
     - [x] Launch Roblox Player
-    - [ ] Launch Roblox Studio
+    - [x] Launch Roblox Studio
     - [ ] Run arbitrary in Runner
     - [ ] Cleanup
     - [ ] Logging
 - [ ] Modules
     - [ ] Bootstrapper
-        - [ ] Environment
+        - [x] Environment
             - [x] Roblox Player
-            - [ ] Roblox Studio
+            - [x] Roblox Studio
         - [ ] Installer
             - [x] Install Roblox
             - [ ] Multi-threaded installation
