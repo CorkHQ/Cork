@@ -195,5 +195,7 @@ namespace cork::bootstrapper {
                 return newArguments;
             }
         }
+
+        return std::list<std::string>(arguments.begin(), arguments.end());
     }
 }
