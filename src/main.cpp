@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
     
     cb::RobloxEnvironment environment;
     environment.SetVersionsDirectory(cs::GetVersionsPath());
-    std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("player", "channel"));
+    std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("player.channel"));
     
     std::list<std::string> playerArguments;
     playerArguments.push_back(playerData.second);
@@ -35,16 +35,16 @@ int main(int argc, char *argv[]){
 
 #if defined(NATIVE_RUNNER)
     cr::NativeRunner runner;
-    runner.SetEnvironment(cs::GetStringMap("cork", "env"));
+    runner.SetEnvironment(cs::GetStringMap("cork.env"));
 #elif defined(WINE_RUNNER)
     cr::WineRunner runner;
-    runner.SetDist(cs::GetString("wine", "dist"));
-    runner.SetType(cs::GetString("wine", "type"));
+    runner.SetDist(cs::GetString("wine.dist"));
+    runner.SetType(cs::GetString("wine.type"));
     runner.SetPrefix(cs::GetPrefixPath());
-    runner.SetEnvironment(cs::GetStringMap("cork", "env"));
-    runner.SetEnvironment(cs::GetStringMap("wine", "env"));
+    runner.SetEnvironment(cs::GetStringMap("cork.env"));
+    runner.SetEnvironment(cs::GetStringMap("wine.env"));
 #endif
-    runner.SetEnvironment(cs::GetStringMap("player", "env"));
+    runner.SetEnvironment(cs::GetStringMap("player.env"));
 
     runner.Execute(playerArguments, playerData.first);
 }

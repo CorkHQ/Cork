@@ -62,22 +62,50 @@ namespace cork::settings {
         fileStream.close();
     }
     
-    bool GetBool(std::string category, std::string setting) {
-        return settingsTable[category][setting].value<bool>().value_or(false);
+    toml::v3::node_view<toml::v3::node> GetElement(std::string path) {
+        toml::v3::node_view<toml::v3::node> element;
+        bool firstElement = true;
+
+        std::string lastPiece = "";
+        for(char c : path) {
+            if (c == '.') {
+                if (firstElement) {
+                    element = settingsTable[lastPiece];
+                    firstElement = false;
+                } else {
+                    element = element[lastPiece];
+                }
+
+                lastPiece = "";
+            } else {
+                lastPiece += c;
+            }
+        }
+        if (firstElement) {
+            element = settingsTable[lastPiece];
+            firstElement = false;
+        } else {
+            element = element[lastPiece];
+        }
+
+        return element;
     }
-    int GetInt(std::string category, std::string setting) {
-        return settingsTable[category][setting].value<int>().value_or(0);
+    bool GetBool(std::string path) {
+        return GetElement(path).value<bool>().value_or(false);
     }
-    float GetFloat(std::string category, std::string setting) {
-        return settingsTable[category][setting].value<float>().value_or(0.0f);
+    int GetInt(std::string path) {
+        return GetElement(path).value<int>().value_or(0);
     }
-    std::string GetString(std::string category, std::string setting) {
-        return settingsTable[category][setting].value<std::string>().value_or("");
+    float GetFloat(std::string path) {
+        return GetElement(path).value<float>().value_or(0.0f);
     }
-    std::map<std::string, std::string> GetStringMap(std::string category, std::string setting) {
+    std::string GetString(std::string path) {
+        return GetElement(path).value<std::string>().value_or("");
+    }
+    std::map<std::string, std::string> GetStringMap(std::string path) {
         std::map<std::string, std::string> newMap;
 
-        for (auto element : *settingsTable[category][setting].as_table()) {
+        for (auto element : *GetElement(path).as_table()) {
             newMap.insert_or_assign(std::string(element.first.str()), element.second.value<std::string>().value_or(""));
         }
 

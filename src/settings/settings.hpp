@@ -15,10 +15,12 @@ namespace cork::settings {
     void LoadSettings();
     void SaveSettings();
     
-    bool GetBool(std::string category, std::string setting);
-    int GetInt(std::string category, std::string setting);
-    float GetFloat(std::string category, std::string setting);
-    std::string GetString(std::string category, std::string setting);
-    std::map<std::string, std::string> GetStringMap(std::string category, std::string setting);
+    toml::v3::node_view<toml::v3::node> GetElement(std::string path);
+    bool GetBool(std::string path);
+    int GetInt(std::string path);
+    float GetFloat(std::string path);
+    std::string GetString(std::string path);
+
+    std::map<std::string, std::string> GetStringMap(std::string path);
     toml::table GetTomlTable();
 }
