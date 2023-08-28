@@ -18,8 +18,8 @@ namespace cork::bootstrapper {
             
             void SetVersionsDirectory(std::string newVersionsDirectory);
 
-            std::pair<std::string, std::string> GetPlayer(std::string versionChannel);
-            std::pair<std::string, std::string> GetStudio(std::string versionChannel);
+            std::pair<std::string, std::string> GetPlayer(std::string versionChannel, std::string versionOverride = "");
+            std::pair<std::string, std::string> GetStudio(std::string versionChannel, std::string versionOverride = "");
 
             std::list<std::string> ParsePlayer(std::vector<std::string> arguments);
             std::list<std::string> ParseStudio(std::vector<std::string> arguments);
