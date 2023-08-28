@@ -74,7 +74,16 @@ namespace cork::settings {
     std::string GetString(std::string category, std::string setting) {
         return settingsTable[category][setting].value<std::string>().value_or("");
     }
-    toml::table GetTable() {
+    std::map<std::string, std::string> GetStringMap(std::string category, std::string setting) {
+        std::map<std::string, std::string> newMap;
+
+        for (auto element : *settingsTable[category][setting].as_table()) {
+            newMap.insert_or_assign(std::string(element.first.str()), element.second.value<std::string>().value_or(""));
+        }
+
+        return newMap;
+    }
+    toml::table GetTomlTable() {
         return settingsTable;
     }
 }
