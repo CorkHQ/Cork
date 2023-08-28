@@ -90,6 +90,7 @@ namespace cork::settings {
 
         return element;
     }
+
     bool GetBool(std::string path) {
         return GetElement(path).value<bool>().value_or(false);
     }
@@ -102,6 +103,7 @@ namespace cork::settings {
     std::string GetString(std::string path) {
         return GetElement(path).value<std::string>().value_or("");
     }
+
     std::map<std::string, std::string> GetStringMap(std::string path) {
         std::map<std::string, std::string> newMap;
 
@@ -111,6 +113,12 @@ namespace cork::settings {
 
         return newMap;
     }
+    std::string GetJson(std::string path) {
+        std::ostringstream ss;
+        ss << toml::json_formatter{*GetElement(path).as_table()};
+        return ss.str();
+    }
+
     toml::table GetTomlTable() {
         return settingsTable;
     }
