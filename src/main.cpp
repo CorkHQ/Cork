@@ -38,7 +38,8 @@ int main(int argc, char *argv[]){
         arguments.pop_front();
         
         if (operationMode == "player") {
-            std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("player.channel"));
+            std::string versionOverride = cs::GetString("player.version");
+            std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("player.channel"), versionOverride);
 
             std::list<std::string> playerArguments;
             playerArguments.push_back(playerData.second);
