@@ -38,7 +38,7 @@
             - [x] Wine Distribution
             - [x] Wine Type
         - [ ] Environment Settings
-            - [ ] Environment Variables
+            - [x] Environment Variables
             - [ ] Launchers
         - [ ] Roblox Settings
             - [x] Channels
