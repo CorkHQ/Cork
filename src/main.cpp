@@ -1,4 +1,5 @@
 #include <iostream>
+#include <boost/log/trivial.hpp>
 #include "bootstrapper/environment.hpp"
 #include "settings/settings.hpp"
 
@@ -13,6 +14,8 @@ namespace cr = cork::runners;
 namespace cs = cork::settings;
 
 int main(int argc, char *argv[]){
+    BOOST_LOG_TRIVIAL(info) << "Cork " << CORK_VERSION << " (" << CORK_CODENAME << ")";
+
     std::list<std::string> arguments(argv + 1, argv + argc);
 
     cs::LoadDefaults();
@@ -23,9 +26,13 @@ int main(int argc, char *argv[]){
     environment.SetVersionsDirectory(cs::GetVersionsPath());
 
 #if defined(NATIVE_RUNNER)
+    BOOST_LOG_TRIVIAL(info) << "Runner: Native";
+
     cr::NativeRunner runner;
     runner.SetEnvironment(cs::GetStringMap("cork.env"));
 #elif defined(WINE_RUNNER)
+    BOOST_LOG_TRIVIAL(info) << "Runner: Wine";
+
     cr::WineRunner runner;
     runner.SetDist(cs::GetString("wine.dist"));
     runner.SetType(cs::GetString("wine.type"));
@@ -37,11 +44,15 @@ int main(int argc, char *argv[]){
     if (arguments.size() > 0) {
         std::string operationMode = arguments.front();
         arguments.pop_front();
-        
+
+        BOOST_LOG_TRIVIAL(info) << "Mode: " << operationMode;
         if (operationMode == "player") {
+            BOOST_LOG_TRIVIAL(trace) << "Getting Player...";
             std::string versionOverride = cs::GetString("player.version");
             std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("player.channel"), versionOverride);
+            BOOST_LOG_TRIVIAL(trace) << "Got Player!";
 
+            BOOST_LOG_TRIVIAL(trace) << "Parsing arguments...";
             std::list<std::string> playerArguments;
             playerArguments.push_back(playerData.second);
             if (arguments.size() > 0) {
@@ -51,6 +62,7 @@ int main(int argc, char *argv[]){
             } else {
                 playerArguments.push_back("--app");
             }
+            BOOST_LOG_TRIVIAL(trace) << "Arguments parsed!";
 
             runner.SetEnvironment(cs::GetStringMap("player.env"));
 
@@ -61,9 +73,12 @@ int main(int argc, char *argv[]){
             cb::ApplyFFlags(playerData.first, cs::GetJson("player.fflags"));
             runner.Execute(playerArguments, playerData.first);
         } else if (operationMode == "studio") {
+            BOOST_LOG_TRIVIAL(trace) << "Getting Studio...";
             std::string versionOverride = cs::GetString("studio.version");
             std::pair<std::string, std::string> studioData = environment.GetStudio(cs::GetString("studio.channel"), versionOverride);
+            BOOST_LOG_TRIVIAL(trace) << "Got Studio!";
 
+            BOOST_LOG_TRIVIAL(trace) << "Parsing arguments...";
             std::list<std::string> studioArguments;
             studioArguments.push_back(studioData.second);
             if (arguments.size() > 0) {
@@ -73,6 +88,7 @@ int main(int argc, char *argv[]){
             } else {
                 studioArguments.push_back("-ide");
             }
+            BOOST_LOG_TRIVIAL(trace) << "Arguments parsed!";
 
             runner.SetEnvironment(cs::GetStringMap("studio.env"));
 
@@ -92,4 +108,6 @@ int main(int argc, char *argv[]){
             std::cout << CORK_VERSION << " (" << CORK_CODENAME << ")" << std::endl;
         }
     }
+
+    BOOST_LOG_TRIVIAL(info) << "End";
 }

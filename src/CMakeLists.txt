@@ -20,7 +20,7 @@ FetchContent_MakeAvailable(tomlplusplus)
 FetchContent_Declare(platform_folders URL https://github.com/sago007/PlatformFolders/archive/refs/tags/4.2.0.tar.gz)
 FetchContent_MakeAvailable(platform_folders)
 
-find_package(Boost COMPONENTS system filesystem REQUIRED)
+find_package(Boost COMPONENTS system filesystem log REQUIRED)
 
 if (WIN32)
   add_compile_definitions(NATIVE_RUNNER)
@@ -44,6 +44,7 @@ target_link_libraries(cork
     sago::platform_folders
     ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_SYSTEM_LIBRARY}
+    ${Boost_LOG_LIBRARY}
     roblox
     runners
     bootstrapper
