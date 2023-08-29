@@ -14,7 +14,7 @@
     - [x] Launch Roblox Player
     - [x] Launch Roblox Studio
     - [x] Run arbitrary in Runner
-    - [ ] Cleanup
+    - [x] Cleanup
     - [ ] Logging
 - [ ] Modules
     - [ ] Bootstrapper
