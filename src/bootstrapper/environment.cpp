@@ -1,5 +1,6 @@
 #include <fstream>
 #include <cpr/cpr.h>
+#include <boost/log/trivial.hpp>
 #include "installer.hpp"
 #include "environment.hpp"
 #include "../roblox/version.hpp"
@@ -19,6 +20,7 @@ std::map<std::string, std::string> playerArguments{
 
 namespace cork::bootstrapper {
     void ApplyFFlags(std::string playerDirectory, std::string fflagJson) {
+        BOOST_LOG_TRIVIAL(trace) << "Applying FFlags..."; 
         fs::path jsonPath = fs::weakly_canonical(fs::path(playerDirectory) / "ClientSettings" / "ClientAppSettings.json");
 
         if (!fs::is_directory(jsonPath.parent_path())) {
@@ -28,6 +30,7 @@ namespace cork::bootstrapper {
         std::ofstream jsonStream = std::ofstream(jsonPath);
         jsonStream << fflagJson << std::endl;
         jsonStream.close();
+        BOOST_LOG_TRIVIAL(trace) << "Applied!"; 
     }
     void ApplyFFlags(std::string playerDirectory, nlohmann::json fflags) {
         std::ostringstream ss;
@@ -37,6 +40,7 @@ namespace cork::bootstrapper {
 
     void RobloxEnvironment::SetVersionsDirectory(std::string newVersionsDirectory) {
         versionsDirectory = fs::path(newVersionsDirectory);
+        BOOST_LOG_TRIVIAL(debug) << "Versions Directory: " << versionsDirectory; 
     }
 
     std::pair<std::string, std::string> RobloxEnvironment::GetPlayer(std::string versionChannel, std::string versionOverride) {
@@ -45,6 +49,7 @@ namespace cork::bootstrapper {
         if (version == "") {
             version = cr::GetVersion(versionType, versionChannel).clientVersionUpload;
         }
+        BOOST_LOG_TRIVIAL(info) << "Player Version: " << version; 
 
         fs::path versionPath = fs::weakly_canonical(versionsDirectory / version);
 
@@ -61,6 +66,7 @@ namespace cork::bootstrapper {
         if (version == "") {
             version = cr::GetVersion(versionType, versionChannel).clientVersionUpload;
         }
+        BOOST_LOG_TRIVIAL(info) << "Studio Version: " << version; 
 
         fs::path versionPath = fs::weakly_canonical(versionsDirectory / version);
 

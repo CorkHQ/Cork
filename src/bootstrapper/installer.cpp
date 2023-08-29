@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <cpr/cpr.h>
 #include <libzippp.h>
+#include <boost/log/trivial.hpp>
 #include "../roblox/cdn.hpp"
 #include "../roblox/packages.hpp"
 
@@ -13,6 +14,8 @@ std::string appSettings = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<Settin
 
 namespace cork::bootstrapper {
     void Install(std::string versionType, std::string version, std::string versionChannel, std::string versionDirectory) {
+        BOOST_LOG_TRIVIAL(info) << "Installing Version...";
+
         std::list<cr::package> packages = cr::GetPackages(versionType, version, versionChannel, cr::GetCDN());
 
         fs::path versionPath = fs::weakly_canonical(versionDirectory);
@@ -26,14 +29,17 @@ namespace cork::bootstrapper {
         fs::create_directories(temporaryPath);
 
         for (cr::package package : packages) {
-            std::cout << package.name << std::endl;
+            BOOST_LOG_TRIVIAL(trace) << "Package: " << package.name;
 
             fs::path filePath = temporaryPath / package.name;
             std::ofstream zipStream = std::ofstream(filePath, std::ios::binary);
 
+            BOOST_LOG_TRIVIAL(trace) << "Downloading...";
             cpr::Response response = cpr::Download(zipStream, cpr::Url{package.url});
             zipStream.close();
+            BOOST_LOG_TRIVIAL(trace) << "Downloaded!";
 
+            BOOST_LOG_TRIVIAL(trace) << "Installing...";
             libzippp::ZipArchive zipFile(filePath);
             zipFile.open(libzippp::ZipArchive::ReadOnly);
 
@@ -67,8 +73,9 @@ namespace cork::bootstrapper {
             }
 
             zipFile.close();
+            BOOST_LOG_TRIVIAL(trace) << "Installed!";
 
-            std::cout << "Done!" << std::endl;
+            BOOST_LOG_TRIVIAL(info) << package.name << " installed";
         }
 
         std::ofstream appStream = std::ofstream(versionPath / "AppSettings.xml");
@@ -76,5 +83,7 @@ namespace cork::bootstrapper {
         appStream.close();
 
         fs::remove_all(temporaryPath);
+
+        BOOST_LOG_TRIVIAL(info) << "Version Installed!";
     }
 }
