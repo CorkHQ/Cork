@@ -198,4 +198,8 @@ namespace cork::bootstrapper {
 
         return std::list<std::string>(arguments.begin(), arguments.end());
     }
+
+    void RobloxEnvironment::CleanVersions() {
+        fs::remove_all(fs::path(versionsDirectory));
+    }
 }

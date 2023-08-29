@@ -23,5 +23,7 @@ namespace cork::bootstrapper {
 
             std::list<std::string> ParsePlayer(std::vector<std::string> arguments);
             std::list<std::string> ParseStudio(std::vector<std::string> arguments);
+
+            void CleanVersions();
     };
 }

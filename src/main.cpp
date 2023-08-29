@@ -82,6 +82,8 @@ int main(int argc, char *argv[]){
             runner.Execute(studioArguments, studioData.first);
         } else if (operationMode == "runner") {
             runner.Execute(arguments);
+        } else if (operationMode == "cleanup") {
+            environment.CleanVersions();
         }
     }
 }
