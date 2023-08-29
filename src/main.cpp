@@ -1,5 +1,7 @@
 #include <iostream>
-#include <boost/log/trivial.hpp>
+#include <boost/log/core.hpp> 
+#include <boost/log/trivial.hpp> 
+#include <boost/log/expressions.hpp> 
 #include "bootstrapper/environment.hpp"
 #include "settings/settings.hpp"
 
@@ -14,13 +16,32 @@ namespace cr = cork::runners;
 namespace cs = cork::settings;
 
 int main(int argc, char *argv[]){
-    BOOST_LOG_TRIVIAL(info) << "Cork " << CORK_VERSION << " (" << CORK_CODENAME << ")";
-
     std::list<std::string> arguments(argv + 1, argv + argc);
 
     cs::LoadDefaults();
     cs::LoadSettings();
     cs::SaveSettings();
+
+    std::string logLevel = cs::GetString("cork.loglevel");
+    if (logLevel == "trace") {
+        boost::log::core::get()->set_filter(        
+            boost::log::trivial::severity >= boost::log::trivial::trace    
+        ); 
+    } else if (logLevel == "debug") {
+        boost::log::core::get()->set_filter(        
+            boost::log::trivial::severity >= boost::log::trivial::debug   
+        ); 
+    } else if (logLevel == "info") {
+        boost::log::core::get()->set_filter(        
+            boost::log::trivial::severity >= boost::log::trivial::info    
+        ); 
+    } else {
+        boost::log::core::get()->set_filter(        
+            boost::log::trivial::severity >= boost::log::trivial::warning    
+        ); 
+    }
+    
+    BOOST_LOG_TRIVIAL(info) << "Cork " << CORK_VERSION << " (" << CORK_CODENAME << ")";
     
     cb::RobloxEnvironment environment;
     environment.SetVersionsDirectory(cs::GetVersionsPath());
