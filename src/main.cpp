@@ -88,6 +88,8 @@ int main(int argc, char *argv[]){
         } else if (operationMode == "reset") {
             cs::LoadDefaults();
             cs::SaveSettings();
+        } else if (operationMode == "version") {
+            std::cout << "Cork " << CORK_VERSION << " (" << CORK_CODENAME << ")" << std::endl;
         }
     }
 }

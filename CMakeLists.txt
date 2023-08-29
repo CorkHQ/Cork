@@ -4,6 +4,9 @@ project(cork VERSION 2.0.0 LANGUAGES C CXX)
 include(CTest)
 enable_testing()
 
+add_compile_definitions(CORK_VERSION="${PROJECT_VERSION}")
+add_compile_definitions(CORK_CODENAME="Cape Canaveral")
+
 add_subdirectory(src)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
