@@ -15,6 +15,7 @@ namespace cs = cork::settings;
 int main(int argc, char *argv[]){
     std::list<std::string> arguments(argv + 1, argv + argc);
 
+    cs::LoadDefaults();
     cs::LoadSettings();
     cs::SaveSettings();
     
@@ -84,6 +85,9 @@ int main(int argc, char *argv[]){
             runner.Execute(arguments);
         } else if (operationMode == "cleanup") {
             environment.CleanVersions();
+        } else if (operationMode == "reset") {
+            cs::LoadDefaults();
+            cs::SaveSettings();
         }
     }
 }

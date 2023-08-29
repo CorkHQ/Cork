@@ -12,6 +12,7 @@ namespace cork::settings {
     std::string GetPrefixPath();
 #endif
 
+    void LoadDefaults();
     void LoadSettings();
     void SaveSettings();
     

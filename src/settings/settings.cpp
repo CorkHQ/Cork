@@ -47,9 +47,10 @@ namespace cork::settings {
     }
 #endif
 
-    void LoadSettings() {
+    void LoadDefaults() {
         settingsTable = toml::parse(defaultSettings);
-
+    }
+    void LoadSettings() {
         std::string filePath = GetSettingsPath();
         if (fs::exists(filePath)) {
             toml::table storedTable = toml::parse_file(filePath);
