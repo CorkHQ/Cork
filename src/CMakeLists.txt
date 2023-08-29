@@ -40,7 +40,7 @@ target_link_libraries(cork
     cpr::cpr
     nlohmann_json::nlohmann_json
     libzippp
-    tomlplusplus
+    tomlplusplus::tomlplusplus
     sago::platform_folders
     ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_SYSTEM_LIBRARY}
