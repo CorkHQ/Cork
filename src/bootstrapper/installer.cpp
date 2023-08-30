@@ -14,7 +14,7 @@ std::string appSettings = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<Settin
 
 namespace cork::bootstrapper {
     void Install(std::string versionType, std::string version, std::string versionChannel, std::string versionDirectory) {
-        BOOST_LOG_TRIVIAL(info) << "Installing Version...";
+        BOOST_LOG_TRIVIAL(info) << "installing version...";
 
         std::list<cr::package> packages = cr::GetPackages(versionType, version, versionChannel, cr::GetCDN());
 
@@ -29,17 +29,17 @@ namespace cork::bootstrapper {
         fs::create_directories(temporaryPath);
 
         for (cr::package package : packages) {
-            BOOST_LOG_TRIVIAL(trace) << "Package: " << package.name;
+            BOOST_LOG_TRIVIAL(trace) << "package: " << package.name;
 
             fs::path filePath = temporaryPath / package.name;
             std::ofstream zipStream = std::ofstream(filePath, std::ios::binary);
 
-            BOOST_LOG_TRIVIAL(trace) << "Downloading...";
+            BOOST_LOG_TRIVIAL(trace) << "downloading...";
             cpr::Response response = cpr::Download(zipStream, cpr::Url{package.url});
             zipStream.close();
-            BOOST_LOG_TRIVIAL(trace) << "Downloaded!";
+            BOOST_LOG_TRIVIAL(trace) << "downloaded!";
 
-            BOOST_LOG_TRIVIAL(trace) << "Installing...";
+            BOOST_LOG_TRIVIAL(trace) << "installing...";
             libzippp::ZipArchive zipFile(filePath);
             zipFile.open(libzippp::ZipArchive::ReadOnly);
 
@@ -73,7 +73,7 @@ namespace cork::bootstrapper {
             }
 
             zipFile.close();
-            BOOST_LOG_TRIVIAL(trace) << "Installed!";
+            BOOST_LOG_TRIVIAL(trace) << "installed!";
 
             BOOST_LOG_TRIVIAL(info) << package.name << " installed";
         }
@@ -84,6 +84,6 @@ namespace cork::bootstrapper {
 
         fs::remove_all(temporaryPath);
 
-        BOOST_LOG_TRIVIAL(info) << "Version Installed!";
+        BOOST_LOG_TRIVIAL(info) << "version installed!";
     }
 }

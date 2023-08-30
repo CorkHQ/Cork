@@ -20,7 +20,7 @@ std::map<std::string, std::string> playerArguments{
 
 namespace cork::bootstrapper {
     void ApplyFFlags(std::string playerDirectory, std::string fflagJson) {
-        BOOST_LOG_TRIVIAL(trace) << "Applying FFlags..."; 
+        BOOST_LOG_TRIVIAL(trace) << "applying fflags..."; 
         fs::path jsonPath = fs::weakly_canonical(fs::path(playerDirectory) / "ClientSettings" / "ClientAppSettings.json");
 
         if (!fs::is_directory(jsonPath.parent_path())) {
@@ -30,7 +30,7 @@ namespace cork::bootstrapper {
         std::ofstream jsonStream = std::ofstream(jsonPath);
         jsonStream << fflagJson << std::endl;
         jsonStream.close();
-        BOOST_LOG_TRIVIAL(trace) << "Applied!"; 
+        BOOST_LOG_TRIVIAL(trace) << "applied!"; 
     }
     void ApplyFFlags(std::string playerDirectory, nlohmann::json fflags) {
         std::ostringstream ss;
@@ -40,7 +40,7 @@ namespace cork::bootstrapper {
 
     void RobloxEnvironment::SetVersionsDirectory(std::string newVersionsDirectory) {
         versionsDirectory = fs::path(newVersionsDirectory);
-        BOOST_LOG_TRIVIAL(debug) << "Versions Directory: " << versionsDirectory; 
+        BOOST_LOG_TRIVIAL(debug) << "versions directory: " << versionsDirectory; 
     }
 
     std::pair<std::string, std::string> RobloxEnvironment::GetPlayer(std::string versionChannel, std::string versionOverride) {
@@ -49,7 +49,7 @@ namespace cork::bootstrapper {
         if (version == "") {
             version = cr::GetVersion(versionType, versionChannel).clientVersionUpload;
         }
-        BOOST_LOG_TRIVIAL(info) << "Player Version: " << version; 
+        BOOST_LOG_TRIVIAL(info) << "player version: " << version; 
 
         fs::path versionPath = fs::weakly_canonical(versionsDirectory / version);
 
@@ -66,7 +66,7 @@ namespace cork::bootstrapper {
         if (version == "") {
             version = cr::GetVersion(versionType, versionChannel).clientVersionUpload;
         }
-        BOOST_LOG_TRIVIAL(info) << "Studio Version: " << version; 
+        BOOST_LOG_TRIVIAL(info) << "studio version: " << version; 
 
         fs::path versionPath = fs::weakly_canonical(versionsDirectory / version);
 
