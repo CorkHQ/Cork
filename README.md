@@ -10,12 +10,12 @@
 ### "you would not write a roblox launcher in c++"
 
 ## Progress
-- [ ] Cork
+- [x] Cork
     - [x] Launch Roblox Player
     - [x] Launch Roblox Studio
     - [x] Run arbitrary in Runner
     - [x] Cleanup
-    - [ ] Logging
+    - [x] Logging
 - [ ] Modules
     - [ ] Bootstrapper
         - [x] Environment
