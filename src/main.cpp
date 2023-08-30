@@ -136,11 +136,22 @@ int main(int argc, char *argv[]){
             runner.Execute(studioArguments, studioData.first);
         } else if (operationMode == "runner") {
             runner.Execute(arguments);
-        } else if (operationMode == "cleanup") {
-            environment.CleanVersions();
-        } else if (operationMode == "reset") {
-            cs::LoadDefaults();
-            cs::SaveSettings();
+        } else if (operationMode == "clear") {
+            if (arguments.size() > 0) {
+                std::string target = arguments.front();
+
+                BOOST_LOG_TRIVIAL(info) << "clear target: " << target;
+                if (target == "versions") {
+                    environment.CleanVersions();
+                } else if (target == "settings") {
+                    cs::LoadDefaults();
+                    cs::SaveSettings();
+                } else {
+                    BOOST_LOG_TRIVIAL(error) << "invalid clear target";
+                }
+            } else {
+                BOOST_LOG_TRIVIAL(error) << "no target to clear";
+            }
         } else if (operationMode == "version") {
             std::cout << CORK_VERSION << " (" << CORK_CODENAME << ")" << std::endl;
         } else {
