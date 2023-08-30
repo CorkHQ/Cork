@@ -12,7 +12,7 @@ jobs:
     - name: mkdir
       run: mkdir build
     - name: cmake build
-      run: cmake -Bbuild -H.
+      run: cmake -Bbuild -H. -DBUILD_SHARED_LIBS=0
     - name: cmake make
       run: cmake --build build/ --target all
     - name: Upload binary
