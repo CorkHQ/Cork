@@ -1,4 +1,4 @@
-add_library(bootstrapper "")
+add_library(bootstrapper STATIC "")
 
 target_sources(bootstrapper
   PRIVATE

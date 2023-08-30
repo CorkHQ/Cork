@@ -1,4 +1,4 @@
-add_library(roblox "")
+add_library(roblox STATIC "")
 
 target_sources(roblox
   PRIVATE

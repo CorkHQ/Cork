@@ -1,4 +1,4 @@
-add_library(runners "")
+add_library(runners STATIC "")
 
 target_sources(runners
   PRIVATE

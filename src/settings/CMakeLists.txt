@@ -1,4 +1,4 @@
-add_library(settings "")
+add_library(settings STATIC "")
 
 target_sources(settings
   PRIVATE
