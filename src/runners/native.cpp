@@ -1,5 +1,7 @@
 #include <boost/process.hpp>
+#include <boost/log/trivial.hpp>
 #include <filesystem>
+#include <iostream>
 #include "native.hpp"
 
 namespace bp = boost::process;
@@ -43,9 +45,9 @@ namespace cork::runners {
     }
 
     void NativeRunner::Execute(std::list<std::string> arguments, std::string cwd) {
-        auto system_env = boost::this_process::environment();
+        auto systemEnvironment = boost::this_process::environment();
 
-        bp::environment env = system_env;
+        bp::environment env = systemEnvironment;
         for (std::pair<std::string, std::string> const& pair : environmentMap) {
             env[pair.first] = pair.second;
         }
@@ -58,7 +60,13 @@ namespace cork::runners {
             newArguments.push_back(argument);
         }
 
-        bp::system(bp::args(newArguments), env, bp::start_dir(cwd));
+        bp::ipstream output;
+        std::string line;
+
+        bp::child childProcess(bp::args(newArguments), env, bp::start_dir(cwd), (bp::std_out & bp::std_err) > output);
+        while (std::getline(output, line)) {
+            BOOST_LOG_TRIVIAL(info) << line;
+        }
     }
     void NativeRunner::Execute(std::list<std::string> arguments) {
         Execute(arguments, fs::current_path().string());
