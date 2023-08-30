@@ -40,6 +40,12 @@ namespace cork::settings {
         fs::path versionsPath = fs::path(GetDataPath()) / "versions";
         return versionsPath;
     }
+    std::string GetLogsPath() {
+        fs::path logsPath = fs::path(sago::getCacheDir()) / "cork" / "logs";
+        fs::create_directories(logsPath);
+        
+        return logsPath;
+    }
 #if defined(WINE_RUNNER)
     std::string GetPrefixPath() {
         fs::path prefixPath = fs::path(GetDataPath()) / "pfx";
