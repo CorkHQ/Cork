@@ -1,8 +1,8 @@
-name: Build (Debian aarch64)
+name: Build (Ubuntu aarch64)
 on:
   workflow_dispatch:
 jobs:
-  build-debian-aarch64:
+  build-ubuntu-aarch64:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
