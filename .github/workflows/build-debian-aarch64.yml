@@ -14,10 +14,11 @@ jobs:
         arch: aarch64
         distro: bullseye
 
-        boost: sudo apt-get update && sudo apt-get install -yq libboost-all-dev libzip-dev
-        dir: mkdir build
-        build: cmake -Bbuild -H. -DBUILD_SHARED_LIBS=0
-        make: cmake --build build/ --target all
+        run: |
+          sudo apt-get update && sudo apt-get install -yq libboost-all-dev libzip-dev
+          mkdir build
+          cmake -Bbuild -H. -DBUILD_SHARED_LIBS=0
+          cmake --build build/ --target all
     - name: Upload binary
       uses: actions/upload-artifact@v1
       with:
