@@ -15,7 +15,7 @@ jobs:
         distro: bullseye
 
         run: |
-          apt-get update && apt-get install -yq git build-essential cmake libboost-all-dev libzip-dev 
+          apt-get update && apt-get install -yq git build-essential cmake libboost-all-dev libzip-dev libssl-dev libcurl-dev
           mkdir build
           cmake -Bbuild -H. -DBUILD_SHARED_LIBS=0
           cmake --build build/ --target all

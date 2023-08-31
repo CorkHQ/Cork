@@ -11,7 +11,7 @@ jobs:
     - name: update
       run: sudo dnf -y -q upgrade --refresh
     - name: build tools
-      run: sudo dnf install -y git cmake make automake gcc gcc-c++
+      run: sudo dnf install -y git cmake make automake gcc gcc-c++ openssl-devel curl-devel
     - name: boost
       run: sudo dnf install -y boost-devel libzip-devel
     - name: mkdir
