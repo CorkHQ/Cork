@@ -1,0 +1,25 @@
+name: Build (Fedora AMD64)
+on:
+  push:
+    branches: [ next ]
+jobs:
+  build-fedora-amd64:
+    runs-on: ubuntu-latest
+    container: fedora:latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: update
+      run: sudo dnf -y -q upgrade --refresh
+    - name: boost
+      run: sudo dnf install -y boost-devel libzip-devel
+    - name: mkdir
+      run: mkdir build
+    - name: cmake build
+      run: cmake -Bbuild -H. -DBUILD_SHARED_LIBS=0
+    - name: cmake make
+      run: cmake --build build/ --target all
+    - name: Upload binary
+      uses: actions/upload-artifact@v1
+      with:
+        name: binary
+        path: build/src/cork
