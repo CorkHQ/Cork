@@ -1,4 +1,4 @@
-name: Build (Ubuntu AMD64)
+name: Build (Debian aarch64)
 on:
   push:
     branches: [ next ]

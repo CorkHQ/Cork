@@ -1,4 +1,4 @@
-name: Build (Fedora AMD64)
+name: Build (Fedora amd64)
 on:
   push:
     branches: [ next ]
