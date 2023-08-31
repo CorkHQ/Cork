@@ -3,7 +3,7 @@ on:
   push:
     branches: [ next ]
 jobs:
-  build:
+  build-ubuntu-amd64:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
