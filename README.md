@@ -17,13 +17,13 @@
     - [x] Cleanup
     - [x] Logging
 - [ ] Modules
-    - [ ] Bootstrapper
+    - [x] Bootstrapper
         - [x] Environment
             - [x] Roblox Player
             - [x] Roblox Studio
-        - [ ] Installer
+        - [x] Installer
             - [x] Install Roblox
-            - [ ] Multi-threaded installation
+            - [x] Multi-threaded installation
     - [x] Roblox
         - [x] CDN
         - [x] Packages
