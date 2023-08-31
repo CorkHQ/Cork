@@ -20,7 +20,7 @@ namespace cork::runners {
         std::list<std::string> wineArguments;
 
         if (launchType != "proton") {
-            std::string wineBinary = "wine64";
+            std::string wineBinary = launchType;
 
             if (dist != "") {
                 wineBinary = (fs::path(dist) / fs::path("bin") / wineBinary).string();
