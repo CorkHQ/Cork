@@ -1,7 +1,6 @@
 name: Build (Debian aarch64)
 on:
-  push:
-    branches: [ next ]
+  workflow_dispatch:
 jobs:
   build-debian-aarch64:
     runs-on: ubuntu-latest
