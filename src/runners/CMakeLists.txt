@@ -15,7 +15,6 @@ target_include_directories(runners
 )
 target_link_libraries(runners
   PRIVATE
-    ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_SYSTEM_LIBRARY}
     ${Boost_LOG_LIBRARY}
 )
