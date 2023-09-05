@@ -59,7 +59,7 @@ cmake --build . --target all
 
 #### Installing
 ```bash
-sudo cmake --install .
+cmake --install . --prefix ~/.local
 ```
 
 ## Documentation
