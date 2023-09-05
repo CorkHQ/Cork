@@ -16,7 +16,10 @@ FetchContent_MakeAvailable(tomlplusplus)
 FetchContent_Declare(platform_folders URL https://github.com/sago007/PlatformFolders/archive/refs/tags/4.2.0.tar.gz)
 FetchContent_MakeAvailable(platform_folders)
 
-find_package(cpr REQUIRED)
+FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
+                         GIT_TAG 32fd1453194c37d5136577ee55629b863a42333f)
+FetchContent_MakeAvailable(cpr)
+
 find_package(Boost COMPONENTS system log REQUIRED)
 
 if (WIN32)
