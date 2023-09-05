@@ -26,4 +26,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: package
-        path: build/cork.x86_64-cork.rpm
+        path: build/cork.x86_64.rpm
