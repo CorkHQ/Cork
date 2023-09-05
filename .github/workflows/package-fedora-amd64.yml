@@ -1,9 +1,9 @@
-name: Build (Fedora amd64)
+name: Package (Fedora amd64)
 on:
   push:
     branches: [ next ]
 jobs:
-  build-fedora-amd64:
+  package-fedora-amd64:
     runs-on: ubuntu-latest
     container: fedora:latest
     steps:
@@ -17,7 +17,7 @@ jobs:
     - name: mkdir
       run: mkdir build
     - name: cmake build
-      run: cmake -Bbuild -H. -DBUILD_SHARED_LIBS=OFF -DCPACK_GENERATOR=RPM -DCPR_USE_SYSTEM_CURL=ON
+      run: cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCPACK_GENERATOR=RPM -DCPR_USE_SYSTEM_CURL=ON
     - name: cmake make
       run: cmake --build build/ --target all
     - name: cpack
