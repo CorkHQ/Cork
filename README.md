@@ -35,9 +35,8 @@ Felt like trying to get Roblox to run on your Ampere Altra or your Talos II? Cor
     - zlib
     - bzip2
     - xz
-- CPR
-    - curl
-    - OpenSSL
+- curl
+- OpenSSL
 
 ### Building and Installing
 #### Clone the Repository
