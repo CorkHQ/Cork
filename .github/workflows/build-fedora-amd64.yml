@@ -25,5 +25,5 @@ jobs:
     - name: Upload binary
       uses: actions/upload-artifact@v1
       with:
-        name: binary
-        path: build/src/cork
+        name: package
+        path: build/cork.x86_64.rpm
