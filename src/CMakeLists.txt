@@ -49,5 +49,3 @@ target_link_libraries(cork
     bootstrapper
     settings
 )
-
-install(TARGETS cork)
