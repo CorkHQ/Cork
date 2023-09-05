@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: libraries
-      run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev libzip-dev
+      run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev libzip-dev curl libcurl4-openssl-dev
     - name: get cpr
       run: |
         git clone https://github.com/libcpr/cpr.git
