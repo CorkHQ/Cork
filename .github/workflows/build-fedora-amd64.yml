@@ -11,7 +11,7 @@ jobs:
     - name: update
       run: sudo dnf -y -q upgrade --refresh
     - name: build tools
-      run: sudo dnf install -y git cmake make automake gcc gcc-c++ rpmbuild
+      run: sudo dnf install -y git cmake make automake gcc gcc-c++ rpm-build
     - name: libraries
       run: sudo dnf install -y boost-devel libzip-devel zlib-devel bzip2-devel xz-devel openssl-devel curl-devel cpr-devel
     - name: static libraries
