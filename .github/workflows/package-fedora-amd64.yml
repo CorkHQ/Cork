@@ -17,7 +17,7 @@ jobs:
     - name: mkdir
       run: mkdir build
     - name: cmake build
-      run: cmake -Bbuild -H. -DBUILD_SHARED_LIBS=0 -DCPACK_GENERATOR=RPM -DUSE_SYSTEM_CURL=ON
+      run: cmake -Bbuild -H. -DBUILD_SHARED_LIBS=OFF -DCPACK_GENERATOR=RPM -DUSE_SYSTEM_CURL=ON
     - name: cmake make
       run: cmake --build build/ --target all
     - name: cpack
