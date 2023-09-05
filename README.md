@@ -28,6 +28,41 @@ Felt like trying to get Roblox to run on your Ampere Altra or your Talos II? Cor
 | Linux | x86_64 | Proton / Wine | Stable |
 | Windows | x86_64 | Native | Experimental |
 
+## Installing from Source
+### Requirements
+- Boost
+- libzip
+    - zlib
+    - bzip2
+    - xz
+- CPR
+    - curl
+    - OpenSSL
+
+### Building and Installing
+#### Clone the Repository
+```bash
+git clone https://github.com/CorkHQ/Cork.git --branch next
+cd Cork
+```
+
+#### Preparing to Build
+```bash
+mkdir build
+cmake -Bbuild -H.
+```
+
+#### Building
+```bash
+cd build
+cmake --build . --target all
+```
+
+#### Installing
+```bash
+sudo cmake --install .
+```
+
 ## Documentation
 **W.I.P**
 
