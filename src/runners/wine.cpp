@@ -36,7 +36,7 @@ namespace cork::runners {
             if (dist != "") {
                 protonBinary = (fs::path(dist) / protonBinary).string();
             }
-            SetEnvironment("STEAM_COMPAT_CLIENT_INSTALL_PATH", "");
+            SetEnvironment("STEAM_COMPAT_CLIENT_INSTALL_PATH", "", true);
             SetEnvironment("STEAM_COMPAT_DATA_PATH", (fs::path(prefix)).parent_path().string());
 
             wineArguments.push_back(protonBinary);
