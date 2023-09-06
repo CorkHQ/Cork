@@ -1,3 +1,0 @@
-platformdirs==3.10.*
-PyQt6==6.5.*
-joblib==1.3.*
