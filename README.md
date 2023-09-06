@@ -43,6 +43,12 @@ sudo dnf install git cmake make automake gcc gcc-c++ rpm-build
 sudo dnf install boost-devel libzip-devel zlib-devel bzip2-devel xz-devel openssl-devel curl-devel
 ```
 
+#### Installing dependencies and build tools on Ubuntu
+```bash
+sudo apt install git build-essential cmake
+sudo apt install libboost-all-dev libzip-dev zlib1g-dev libbz2-dev liblzma-dev libssl-dev curl libcurl4-openssl-dev
+```
+
 ### Building and Installing
 #### Clone the Repository
 ```bash
