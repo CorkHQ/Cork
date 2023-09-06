@@ -1,9 +1,9 @@
 include(FetchContent)
 
-find_package(json QUIET)
-if(NOT json_FOUND)
-  FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
-  FetchContent_MakeAvailable(json)
+find_package(nlohmann_json QUIET)
+if(NOT nlohmann_json_FOUND)
+  FetchContent_Declare(nlohmann_json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
+  FetchContent_MakeAvailable(nlohmann_json)
 endif()
 
 find_package(libzippp QUIET)
