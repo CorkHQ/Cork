@@ -35,8 +35,9 @@ Felt like trying to get Roblox to run on your Ampere Altra or your Talos II? Cor
     - zlib
     - bzip2
     - xz
-- curl
 - OpenSSL
+- cURL
+
 #### Installing dependencies and build tools on Fedora
 ```bash
 sudo dnf install git cmake make automake gcc gcc-c++ rpm-build
