@@ -5,7 +5,7 @@
     <h1>Cork 2 (Cape Canaveral)</h1>
 <p>
 
-[![License](https://img.shields.io/github/license/Bugadinho/Cork)](https://github.com/Bugadinho/Cork/blob/next/LICENSE)
+[![License](https://img.shields.io/github/license/Bugadinho/Cork)](https://github.com/Bugadinho/Cork/blob/master/LICENSE)
 
 > **⚠️ Work in Progress**<br>
 > This version of Cork is a full rewrite of the original in an entirely different language, and as such, is not 100% stable yet.
@@ -56,7 +56,7 @@ sudo apt install libboost-all-dev libzip-dev zlib1g-dev libbz2-dev liblzma-dev l
 ### Building and Installing
 #### Clone the Repository
 ```bash
-git clone https://github.com/CorkHQ/Cork.git --branch next
+git clone https://github.com/CorkHQ/Cork.git
 cd Cork
 ```
 
