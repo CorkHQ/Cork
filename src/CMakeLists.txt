@@ -18,7 +18,10 @@ FetchContent_MakeAvailable(platform_folders)
 
 FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
                          GIT_TAG 32fd1453194c37d5136577ee55629b863a42333f)
-FetchContent_MakeAvailable(cpr)
+if(NOT cpr_POPULATED)
+    FetchContent_Populate(cpr)
+    add_subdirectory(${cpr_SOURCE_DIR} ${cpr_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
 
 find_package(Boost COMPONENTS system log REQUIRED)
 
