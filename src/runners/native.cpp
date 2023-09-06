@@ -35,16 +35,19 @@ namespace cork::runners {
         }
     }
 
-    void NativeRunner::SetEnvironment(std:: string var, std:: string value) {
-        environmentMap[var] = value;
-    }
-    void NativeRunner::SetEnvironment(std::map<std::string, std::string> map) {
-        for (std::pair<std::string, std::string> const& pair : map) {
-            SetEnvironment(pair.first, pair.second);
-        }
-    }
     bool NativeRunner::HasEnvironment(std:: string key) {
         return (environmentMap.count(key) > 0);
+    }
+    void NativeRunner::SetEnvironment(std:: string var, std:: string value, bool preserveIfExists) {
+        if (preserveIfExists && HasEnvironment(var)) {
+            return;
+        }
+        environmentMap[var] = value;
+    }
+    void NativeRunner::SetEnvironment(std::map<std::string, std::string> map, bool preserveIfExists) {
+        for (std::pair<std::string, std::string> const& pair : map) {
+            SetEnvironment(pair.first, pair.second, preserveIfExists);
+        }
     }
 
     void NativeRunner::Execute(std::list<std::string> arguments, std::string cwd) {

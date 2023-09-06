@@ -14,9 +14,9 @@ namespace cork::runners {
             void AddLaunchers(std::list<std::string> list);
             void AddLaunchers(std:: string launchers);
 
-            void SetEnvironment(std::string var, std::string value);
-            void SetEnvironment(std::map<std::string, std::string> map);
             bool HasEnvironment(std::string key);
+            void SetEnvironment(std::string var, std::string value, bool preserveIfExists = false);
+            void SetEnvironment(std::map<std::string, std::string> map, bool preserveIfExists = false);
 
             virtual void Execute(std::list<std::string> arguments, std::string cwd);
             virtual void Execute(std::list<std::string> arguments);
