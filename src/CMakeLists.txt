@@ -1,26 +1,41 @@
 include(FetchContent)
 
-FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
-FetchContent_MakeAvailable(json)
+find_package(json QUIET)
+if(NOT json_FOUND)
+  FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
+  FetchContent_MakeAvailable(json)
+endif()
 
-FetchContent_Declare(libzippp URL https://github.com/ctabin/libzippp/archive/refs/tags/libzippp-v6.1-1.9.2.tar.gz)
-FetchContent_MakeAvailable(libzippp)
+find_package(libzippp QUIET)
+if(NOT libzippp_FOUND)
+  FetchContent_Declare(libzippp URL https://github.com/ctabin/libzippp/archive/refs/tags/libzippp-v6.1-1.9.2.tar.gz)
+  FetchContent_MakeAvailable(libzippp)
+endif()
 
-FetchContent_Declare(
-    tomlplusplus
-    GIT_REPOSITORY https://github.com/marzer/tomlplusplus.git
-    GIT_TAG        v3.3.0
-)
-FetchContent_MakeAvailable(tomlplusplus)
+find_package(tomlplusplus QUIET)
+if(NOT tomlplusplus_FOUND)
+  FetchContent_Declare(
+      tomlplusplus
+      GIT_REPOSITORY https://github.com/marzer/tomlplusplus.git
+      GIT_TAG        v3.3.0
+  )
+  FetchContent_MakeAvailable(tomlplusplus)
+endif()
 
-FetchContent_Declare(platform_folders URL https://github.com/sago007/PlatformFolders/archive/refs/tags/4.2.0.tar.gz)
-FetchContent_MakeAvailable(platform_folders)
+find_package(platform_folders QUIET)
+if(NOT platform_folders_FOUND)
+  FetchContent_Declare(platform_folders URL https://github.com/sago007/PlatformFolders/archive/refs/tags/4.2.0.tar.gz)
+  FetchContent_MakeAvailable(platform_folders)
+endif()
 
-FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
-                         GIT_TAG 32fd1453194c37d5136577ee55629b863a42333f)
-if(NOT cpr_POPULATED)
-    FetchContent_Populate(cpr)
-    add_subdirectory(${cpr_SOURCE_DIR} ${cpr_BINARY_DIR} EXCLUDE_FROM_ALL)
+find_package(cpr QUIET)
+if(NOT cpr_FOUND)
+  FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
+                          GIT_TAG 32fd1453194c37d5136577ee55629b863a42333f)
+  if(NOT cpr_POPULATED)
+      FetchContent_Populate(cpr)
+      add_subdirectory(${cpr_SOURCE_DIR} ${cpr_BINARY_DIR} EXCLUDE_FROM_ALL)
+  endif()
 endif()
 
 find_package(Boost COMPONENTS system log REQUIRED)
