@@ -26,6 +26,7 @@ find_package(platform_folders QUIET)
 if(NOT platform_folders_FOUND)
   FetchContent_Declare(platform_folders URL https://github.com/sago007/PlatformFolders/archive/refs/tags/4.2.0.tar.gz)
   FetchContent_MakeAvailable(platform_folders)
+  include_directories(${platform_folders_SOURCE_DIR})
 endif()
 
 find_package(cpr QUIET)
