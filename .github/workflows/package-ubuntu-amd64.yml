@@ -1,0 +1,24 @@
+name: Package (Ubuntu amd64)
+on:
+  push:
+    branches: [ next ]
+jobs:
+  package-ubuntu-amd64:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: libraries
+      run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev libzip-dev curl libcurl4-openssl-dev
+    - name: mkdir
+      run: mkdir build
+    - name: cmake build
+      run: cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCPACK_GENERATOR=DEB -DCPR_USE_SYSTEM_CURL=ON
+    - name: cmake make
+      run: cmake --build build/ --target all
+    - name: cpack
+      run: cd build && cpack
+    - name: Upload binary
+      uses: actions/upload-artifact@v1
+      with:
+        name: package
+        path: build/cork.x86_64.deb
