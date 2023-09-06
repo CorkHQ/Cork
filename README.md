@@ -29,7 +29,7 @@ Felt like trying to get Roblox to run on your Ampere Altra or your Talos II? Cor
 | Windows | x86_64 | Native | Experimental |
 
 ## Installing from Source
-### Requirements
+### Dependencies
 - Boost
 - libzip
     - zlib
@@ -37,6 +37,11 @@ Felt like trying to get Roblox to run on your Ampere Altra or your Talos II? Cor
     - xz
 - curl
 - OpenSSL
+#### Installing dependencies and build tools on Fedora
+```bash
+sudo dnf install git cmake make automake gcc gcc-c++ rpm-build
+sudo dnf install boost-devel libzip-devel zlib-devel bzip2-devel xz-devel openssl-devel curl-devel
+```
 
 ### Building and Installing
 #### Clone the Repository
