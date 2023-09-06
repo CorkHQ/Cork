@@ -28,6 +28,9 @@ Felt like trying to get Roblox to run on your Ampere Altra or your Talos II? Cor
 | Linux | x86_64 | Proton / Wine | Stable |
 | Windows | x86_64 | Native | Experimental |
 
+## Installing from Package
+RPM and DEB packages are built with GitHub Actions for every commit, you can install those but they are experimental for now. Proper releases for those are coming soon!
+
 ## Installing from Source
 ### Dependencies
 - Boost
