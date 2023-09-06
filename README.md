@@ -2,13 +2,13 @@
     <br/>
     <img src="https://github.com/Bugadinho/Cork/raw/master/resources/cork.svg" height="250"/>
     <br/>
-    <h1>Cork</h1>
+    <h1>Cork 1 (Alcântara)</h1>
 <p>
 
-[![License](https://img.shields.io/github/license/Bugadinho/Cork)](https://github.com/Bugadinho/Cork/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/Bugadinho/Cork)](https://github.com/Bugadinho/Cork/blob/python/LICENSE)
 
 > **⚠️ Warning**<br>
-> Please refrain from using internal version channels, they are not supported and unexpected issues may arise.
+> This is the deprecated Python version of Cork, while it does still function, it will NOT be receiving additional feature updates.
 
 A bootstrapper for Roblox and Roblox Studio on Linux using Wine
 
