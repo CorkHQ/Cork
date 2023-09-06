@@ -1,7 +1,7 @@
 name: Package (Ubuntu amd64)
 on:
   push:
-    branches: [ next ]
+    branches: [ master ]
 jobs:
   package-ubuntu-amd64:
     runs-on: ubuntu-latest

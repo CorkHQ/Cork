@@ -1,7 +1,7 @@
 name: Package (Fedora amd64)
 on:
   push:
-    branches: [ next ]
+    branches: [ master ]
 jobs:
   package-fedora-amd64:
     runs-on: ubuntu-latest
