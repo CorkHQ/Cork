@@ -43,6 +43,9 @@ namespace cork::runners {
             SetEnvironment(pair.first, pair.second);
         }
     }
+    bool NativeRunner::HasEnvironment(std:: string key) {
+        return (environmentMap.count(key) > 0);
+    }
 
     void NativeRunner::Execute(std::list<std::string> arguments, std::string cwd) {
         auto systemEnvironment = boost::this_process::environment();
