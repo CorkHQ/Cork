@@ -21,5 +21,5 @@ target_link_libraries(bootstrapper
     ${Boost_LOG_LIBRARY}
     nlohmann_json::nlohmann_json
     cpr::cpr
-    libzippp
+    libzippp::libzippp
 )

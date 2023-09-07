@@ -8,8 +8,10 @@ endif()
 
 find_package(libzippp QUIET)
 if(NOT libzippp_FOUND)
-  FetchContent_Declare(libzippp URL https://github.com/ctabin/libzippp/archive/refs/tags/libzippp-v6.1-1.9.2.tar.gz)
+  FetchContent_Declare(libzippp SOURCE_DIR ${FETCHCONTENT_BASE_DIR}/libzippp-src/libzippp URL https://github.com/ctabin/libzippp/archive/refs/tags/libzippp-v6.1-1.9.2.tar.gz)
   FetchContent_MakeAvailable(libzippp)
+else()
+  include_directories("${libzippp_INCLUDE_DIRS}/libzippp")
 endif()
 
 find_package(tomlplusplus QUIET)
@@ -26,7 +28,8 @@ find_package(platform_folders QUIET)
 if(NOT platform_folders_FOUND)
   FetchContent_Declare(platform_folders URL https://github.com/sago007/PlatformFolders/archive/refs/tags/4.2.0.tar.gz)
   FetchContent_MakeAvailable(platform_folders)
-  include_directories(${platform_folders_SOURCE_DIR})
+else()
+  include_directories("${platform_folders_INCLUDE_DIRS}/sago")
 endif()
 
 find_package(cpr QUIET)
@@ -58,7 +61,7 @@ target_link_libraries(cork
   PRIVATE
     cpr::cpr
     nlohmann_json::nlohmann_json
-    libzippp
+    libzippp::libzippp
     tomlplusplus::tomlplusplus
     sago::platform_folders
     ${Boost_SYSTEM_LIBRARY}
