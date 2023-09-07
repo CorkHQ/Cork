@@ -1,7 +1,11 @@
 #include <iostream>
 #include <filesystem>
 #include <toml++/toml.h>
+#ifdef LOCAL_PLATFORM_FOLDERS
 #include <platform_folders.h>
+#else
+#include <sago/platform_folders.h>
+#endif
 #include "default.hpp"
 
 namespace fs = std::filesystem;

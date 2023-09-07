@@ -8,10 +8,18 @@ endif()
 
 find_package(libzippp QUIET)
 if(NOT libzippp_FOUND)
-  FetchContent_Declare(libzippp SOURCE_DIR ${FETCHCONTENT_BASE_DIR}/libzippp-src/libzippp URL https://github.com/ctabin/libzippp/archive/refs/tags/libzippp-v6.1-1.9.2.tar.gz)
+  FetchContent_Declare(libzippp URL https://github.com/ctabin/libzippp/archive/refs/tags/libzippp-v6.1-1.9.2.tar.gz)
   FetchContent_MakeAvailable(libzippp)
-else()
-  include_directories("${libzippp_INCLUDE_DIRS}/libzippp")
+
+  add_compile_definitions(LOCAL_LIBZIPPP)
+endif()
+
+find_package(platform_folders QUIET)
+if(NOT platform_folders_FOUND)
+  FetchContent_Declare(platform_folders URL https://github.com/sago007/PlatformFolders/archive/refs/tags/4.2.0.tar.gz)
+  FetchContent_MakeAvailable(platform_folders)
+
+  add_compile_definitions(LOCAL_PLATFORM_FOLDERS)
 endif()
 
 find_package(tomlplusplus QUIET)
@@ -22,14 +30,6 @@ if(NOT tomlplusplus_FOUND)
       GIT_TAG        v3.3.0
   )
   FetchContent_MakeAvailable(tomlplusplus)
-endif()
-
-find_package(platform_folders QUIET)
-if(NOT platform_folders_FOUND)
-  FetchContent_Declare(platform_folders URL https://github.com/sago007/PlatformFolders/archive/refs/tags/4.2.0.tar.gz)
-  FetchContent_MakeAvailable(platform_folders)
-else()
-  include_directories("${platform_folders_INCLUDE_DIRS}/sago")
 endif()
 
 find_package(cpr QUIET)

@@ -2,7 +2,11 @@
 #include <iostream>
 #include <filesystem>
 #include <cpr/cpr.h>
+#ifdef LOCAL_LIBZIPPP
 #include <libzippp.h>
+#else
+#include <libzippp/libzippp.h>
+#endif
 #include <boost/log/trivial.hpp>
 #include <boost/asio/post.hpp>
 #include <boost/asio/thread_pool.hpp>
