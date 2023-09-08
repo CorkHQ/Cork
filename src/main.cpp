@@ -103,7 +103,7 @@ int main(int argc, char *argv[]){
             std::list<std::string> playerArguments;
             playerArguments.push_back(playerData.second);
             if (arguments.size() > 0) {
-                for (std::string argument: environment.ParsePlayer(std::vector<std::string>{std::begin(arguments), std::end(arguments)})) {
+                for (std::string argument: arguments) {
                     playerArguments.push_back(argument);
                 }
             } else {
@@ -129,7 +129,10 @@ int main(int argc, char *argv[]){
             std::list<std::string> studioArguments;
             studioArguments.push_back(studioData.second);
             if (arguments.size() > 0) {
-                for (std::string argument: environment.ParseStudio(std::vector<std::string>{std::begin(arguments), std::end(arguments)})) {
+                for (std::string argument: arguments) {
+                    if (argument.rfind("roblox-studio:", 0) == 0) {
+                        studioArguments.push_back("-protocolString");
+                    }
                     studioArguments.push_back(argument);
                 }
             } else {
