@@ -85,7 +85,7 @@ Maybe you should, maybe you shouldn't. All of the current solutions for running 
 
 ## Acknowledgements
 Heavily inspired and based on:
-* [Grapejuice](https://gitlab.com/brinkervii/grapejuice)
 * [Vinegar](https://github.com/vinegarhq/vinegar)
+* [Grapejuice](https://gitlab.com/brinkervii/grapejuice)
 * [Bloxstrap](https://github.com/pizzaboxer/bloxstrap)
 * [Roblox Studio Mod Manager](https://github.com/MaximumADHD/Roblox-Studio-Mod-Manager)
