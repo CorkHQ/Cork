@@ -160,6 +160,8 @@ int main(int argc, char *argv[]){
                     environment.CleanVersions();
                 } else if (target == "downloads") {
                     fs::remove_all(fs::path(cs::GetDownloadsPath()));
+                } else if (target == "logs") {
+                    fs::remove_all(fs::path(cs::GetLogsPath()));
                 } else if (target == "settings") {
                     cs::LoadDefaults();
                     cs::SaveSettings();
