@@ -42,6 +42,7 @@ if(NOT cpr_FOUND)
   endif()
 endif()
 
+find_package(OpenSSL REQUIRED)
 find_package(Boost COMPONENTS system log REQUIRED)
 
 if (WIN32)
@@ -66,6 +67,7 @@ target_link_libraries(cork
     sago::platform_folders
     ${Boost_SYSTEM_LIBRARY}
     ${Boost_LOG_LIBRARY}
+    OpenSSL::Crypto
     roblox
     runners
     bootstrapper

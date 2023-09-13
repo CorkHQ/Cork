@@ -22,4 +22,5 @@ target_link_libraries(bootstrapper
     nlohmann_json::nlohmann_json
     cpr::cpr
     libzippp::libzippp
+    OpenSSL::Crypto
 )
