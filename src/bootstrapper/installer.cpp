@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <stdexcept>
 #include <filesystem>
 #include <cpr/cpr.h>
 #ifdef LOCAL_LIBZIPPP
@@ -52,8 +53,35 @@ namespace cork::bootstrapper {
             fs::path filePath = temporaryPath / package.name;
             std::ofstream zipStream = std::ofstream(filePath, std::ios::binary);
 
-            BOOST_LOG_TRIVIAL(trace) << "downloading " << package.name << "...";
-            cpr::Response response = cpr::Download(zipStream, cpr::Url{package.url});
+            int attempts = 0;
+            bool success = false;
+
+            while (success == false && attempts < 3) {
+                try {
+                    BOOST_LOG_TRIVIAL(trace) << "downloading " << package.name << "...";
+                    cpr::Response response = cpr::Download(zipStream, cpr::Url{package.url});
+                    
+                    if (response.status_code != 200) {
+                        throw std::runtime_error("Server responded with status code of not 200!");
+                    }
+
+                    success = true;
+                }
+                catch (std::exception &e) {
+                    BOOST_LOG_TRIVIAL(warning) << "failed to download " << package.name << "!";
+                    BOOST_LOG_TRIVIAL(debug) << e.what();
+
+                    zipStream.clear();
+                    zipStream.seekp(std::ios::beg);
+
+                    attempts++;
+                }
+            }
+
+            if (success == false) {
+                throw std::runtime_error("Failed to download file!");
+            }
+
             zipStream.close();
             BOOST_LOG_TRIVIAL(trace) << "downloaded " << package.name << "!";
 
