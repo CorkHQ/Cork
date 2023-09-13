@@ -19,6 +19,10 @@ namespace fs = std::filesystem;
 std::string appSettings = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<Settings>\r\n        <ContentFolder>content</ContentFolder>\r\n        <BaseUrl>http://www.roblox.com</BaseUrl>\r\n</Settings>\r\n";
 
 namespace cork::bootstrapper {
+    void DisplayProgress(int installedPackages, int downloadedPackages, int totalPackages) {
+        BOOST_LOG_TRIVIAL(trace) << "install progress: " << installedPackages << "/" << downloadedPackages << "/" << totalPackages;
+    }
+
     void Install(std::string versionType, std::string version, std::string versionChannel, std::string versionDirectory, fs::path temporaryDirectory) {
         BOOST_LOG_TRIVIAL(info) << "installing version...";
 
@@ -38,6 +42,10 @@ namespace cork::bootstrapper {
 
         fs::create_directories(temporaryPath);
 
+        std::atomic<int> totalPackages = packages.size();
+        std::atomic<int> downloadedPackages = 0;
+        std::atomic<int> installedPackages = 0;
+
         boost::asio::thread_pool installPool;
 
         for (cr::package package : packages) {
@@ -49,8 +57,11 @@ namespace cork::bootstrapper {
             zipStream.close();
             BOOST_LOG_TRIVIAL(trace) << "downloaded " << package.name << "!";
 
+            downloadedPackages++;
+            DisplayProgress(installedPackages, downloadedPackages, totalPackages);
+
             boost::asio::post(installPool,
-            [filePath, versionPath, package]()
+            [filePath, versionPath, package, &installedPackages, &downloadedPackages, &totalPackages]()
             {
                 BOOST_LOG_TRIVIAL(trace) << "installing " << package.name << "...";
                 libzippp::ZipArchive zipFile(filePath);
@@ -86,6 +97,9 @@ namespace cork::bootstrapper {
                 }
 
                 zipFile.close();
+                installedPackages++;
+                DisplayProgress(installedPackages, downloadedPackages, totalPackages);
+                
                 BOOST_LOG_TRIVIAL(info) << "installed " << package.name << "!";
             });
         }
