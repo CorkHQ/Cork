@@ -68,8 +68,7 @@ namespace cork::bootstrapper {
                     success = true;
                 }
                 catch (std::exception &e) {
-                    BOOST_LOG_TRIVIAL(warning) << "failed to download " << package.name << "!";
-                    BOOST_LOG_TRIVIAL(debug) << e.what();
+                    BOOST_LOG_TRIVIAL(warning) << "failed to download " << package.name << ": " << e.what();
 
                     zipStream.clear();
                     zipStream.seekp(std::ios::beg);
