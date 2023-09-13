@@ -19,7 +19,7 @@ namespace fs = std::filesystem;
 std::string appSettings = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<Settings>\r\n        <ContentFolder>content</ContentFolder>\r\n        <BaseUrl>http://www.roblox.com</BaseUrl>\r\n</Settings>\r\n";
 
 namespace cork::bootstrapper {
-    void Install(std::string versionType, std::string version, std::string versionChannel, std::string versionDirectory) {
+    void Install(std::string versionType, std::string version, std::string versionChannel, std::string versionDirectory, fs::path temporaryDirectory) {
         BOOST_LOG_TRIVIAL(info) << "installing version...";
 
         std::list<cr::package> packages = cr::GetPackages(versionType, version, versionChannel, cr::GetCDN());
@@ -32,6 +32,10 @@ namespace cork::bootstrapper {
         fs::create_directories(versionPath);
 
         fs::path temporaryPath = fs::weakly_canonical(versionPath / "tmp");
+        if (temporaryDirectory != "") {
+            temporaryPath = temporaryDirectory / version;
+        }
+
         fs::create_directories(temporaryPath);
 
         boost::asio::thread_pool installPool;

@@ -42,6 +42,10 @@ namespace cork::bootstrapper {
         versionsDirectory = fs::path(newVersionsDirectory);
         BOOST_LOG_TRIVIAL(debug) << "versions directory: " << versionsDirectory; 
     }
+    void RobloxEnvironment::SetTemporaryDirectory(std::string newTemporaryDirectory) {
+        temporaryDirectory = fs::path(newTemporaryDirectory);
+        BOOST_LOG_TRIVIAL(debug) << "temporary directory: " << temporaryDirectory; 
+    }
 
     std::pair<std::string, std::string> RobloxEnvironment::GetPlayer(std::string versionChannel, std::string versionOverride) {
         std::string versionType = "WindowsPlayer";
@@ -54,7 +58,7 @@ namespace cork::bootstrapper {
         fs::path versionPath = fs::weakly_canonical(versionsDirectory / version);
 
         if (!fs::is_regular_file(versionPath / "AppSettings.xml")) {
-            Install(versionType, version, versionChannel, versionPath.string());
+            Install(versionType, version, versionChannel, versionPath.string(), temporaryDirectory);
         }
 
         return {versionPath, versionPath / "RobloxPlayerBeta.exe"};
@@ -71,7 +75,7 @@ namespace cork::bootstrapper {
         fs::path versionPath = fs::weakly_canonical(versionsDirectory / version);
 
         if (!fs::is_regular_file(versionPath / "AppSettings.xml")) {
-            Install(versionType, version, versionChannel, versionPath.string());
+            Install(versionType, version, versionChannel, versionPath.string(), temporaryDirectory);
         }
 
         return {versionPath, versionPath / "RobloxStudioBeta.exe"};

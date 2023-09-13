@@ -13,10 +13,12 @@ namespace cork::bootstrapper {
     class RobloxEnvironment {
         private:
             fs::path versionsDirectory;
+            fs::path temporaryDirectory;
         public:
             std::string environmentChannel;
             
             void SetVersionsDirectory(std::string newVersionsDirectory);
+            void SetTemporaryDirectory(std::string newTemporaryDirectory);
 
             std::pair<std::string, std::string> GetPlayer(std::string versionChannel, std::string versionOverride = "");
             std::pair<std::string, std::string> GetStudio(std::string versionChannel, std::string versionOverride = "");

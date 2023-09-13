@@ -44,6 +44,12 @@ namespace cork::settings {
         fs::path versionsPath = fs::path(GetDataPath()) / "versions";
         return versionsPath;
     }
+    std::string GetDownloadsPath() {
+        fs::path downloadsPath = fs::path(sago::getCacheDir()) / "cork" / "downloads";
+        fs::create_directories(downloadsPath);
+        
+        return downloadsPath;
+    }
     std::string GetLogsPath() {
         fs::path logsPath = fs::path(sago::getCacheDir()) / "cork" / "logs";
         fs::create_directories(logsPath);

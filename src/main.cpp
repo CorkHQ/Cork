@@ -38,7 +38,7 @@ void setupLogger(std::string logLevel) {
         boost::log::keywords::target = cs::GetLogsPath());
     fsSink->set_formatter(logFmt);
     fsSink->locked_backend()->auto_flush(true);
-    
+
     if (logLevel == "trace") {
         fsSink->set_filter(        
             boost::log::trivial::severity >= boost::log::trivial::trace    
@@ -72,6 +72,7 @@ int main(int argc, char *argv[]){
     
     cb::RobloxEnvironment environment;
     environment.SetVersionsDirectory(cs::GetVersionsPath());
+    environment.SetTemporaryDirectory(cs::GetDownloadsPath());
 
 #if defined(NATIVE_RUNNER)
     BOOST_LOG_TRIVIAL(info) << "runner: native";
@@ -157,6 +158,8 @@ int main(int argc, char *argv[]){
                 BOOST_LOG_TRIVIAL(info) << "clear target: " << target;
                 if (target == "versions") {
                     environment.CleanVersions();
+                } else if (target == "downloads") {
+                    fs::remove_all(fs::path(cs::GetDownloadsPath()));
                 } else if (target == "settings") {
                     cs::LoadDefaults();
                     cs::SaveSettings();

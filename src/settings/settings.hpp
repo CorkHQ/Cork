@@ -8,6 +8,7 @@ namespace cork::settings {
 
     std::string GetSettingsPath();
     std::string GetVersionsPath();
+    std::string GetDownloadsPath();
     std::string GetLogsPath();
 #if defined(WINE_RUNNER)
     std::string GetPrefixPath();
