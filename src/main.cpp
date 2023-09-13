@@ -17,7 +17,7 @@ namespace cb = cork::bootstrapper;
 namespace cr = cork::runners;
 namespace cs = cork::settings;
 
-void setupLogger() {
+void setupLogger(std::string logLevel) {
     auto formatSeverity = boost::log::expressions::
         attr<boost::log::trivial::severity_level>("Severity");
     
@@ -28,6 +28,7 @@ void setupLogger() {
     
     auto consoleSink = boost::log::add_console_log(std::clog);
     consoleSink->set_formatter(logFmt);
+    consoleSink->set_filter(boost::log::trivial::severity >= boost::log::trivial::trace);
 
     auto fsSink = boost::log::add_file_log(
         boost::log::keywords::file_name = "cork-%Y-%m-%d_%H-%M-%S.%N.log",
@@ -37,6 +38,24 @@ void setupLogger() {
         boost::log::keywords::target = cs::GetLogsPath());
     fsSink->set_formatter(logFmt);
     fsSink->locked_backend()->auto_flush(true);
+    
+    if (logLevel == "trace") {
+        fsSink->set_filter(        
+            boost::log::trivial::severity >= boost::log::trivial::trace    
+        ); 
+    } else if (logLevel == "debug") {
+        fsSink->set_filter(        
+            boost::log::trivial::severity >= boost::log::trivial::debug   
+        ); 
+    } else if (logLevel == "info") {
+        fsSink->set_filter(        
+            boost::log::trivial::severity >= boost::log::trivial::info    
+        ); 
+    } else {
+        fsSink->set_filter(        
+            boost::log::trivial::severity >= boost::log::trivial::warning    
+        ); 
+    }
 }
 
 int main(int argc, char *argv[]){
@@ -46,26 +65,8 @@ int main(int argc, char *argv[]){
     cs::LoadSettings();
     cs::SaveSettings();
 
-    setupLogger();
-
     std::string logLevel = cs::GetString("cork.loglevel");
-    if (logLevel == "trace") {
-        boost::log::core::get()->set_filter(        
-            boost::log::trivial::severity >= boost::log::trivial::trace    
-        ); 
-    } else if (logLevel == "debug") {
-        boost::log::core::get()->set_filter(        
-            boost::log::trivial::severity >= boost::log::trivial::debug   
-        ); 
-    } else if (logLevel == "info") {
-        boost::log::core::get()->set_filter(        
-            boost::log::trivial::severity >= boost::log::trivial::info    
-        ); 
-    } else {
-        boost::log::core::get()->set_filter(        
-            boost::log::trivial::severity >= boost::log::trivial::warning    
-        ); 
-    }
+    setupLogger(logLevel);
     
     BOOST_LOG_TRIVIAL(info) << "Cork " << CORK_VERSION << " (" << CORK_CODENAME << ")";
     
