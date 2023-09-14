@@ -148,6 +148,7 @@ int main(int argc, char *argv[]){
             runner.AddLaunchers(cs::GetString("cork.launcher"));
             runner.AddLaunchers(cs::GetString("studio.launcher.post"));
 
+            cb::ApplyFFlags(studioData.first, cs::GetJson("studio.fflags"));
             runner.Execute(studioArguments, studioData.first);
         } else if (operationMode == "runner") {
             runner.Execute(arguments);

@@ -33,5 +33,7 @@ static const std::string defaultSettings =
     "[studio.launcher]\n"
     "pre = \"\"\n"
     "post = \"\"\n"
+    "[studio.fflags]\n"
+    "\n"
     "[studio.env]\n"
     "\n";

@@ -7,8 +7,8 @@
 namespace fs = std::filesystem;
 
 namespace cork::bootstrapper {
-    void ApplyFFlags(std::string playerDirectory, std::string fflagJson);
-    void ApplyFFlags(std::string playerDirectory, nlohmann::json fflags);
+    void ApplyFFlags(std::string directory, std::string fflagJson);
+    void ApplyFFlags(std::string directory, nlohmann::json fflags);
     
     class RobloxEnvironment {
         private:
