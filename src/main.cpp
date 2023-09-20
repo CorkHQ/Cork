@@ -90,6 +90,7 @@ int main(int argc, char *argv[]){
     runner.SetEnvironment(cs::GetStringMap("wine.env"));
 #endif
 
+    int returnCode = 0;
     if (arguments.size() > 0) {
         std::string operationMode = arguments.front();
         arguments.pop_front();
@@ -169,22 +170,29 @@ int main(int argc, char *argv[]){
                         cs::SaveSettings();
                     } else {
                         BOOST_LOG_TRIVIAL(error) << "invalid clear target";
+                        returnCode = 1;
                     }
                 } else {
                     BOOST_LOG_TRIVIAL(error) << "no target to clear";
+                    returnCode = 1;
                 }
             } else if (operationMode == "version") {
                 std::cout << CORK_VERSION << " (" << CORK_CODENAME << ")" << std::endl;
             } else {
                 BOOST_LOG_TRIVIAL(error) << "invalid mode given";
+                returnCode = 1;
             }
         }
         catch (std::exception &e) {
             BOOST_LOG_TRIVIAL(fatal) << "exception: " << e.what();
+            returnCode = 2;
         }
     } else {
         BOOST_LOG_TRIVIAL(error) << "no mode given";
+        returnCode = 1;
     }
 
     BOOST_LOG_TRIVIAL(debug) << "end";
+
+    return returnCode;
 }
