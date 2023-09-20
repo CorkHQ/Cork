@@ -72,6 +72,13 @@ namespace cork::settings {
 
     void LoadDefaults() {
         settingsTable = toml::parse(defaultSettings);
+        if (HasVendorPath()) {
+            std::string vendorSettingsPath = fs::path(GetVendorPath()) / "settings.toml";
+            if (fs::exists(vendorSettingsPath)) {
+                toml::table vendorTable = toml::parse_file(vendorSettingsPath);
+                mergeTable(&settingsTable, &vendorTable);
+            }
+        }
     }
     void LoadSettings() {
         std::string filePath = GetSettingsPath();
