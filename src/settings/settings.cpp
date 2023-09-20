@@ -23,6 +23,13 @@ void mergeTable(toml::table* target, toml::table* source) {
 }
 
 namespace cork::settings {
+    bool HasVendorPath() {
+        return CORK_VENDOR_PATH != "";
+    }
+    std::string GetVendorPath(){
+        return CORK_VENDOR_PATH;
+    }
+
     std::string GetDataPath() {
         fs::path dataPath = fs::path(sago::getDataHome()) / "cork";
         fs::create_directories(dataPath);

@@ -1,5 +1,8 @@
 add_library(settings STATIC "")
 
+set(CORK_VENDOR_PATH "" CACHE STRING "Path to look for defaults")
+add_compile_definitions(CORK_VENDOR_PATH="${CORK_VENDOR_PATH}")
+
 target_sources(settings
   PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/settings.cpp

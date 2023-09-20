@@ -3,6 +3,9 @@
 #include <toml++/toml.h>
 
 namespace cork::settings {
+    bool HasVendorPath();
+    std::string GetVendorPath();
+
     std::string GetDataPath();
     std::string GetConfigPath();
 
