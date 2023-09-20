@@ -95,87 +95,92 @@ int main(int argc, char *argv[]){
         arguments.pop_front();
 
         BOOST_LOG_TRIVIAL(info) << "mode: " << operationMode;
-        if (operationMode == "player") {
-            BOOST_LOG_TRIVIAL(trace) << "getting player...";
-            std::string versionOverride = cs::GetString("player.version");
-            std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("player.channel"), versionOverride);
-            BOOST_LOG_TRIVIAL(trace) << "got player!";
+        try {
+            if (operationMode == "player") {
+                BOOST_LOG_TRIVIAL(trace) << "getting player...";
+                std::string versionOverride = cs::GetString("player.version");
+                std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("player.channel"), versionOverride);
+                BOOST_LOG_TRIVIAL(trace) << "got player!";
 
-            BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
-            std::list<std::string> playerArguments;
-            playerArguments.push_back(playerData.second);
-            if (arguments.size() > 0) {
-                for (std::string argument: arguments) {
-                    playerArguments.push_back(argument);
-                }
-            } else {
-                playerArguments.push_back("--app");
-            }
-            BOOST_LOG_TRIVIAL(trace) << "arguments parsed!";
-
-            runner.SetEnvironment(cs::GetStringMap("player.env"));
-
-            runner.AddLaunchers(cs::GetString("player.launcher.pre"));
-            runner.AddLaunchers(cs::GetString("cork.launcher"));
-            runner.AddLaunchers(cs::GetString("player.launcher.post"));
-
-            cb::ApplyFFlags(playerData.first, cs::GetJson("player.fflags"));
-            runner.Execute(playerArguments, playerData.first);
-        } else if (operationMode == "studio") {
-            BOOST_LOG_TRIVIAL(trace) << "getting studio...";
-            std::string versionOverride = cs::GetString("studio.version");
-            std::pair<std::string, std::string> studioData = environment.GetStudio(cs::GetString("studio.channel"), versionOverride);
-            BOOST_LOG_TRIVIAL(trace) << "got studio!";
-
-            BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
-            std::list<std::string> studioArguments;
-            studioArguments.push_back(studioData.second);
-            if (arguments.size() > 0) {
-                for (std::string argument: arguments) {
-                    if (argument.rfind("roblox-studio:", 0) == 0) {
-                        studioArguments.push_back("-protocolString");
+                BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
+                std::list<std::string> playerArguments;
+                playerArguments.push_back(playerData.second);
+                if (arguments.size() > 0) {
+                    for (std::string argument: arguments) {
+                        playerArguments.push_back(argument);
                     }
-                    studioArguments.push_back(argument);
-                }
-            } else {
-                studioArguments.push_back("-ide");
-            }
-            BOOST_LOG_TRIVIAL(trace) << "arguments parsed!";
-
-            runner.SetEnvironment(cs::GetStringMap("studio.env"));
-
-            runner.AddLaunchers(cs::GetString("studio.launcher.pre"));
-            runner.AddLaunchers(cs::GetString("cork.launcher"));
-            runner.AddLaunchers(cs::GetString("studio.launcher.post"));
-
-            cb::ApplyFFlags(studioData.first, cs::GetJson("studio.fflags"));
-            runner.Execute(studioArguments, studioData.first);
-        } else if (operationMode == "runner") {
-            runner.Execute(arguments);
-        } else if (operationMode == "clear") {
-            if (arguments.size() > 0) {
-                std::string target = arguments.front();
-
-                BOOST_LOG_TRIVIAL(info) << "clear target: " << target;
-                if (target == "versions") {
-                    environment.CleanVersions();
-                } else if (target == "downloads") {
-                    fs::remove_all(fs::path(cs::GetDownloadsPath()));
-                } else if (target == "logs") {
-                    fs::remove_all(fs::path(cs::GetLogsPath()));
-                } else if (target == "settings") {
-                    cs::LoadDefaults();
-                    cs::SaveSettings();
                 } else {
-                    BOOST_LOG_TRIVIAL(error) << "invalid clear target";
+                    playerArguments.push_back("--app");
                 }
+                BOOST_LOG_TRIVIAL(trace) << "arguments parsed!";
+
+                runner.SetEnvironment(cs::GetStringMap("player.env"));
+
+                runner.AddLaunchers(cs::GetString("player.launcher.pre"));
+                runner.AddLaunchers(cs::GetString("cork.launcher"));
+                runner.AddLaunchers(cs::GetString("player.launcher.post"));
+
+                cb::ApplyFFlags(playerData.first, cs::GetJson("player.fflags"));
+                runner.Execute(playerArguments, playerData.first);
+            } else if (operationMode == "studio") {
+                BOOST_LOG_TRIVIAL(trace) << "getting studio...";
+                std::string versionOverride = cs::GetString("studio.version");
+                std::pair<std::string, std::string> studioData = environment.GetStudio(cs::GetString("studio.channel"), versionOverride);
+                BOOST_LOG_TRIVIAL(trace) << "got studio!";
+
+                BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
+                std::list<std::string> studioArguments;
+                studioArguments.push_back(studioData.second);
+                if (arguments.size() > 0) {
+                    for (std::string argument: arguments) {
+                        if (argument.rfind("roblox-studio:", 0) == 0) {
+                            studioArguments.push_back("-protocolString");
+                        }
+                        studioArguments.push_back(argument);
+                    }
+                } else {
+                    studioArguments.push_back("-ide");
+                }
+                BOOST_LOG_TRIVIAL(trace) << "arguments parsed!";
+
+                runner.SetEnvironment(cs::GetStringMap("studio.env"));
+
+                runner.AddLaunchers(cs::GetString("studio.launcher.pre"));
+                runner.AddLaunchers(cs::GetString("cork.launcher"));
+                runner.AddLaunchers(cs::GetString("studio.launcher.post"));
+
+                cb::ApplyFFlags(studioData.first, cs::GetJson("studio.fflags"));
+                runner.Execute(studioArguments, studioData.first);
+            } else if (operationMode == "runner") {
+                runner.Execute(arguments);
+            } else if (operationMode == "clear") {
+                if (arguments.size() > 0) {
+                    std::string target = arguments.front();
+
+                    BOOST_LOG_TRIVIAL(info) << "clear target: " << target;
+                    if (target == "versions") {
+                        environment.CleanVersions();
+                    } else if (target == "downloads") {
+                        fs::remove_all(fs::path(cs::GetDownloadsPath()));
+                    } else if (target == "logs") {
+                        fs::remove_all(fs::path(cs::GetLogsPath()));
+                    } else if (target == "settings") {
+                        cs::LoadDefaults();
+                        cs::SaveSettings();
+                    } else {
+                        BOOST_LOG_TRIVIAL(error) << "invalid clear target";
+                    }
+                } else {
+                    BOOST_LOG_TRIVIAL(error) << "no target to clear";
+                }
+            } else if (operationMode == "version") {
+                std::cout << CORK_VERSION << " (" << CORK_CODENAME << ")" << std::endl;
             } else {
-                BOOST_LOG_TRIVIAL(error) << "no target to clear";
+                BOOST_LOG_TRIVIAL(error) << "invalid mode given";
             }
-        } else if (operationMode == "version") {
-            std::cout << CORK_VERSION << " (" << CORK_CODENAME << ")" << std::endl;
-        } else {
-            BOOST_LOG_TRIVIAL(error) << "invalid mode given";
+        }
+        catch (std::exception &e) {
+            BOOST_LOG_TRIVIAL(fatal) << "exception: " << e.what();
         }
     } else {
         BOOST_LOG_TRIVIAL(error) << "no mode given";
