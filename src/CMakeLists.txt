@@ -51,6 +51,9 @@ else()
   add_compile_definitions(WINE_RUNNER)
 endif()
 
+add_compile_definitions(CORK_VERSION="${PROJECT_VERSION}")
+add_compile_definitions(CORK_CODENAME="Cape Canaveral")
+
 add_executable(cork main.cpp)
 
 add_subdirectory(roblox)

@@ -14,9 +14,6 @@ option(CORK_PACKAGE "Package Cork" ${is_root_project})
 include(CTest)
 enable_testing()
 
-add_compile_definitions(CORK_VERSION="${PROJECT_VERSION}")
-add_compile_definitions(CORK_CODENAME="Cape Canaveral")
-
 add_subdirectory(src)
 
 if(CORK_INSTALL)
