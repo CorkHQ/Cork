@@ -153,6 +153,7 @@ int main(int argc, char *argv[]){
                 cb::ApplyFFlags(studioData.first, cs::GetJson("studio.fflags"));
                 runner.Execute(studioArguments, studioData.first);
             } else if (operationMode == "runner") {
+                runner.AddLaunchers(cs::GetString("cork.launcher"));
                 runner.Execute(arguments);
             } else if (operationMode == "clear") {
                 if (arguments.size() > 0) {
