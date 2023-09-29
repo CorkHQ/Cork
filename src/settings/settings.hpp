@@ -1,4 +1,5 @@
 #include <map>
+#include <list>
 #include <iostream>
 #include <toml++/toml.h>
 
@@ -16,6 +17,7 @@ namespace cork::settings {
 #if defined(WINE_RUNNER)
     std::string GetPrefixPath();
 #endif
+    std::list<std::string> GetPlugins();
 
     void LoadDefaults();
     void LoadSettings();

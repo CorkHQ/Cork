@@ -1,3 +1,4 @@
+#include <list>
 #include <iostream>
 #include <filesystem>
 #include <toml++/toml.h>
@@ -69,6 +70,27 @@ namespace cork::settings {
         return prefixPath;
     }
 #endif
+    std::list<std::string> GetPlugins() {
+        std::list<std::string> pluginList;
+        std::list<fs::path> paths;
+
+        if (HasVendorPath()) {
+            paths.push_back(fs::path(GetVendorPath()) / "plugins");
+        }
+        paths.push_back(fs::path(GetDataPath()) / "plugins");
+
+        for (fs::path path: paths) {
+            if (fs::exists(path)) {
+                for (const fs::directory_entry & entry : fs::directory_iterator(path)) {
+                    if (entry.is_directory()) {
+                        pluginList.push_back(entry.path());
+                    }
+                }
+            }
+        }
+
+        return pluginList;
+    }
 
     void LoadDefaults() {
         settingsTable = toml::parse(defaultSettings);
