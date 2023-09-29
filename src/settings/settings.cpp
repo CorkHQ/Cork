@@ -77,7 +77,7 @@ namespace cork::settings {
         if (HasVendorPath()) {
             paths.push_back(fs::path(GetVendorPath()) / "plugins");
         }
-        paths.push_back(fs::path(GetDataPath()) / "plugins");
+        paths.push_back(fs::path(GetConfigPath()) / "plugins");
 
         for (fs::path path: paths) {
             if (fs::exists(path)) {
