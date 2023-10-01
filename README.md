@@ -63,7 +63,7 @@ cd Cork
 #### Preparing to Build
 ```bash
 mkdir build
-cmake -Bbuild -H.
+cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCPR_USE_SYSTEM_CURL=ON
 ```
 
 #### Building
