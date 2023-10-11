@@ -45,13 +45,13 @@ RPM and DEB packages are built with GitHub Actions for every commit, you can ins
 #### Installing dependencies and build tools on Fedora
 ```bash
 sudo dnf install git cmake make automake gcc gcc-c++ rpm-build
-sudo dnf install boost-devel libzip-devel zlib-devel bzip2-devel xz-devel openssl-devel curl-devel
+sudo dnf install boost-devel libzip-devel zlib-devel bzip2-devel xz-devel openssl-devel curl-devel lua-devel
 ```
 
 #### Installing dependencies and build tools on Ubuntu
 ```bash
 sudo apt install git build-essential cmake
-sudo apt install libboost-all-dev libzip-dev zlib1g-dev libbz2-dev liblzma-dev libssl-dev curl libcurl4-openssl-dev
+sudo apt install libboost-all-dev libzip-dev zlib1g-dev libbz2-dev liblzma-dev libssl-dev curl libcurl4-openssl-dev liblua5.4-dev
 ```
 
 ### Building and Installing
