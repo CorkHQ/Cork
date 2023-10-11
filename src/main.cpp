@@ -1,4 +1,8 @@
+#include <fstream>
 #include <iostream>
+#if defined(PLUGINS_ENABLED)
+#include <sol/sol.hpp>
+#endif
 #include <boost/log/core.hpp> 
 #include <boost/log/trivial.hpp> 
 #include <boost/log/expressions.hpp>
@@ -90,10 +94,45 @@ int main(int argc, char *argv[]){
     runner.SetEnvironment(cs::GetStringMap("wine.env"));
 #endif
 
+#if defined(PLUGINS_ENABLED)
+    std::list<std::unique_ptr<sol::state>> pluginStates;
+    std::list<std::string> pluginFolders = cs::GetPlugins();
+
+    for (std::string pluginFolder: pluginFolders) {
+        fs::path pluginFile = fs::path(pluginFolder) / "plugin.lua";
+        if (fs::exists(pluginFile) && fs::is_regular_file(pluginFile)) {
+            std::ifstream pluginStream(pluginFile);
+            std::ostringstream stringStream;
+            stringStream << pluginStream.rdbuf();
+
+            std::string pluginString = stringStream.str();
+
+            pluginStates.push_back(std::make_unique<sol::state>());
+
+            (*pluginStates.back()).open_libraries(sol::lib::base);
+
+    #if defined(NATIVE_RUNNER)
+            (*pluginStates.back())["RUNNER"] = "native";
+    #elif defined(WINE_RUNNER)
+            (*pluginStates.back())["RUNNER"] = "wine";
+            (*pluginStates.back())["PREFIX"] = runner.GetPrefix();
+    #endif
+
+            (*pluginStates.back()).script(pluginString);
+        }
+    }
+#endif
+
     int returnCode = 0;
     if (arguments.size() > 0) {
         std::string operationMode = arguments.front();
         arguments.pop_front();
+
+#if defined(PLUGINS_ENABLED)
+        for (std::unique_ptr<sol::state>& state: pluginStates) {
+            (*state)["MODE"] = operationMode;
+        }
+#endif
 
         BOOST_LOG_TRIVIAL(info) << "mode: " << operationMode;
         try {
@@ -122,6 +161,15 @@ int main(int argc, char *argv[]){
                 runner.AddLaunchers(cs::GetString("player.launcher.post"));
 
                 cb::ApplyFFlags(playerData.first, cs::GetJson("player.fflags"));
+
+#if defined(PLUGINS_ENABLED)
+                for (std::unique_ptr<sol::state>& state: pluginStates) {
+                    if ((*state)["execute"].valid()) {
+                        (*state)["execute"]();
+                    }
+                }
+#endif
+
                 runner.Execute(playerArguments, playerData.first);
             } else if (operationMode == "studio") {
                 BOOST_LOG_TRIVIAL(trace) << "getting studio...";
@@ -151,6 +199,15 @@ int main(int argc, char *argv[]){
                 runner.AddLaunchers(cs::GetString("studio.launcher.post"));
 
                 cb::ApplyFFlags(studioData.first, cs::GetJson("studio.fflags"));
+
+#if defined(PLUGINS_ENABLED)
+                for (std::unique_ptr<sol::state>& state: pluginStates) {
+                    if ((*state)["execute"].valid()) {
+                        (*state)["execute"]();
+                    }
+                }
+#endif
+
                 runner.Execute(studioArguments, studioData.first);
             } else if (operationMode == "runner") {
                 runner.AddLaunchers(cs::GetString("cork.launcher"));
@@ -192,6 +249,15 @@ int main(int argc, char *argv[]){
         BOOST_LOG_TRIVIAL(error) << "no mode given";
         returnCode = 1;
     }
+
+#if defined(PLUGINS_ENABLED)
+    for (std::unique_ptr<sol::state>& state: pluginStates) {
+        (*state)["RETURN_CODE"] = returnCode;
+        if ((*state)["shutdown"].valid()) {
+            (*state)["shutdown"]();
+        }
+    }
+#endif
 
     BOOST_LOG_TRIVIAL(debug) << "end";
 

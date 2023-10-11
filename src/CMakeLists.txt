@@ -42,6 +42,16 @@ if(NOT cpr_FOUND)
   endif()
 endif()
 
+if(CORK_PLUGINS)
+  set(SOL2_BUILD_LUA OFF)
+  find_package(sol2 QUIET)
+  if(NOT sol2_FOUND)
+    FetchContent_Declare(sol2 URL https://github.com/ThePhD/sol2/archive/refs/tags/v3.3.0.tar.gz)
+    FetchContent_MakeAvailable(sol2)
+  endif()
+  find_package(Lua REQUIRED)
+endif()
+
 find_package(OpenSSL REQUIRED)
 find_package(Boost COMPONENTS system log REQUIRED)
 
@@ -49,6 +59,10 @@ if (WIN32)
   add_compile_definitions(NATIVE_RUNNER)
 else()
   add_compile_definitions(WINE_RUNNER)
+endif()
+
+if(CORK_PLUGINS)
+  add_compile_definitions(PLUGINS_ENABLED)
 endif()
 
 add_compile_definitions(CORK_VERSION="${PROJECT_VERSION}")
@@ -76,3 +90,11 @@ target_link_libraries(cork
     bootstrapper
     settings
 )
+
+if(CORK_PLUGINS)
+  target_link_libraries(cork
+    PRIVATE
+      sol2::sol2
+      ${LUA_LIBRARIES}
+  )
+endif()

@@ -10,6 +10,7 @@ endif()
 
 option(CORK_INSTALL "Install Cork" ${is_root_project})
 option(CORK_PACKAGE "Package Cork" ${is_root_project})
+option(CORK_PLUGINS "Plugin Support" ON)
 
 include(CTest)
 enable_testing()
