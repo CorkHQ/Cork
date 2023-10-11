@@ -51,7 +51,7 @@ sudo dnf install boost-devel libzip-devel zlib-devel bzip2-devel xz-devel openss
 #### Installing dependencies and build tools on Ubuntu
 ```bash
 sudo apt install git build-essential cmake
-sudo apt install libboost-all-dev libzip-dev zlib1g-dev libbz2-dev liblzma-dev libssl-dev curl libcurl4-openssl-dev liblua5.1-0-dev
+sudo apt install libboost-all-dev libzip-dev zlib1g-dev libbz2-dev liblzma-dev libssl-dev curl libcurl4-openssl-dev liblua5.4-dev
 ```
 
 ### Building and Installing
