@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: libraries
-      run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev libzip-dev curl libcurl4-openssl-dev liblua5.4-dev
+      run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev libzip-dev curl libcurl4-openssl-dev liblua5.1-0-dev
     - name: mkdir
       run: mkdir build
     - name: cmake build
