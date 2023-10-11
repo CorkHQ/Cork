@@ -1,6 +1,7 @@
 #include <list>
 #include <iostream>
 #include <filesystem>
+#include <fstream>
 #include <toml++/toml.h>
 #ifdef LOCAL_PLATFORM_FOLDERS
 #include <platform_folders.h>
