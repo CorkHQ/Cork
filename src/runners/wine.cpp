@@ -6,6 +6,9 @@
 namespace fs = std::filesystem;
 
 namespace cork::runners {
+    std::string WineRunner::GetPrefix() {
+        return prefix;
+    }
     void WineRunner::SetPrefix(std::string newPrefix) {
         prefix = newPrefix;
     }
