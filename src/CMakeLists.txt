@@ -47,7 +47,7 @@ if(CORK_PLUGINS)
   find_package(sol2 QUIET)
   if(NOT sol2_FOUND)
     FetchContent_Declare(sol2 GIT_REPOSITORY https://github.com/ThePhD/sol2.git
-    GIT_TAG 9c882a28fdb6f4ad79a53a4191b43ce48a661175)
+                              GIT_TAG 9c882a28fdb6f4ad79a53a4191b43ce48a661175)
     FetchContent_MakeAvailable(sol2)
   endif()
   find_package(Lua REQUIRED)
