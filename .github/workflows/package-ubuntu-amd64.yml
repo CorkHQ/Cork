@@ -12,7 +12,7 @@ jobs:
     - name: mkdir
       run: mkdir build
     - name: cmake build
-      run: cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCPACK_GENERATOR=DEB -DCPR_USE_SYSTEM_CURL=ON -DLUA_INCLUDE_DIR=/usr/include/lua5.4
+      run: cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCPACK_GENERATOR=DEB -DCPR_USE_SYSTEM_CURL=ON
     - name: cmake make
       run: cmake --build build/ --target all
     - name: cpack
