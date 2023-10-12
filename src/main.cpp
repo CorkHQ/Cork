@@ -164,8 +164,8 @@ int main(int argc, char *argv[]){
 
 #if defined(PLUGINS_ENABLED)
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
-                    if ((*state)["execute"].valid()) {
-                        (*state)["execute"]();
+                    if ((*state)["PluginExecute"].valid()) {
+                        (*state)["PluginExecute"]();
                     }
                 }
 #endif
@@ -202,8 +202,8 @@ int main(int argc, char *argv[]){
 
 #if defined(PLUGINS_ENABLED)
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
-                    if ((*state)["execute"].valid()) {
-                        (*state)["execute"]();
+                    if ((*state)["PluginExecute"].valid()) {
+                        (*state)["PluginExecute"]();
                     }
                 }
 #endif
@@ -253,8 +253,8 @@ int main(int argc, char *argv[]){
 #if defined(PLUGINS_ENABLED)
     for (std::unique_ptr<sol::state>& state: pluginStates) {
         (*state)["RETURN_CODE"] = returnCode;
-        if ((*state)["shutdown"].valid()) {
-            (*state)["shutdown"]();
+        if ((*state)["PluginShutdown"].valid()) {
+            (*state)["PluginShutdown"]();
         }
     }
 #endif
