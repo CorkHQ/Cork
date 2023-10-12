@@ -151,6 +151,18 @@ int main(int argc, char *argv[]){
                 std::string versionOverride = cs::GetString("player.version");
                 std::string versionChannel = cs::GetString("player.channel");
 
+#if defined(PLUGINS_ENABLED)
+                for (std::unique_ptr<sol::state>& state: pluginStates) {
+                    (*state)["VERSION_OVERRIDE"] = versionOverride;
+                    (*state)["VERSION_CHANNEL"] = versionChannel;
+                    if ((*state)["PluginVersion"].valid()) {
+                        (*state)["PluginVersion"]();
+                        versionOverride = (*state)["VERSION_OVERRIDE"];
+                        versionChannel = (*state)["VERSION_CHANNEL"];
+                    }
+                }
+#endif
+
                 std::pair<std::string, std::string> playerData = environment.GetPlayer(versionChannel, versionOverride);
                 BOOST_LOG_TRIVIAL(trace) << "got player!";
 
@@ -187,7 +199,19 @@ int main(int argc, char *argv[]){
                 BOOST_LOG_TRIVIAL(trace) << "getting studio...";
                 std::string versionOverride = cs::GetString("studio.version");
                 std::string versionChannel = cs::GetString("studio.channel");
-                
+
+#if defined(PLUGINS_ENABLED)
+                for (std::unique_ptr<sol::state>& state: pluginStates) {
+                    (*state)["VERSION_OVERRIDE"] = versionOverride;
+                    (*state)["VERSION_CHANNEL"] = versionChannel;
+                    if ((*state)["PluginVersion"].valid()) {
+                        (*state)["PluginVersion"]();
+                        versionOverride = (*state)["VERSION_OVERRIDE"];
+                        versionChannel = (*state)["VERSION_CHANNEL"];
+                    }
+                }
+#endif
+
                 std::pair<std::string, std::string> studioData = environment.GetStudio(versionChannel, versionOverride);
                 BOOST_LOG_TRIVIAL(trace) << "got studio!";
 
