@@ -149,7 +149,9 @@ int main(int argc, char *argv[]){
             if (operationMode == "player") {
                 BOOST_LOG_TRIVIAL(trace) << "getting player...";
                 std::string versionOverride = cs::GetString("player.version");
-                std::pair<std::string, std::string> playerData = environment.GetPlayer(cs::GetString("player.channel"), versionOverride);
+                std::string versionChannel = cs::GetString("player.channel");
+
+                std::pair<std::string, std::string> playerData = environment.GetPlayer(versionChannel, versionOverride);
                 BOOST_LOG_TRIVIAL(trace) << "got player!";
 
                 BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
@@ -184,7 +186,9 @@ int main(int argc, char *argv[]){
             } else if (operationMode == "studio") {
                 BOOST_LOG_TRIVIAL(trace) << "getting studio...";
                 std::string versionOverride = cs::GetString("studio.version");
-                std::pair<std::string, std::string> studioData = environment.GetStudio(cs::GetString("studio.channel"), versionOverride);
+                std::string versionChannel = cs::GetString("studio.channel");
+                
+                std::pair<std::string, std::string> studioData = environment.GetStudio(versionChannel, versionOverride);
                 BOOST_LOG_TRIVIAL(trace) << "got studio!";
 
                 BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
