@@ -155,8 +155,8 @@ int main(int argc, char *argv[]){
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
                     (*state)["VERSION_OVERRIDE"] = versionOverride;
                     (*state)["VERSION_CHANNEL"] = versionChannel;
-                    if ((*state)["PluginVersion"].valid()) {
-                        (*state)["PluginVersion"]();
+                    if ((*state)["PluginPreVersion"].valid()) {
+                        (*state)["PluginPreVersion"]();
                         versionOverride = (*state)["VERSION_OVERRIDE"];
                         versionChannel = (*state)["VERSION_CHANNEL"];
                     }
@@ -204,8 +204,8 @@ int main(int argc, char *argv[]){
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
                     (*state)["VERSION_OVERRIDE"] = versionOverride;
                     (*state)["VERSION_CHANNEL"] = versionChannel;
-                    if ((*state)["PluginVersion"].valid()) {
-                        (*state)["PluginVersion"]();
+                    if ((*state)["PluginPreVersion"].valid()) {
+                        (*state)["PluginPreVersion"]();
                         versionOverride = (*state)["VERSION_OVERRIDE"];
                         versionChannel = (*state)["VERSION_CHANNEL"];
                     }
