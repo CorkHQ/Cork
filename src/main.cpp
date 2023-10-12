@@ -115,8 +115,14 @@ int main(int argc, char *argv[]){
             (*pluginStates.back())["RUNNER"] = "native";
     #elif defined(WINE_RUNNER)
             (*pluginStates.back())["RUNNER"] = "wine";
-            (*pluginStates.back())["PREFIX"] = runner.GetPrefix();
+            (*pluginStates.back())["PATH_PREFIX"] = runner.GetPrefix();
     #endif
+            (*pluginStates.back())["PATH_PLUGIN"] = pluginFolder;
+            (*pluginStates.back())["PATH_DATA"] = cs::GetDataPath();
+            (*pluginStates.back())["PATH_LOGS"] = cs::GetLogsPath();
+            (*pluginStates.back())["PATH_CONFIG"] = cs::GetConfigPath();
+            (*pluginStates.back())["PATH_VERSIONS"] = cs::GetVersionsPath();
+            (*pluginStates.back())["PATH_DOWNLOADS"] = cs::GetDownloadsPath();
 
             (*pluginStates.back()).script(pluginString);
         }
