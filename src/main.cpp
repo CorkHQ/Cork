@@ -166,6 +166,15 @@ int main(int argc, char *argv[]){
                 std::pair<std::string, std::string> playerData = environment.GetPlayer(versionChannel, versionOverride);
                 BOOST_LOG_TRIVIAL(trace) << "got player!";
 
+#if defined(PLUGINS_ENABLED)
+                for (std::unique_ptr<sol::state>& state: pluginStates) {
+                    (*state)["VERSION_PATH"] = playerData.first;
+                    if ((*state)["PluginVersion"].valid()) {
+                        (*state)["PluginVersion"]();
+                    }
+                }
+#endif
+
                 BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
                 std::list<std::string> playerArguments;
                 playerArguments.push_back(playerData.second);
@@ -214,6 +223,15 @@ int main(int argc, char *argv[]){
 
                 std::pair<std::string, std::string> studioData = environment.GetStudio(versionChannel, versionOverride);
                 BOOST_LOG_TRIVIAL(trace) << "got studio!";
+
+#if defined(PLUGINS_ENABLED)
+                for (std::unique_ptr<sol::state>& state: pluginStates) {
+                    (*state)["VERSION_PATH"] = studioData.first;
+                    if ((*state)["PluginVersion"].valid()) {
+                        (*state)["PluginVersion"]();
+                    }
+                }
+#endif
 
                 BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
                 std::list<std::string> studioArguments;
