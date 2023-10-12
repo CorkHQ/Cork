@@ -93,6 +93,10 @@ target_link_libraries(cork
 )
 
 if(CORK_PLUGINS)
+  target_include_directories(cork
+    PUBLIC
+      ${LUA_INCLUDE_DIR}
+  )
   target_link_libraries(cork
     PRIVATE
       sol2::sol2
