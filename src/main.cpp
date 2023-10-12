@@ -124,6 +124,10 @@ int main(int argc, char *argv[]){
             (*pluginStates.back())["PATH_VERSIONS"] = cs::GetVersionsPath();
             (*pluginStates.back())["PATH_DOWNLOADS"] = cs::GetDownloadsPath();
 
+            (*pluginStates.back()).set_function("RunnerExecute", [&runner, pluginFolder](std::list<std::string> runnerArguments) {
+                runner.Execute(runnerArguments, pluginFolder);
+            });
+
             (*pluginStates.back()).script(pluginString);
         }
     }
