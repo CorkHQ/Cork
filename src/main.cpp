@@ -169,6 +169,7 @@ int main(int argc, char *argv[]){
 #if defined(PLUGINS_ENABLED)
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
                     (*state)["VERSION_PATH"] = playerData.first;
+                    (*state)["VERSION_EXECUTABLE"] = playerData.second;
                     if ((*state)["PluginVersion"].valid()) {
                         (*state)["PluginVersion"]();
                     }
@@ -227,6 +228,7 @@ int main(int argc, char *argv[]){
 #if defined(PLUGINS_ENABLED)
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
                     (*state)["VERSION_PATH"] = studioData.first;
+                    (*state)["VERSION_EXECUTABLE"] = studioData.second;
                     if ((*state)["PluginVersion"].valid()) {
                         (*state)["PluginVersion"]();
                     }
