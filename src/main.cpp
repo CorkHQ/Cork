@@ -109,7 +109,15 @@ int main(int argc, char *argv[]){
 
             pluginStates.push_back(std::make_unique<sol::state>());
 
-            (*pluginStates.back()).open_libraries(sol::lib::base);
+            (*pluginStates.back()).open_libraries(sol::lib::base,
+                sol::lib::package,
+                sol::lib::coroutine,
+                sol::lib::string,
+                sol::lib::os,
+                sol::lib::math,
+                sol::lib::table,
+                sol::lib::io,
+                sol::lib::debug);
 
     #if defined(NATIVE_RUNNER)
             (*pluginStates.back())["RUNNER"] = "native";
