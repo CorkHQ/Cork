@@ -177,7 +177,7 @@ int main(int argc, char *argv[]){
 
                 BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
                 std::list<std::string> playerArguments;
-                playerArguments.push_back(playerData.second);
+                playerArguments.push_back(fs::path(playerData.first) / playerData.second);
                 if (arguments.size() > 0) {
                     for (std::string argument: arguments) {
                         playerArguments.push_back(argument);
@@ -235,7 +235,7 @@ int main(int argc, char *argv[]){
 
                 BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
                 std::list<std::string> studioArguments;
-                studioArguments.push_back(studioData.second);
+                studioArguments.push_back(fs::path(studioData.first) / studioData.second);
                 if (arguments.size() > 0) {
                     for (std::string argument: arguments) {
                         if (argument.rfind("roblox-studio:", 0) == 0) {
