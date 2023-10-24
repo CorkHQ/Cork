@@ -172,6 +172,8 @@ int main(int argc, char *argv[]){
                     (*state)["VERSION_EXECUTABLE"] = playerData.second;
                     if ((*state)["PluginVersion"].valid()) {
                         (*state)["PluginVersion"]();
+                        playerData.first = (*state)["VERSION_PATH"];
+                        playerData.second = (*state)["VERSION_EXECUTABLE"];
                     }
                 }
 #endif
@@ -231,6 +233,8 @@ int main(int argc, char *argv[]){
                     (*state)["VERSION_EXECUTABLE"] = studioData.second;
                     if ((*state)["PluginVersion"].valid()) {
                         (*state)["PluginVersion"]();
+                        studioData.first = (*state)["VERSION_PATH"];
+                        studioData.second = (*state)["VERSION_EXECUTABLE"];
                     }
                 }
 #endif
