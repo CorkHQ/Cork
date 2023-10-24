@@ -8,7 +8,7 @@ endif()
 
 find_package(libzippp QUIET)
 if(NOT libzippp_FOUND)
-  FetchContent_Declare(libzippp URL https://github.com/ctabin/libzippp/archive/refs/tags/libzippp-v6.1-1.9.2.tar.gz)
+  FetchContent_Declare(libzippp URL https://github.com/ctabin/libzippp/archive/refs/tags/libzippp-v7.0-1.10.1.tar.gz)
   FetchContent_MakeAvailable(libzippp)
 
   add_compile_definitions(LOCAL_LIBZIPPP)
@@ -27,7 +27,7 @@ if(NOT tomlplusplus_FOUND)
   FetchContent_Declare(
       tomlplusplus
       GIT_REPOSITORY https://github.com/marzer/tomlplusplus.git
-      GIT_TAG        v3.3.0
+      GIT_TAG        v3.4.0
   )
   FetchContent_MakeAvailable(tomlplusplus)
 endif()
@@ -35,7 +35,7 @@ endif()
 find_package(cpr QUIET)
 if(NOT cpr_FOUND)
   FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
-                          GIT_TAG 32fd1453194c37d5136577ee55629b863a42333f)
+                          GIT_TAG 1.10.5)
   if(NOT cpr_POPULATED)
       FetchContent_Populate(cpr)
       add_subdirectory(${cpr_SOURCE_DIR} ${cpr_BINARY_DIR} EXCLUDE_FROM_ALL)
