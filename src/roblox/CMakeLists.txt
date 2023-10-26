@@ -1,4 +1,5 @@
 add_library(roblox STATIC "")
+target_compile_features(roblox PUBLIC cxx_std_20)
 
 target_sources(roblox
   PRIVATE

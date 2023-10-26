@@ -70,6 +70,7 @@ add_compile_definitions(CORK_VERSION="${PROJECT_VERSION}")
 add_compile_definitions(CORK_CODENAME="Cape Canaveral")
 
 add_executable(cork main.cpp)
+target_compile_features(cork PUBLIC cxx_std_20)
 
 add_subdirectory(roblox)
 add_subdirectory(runners)

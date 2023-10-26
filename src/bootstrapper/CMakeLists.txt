@@ -1,4 +1,5 @@
 add_library(bootstrapper STATIC "")
+target_compile_features(bootstrapper PUBLIC cxx_std_20)
 
 target_sources(bootstrapper
   PRIVATE

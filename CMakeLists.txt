@@ -1,6 +1,5 @@
-cmake_minimum_required(VERSION 3.5.0)
+cmake_minimum_required(VERSION 3.12.0)
 project(cork VERSION 2.0.0 LANGUAGES C CXX)
-set (CMAKE_CXX_STANDARD 20)
 
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
   set(is_root_project ON)
@@ -11,9 +10,6 @@ endif()
 option(CORK_INSTALL "Install Cork" ${is_root_project})
 option(CORK_PACKAGE "Package Cork" ${is_root_project})
 option(CORK_PLUGINS "Plugin Support" ON)
-
-include(CTest)
-enable_testing()
 
 add_subdirectory(src)
 

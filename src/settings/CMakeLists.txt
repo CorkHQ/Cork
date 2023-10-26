@@ -1,4 +1,5 @@
 add_library(settings STATIC "")
+target_compile_features(settings PUBLIC cxx_std_20)
 
 set(CORK_VENDOR_PATH "" CACHE STRING "Path to look for defaults")
 add_compile_definitions(CORK_VENDOR_PATH="${CORK_VENDOR_PATH}")

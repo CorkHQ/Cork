@@ -1,4 +1,5 @@
 add_library(runners STATIC "")
+target_compile_features(runners PUBLIC cxx_std_20)
 
 target_sources(runners
   PRIVATE
