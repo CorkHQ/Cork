@@ -3,6 +3,7 @@
 #if defined(PLUGINS_ENABLED)
 #include <sol/sol.hpp>
 #endif
+#include <nlohmann/json.hpp>
 #include <boost/log/core.hpp> 
 #include <boost/log/trivial.hpp> 
 #include <boost/log/expressions.hpp>
@@ -165,10 +166,21 @@ int main(int argc, char *argv[]){
                 std::string versionOverride = cs::GetString("player.version");
                 std::string versionChannel = cs::GetString("player.channel");
 
+                std::string fflagJsonString = cs::GetJson("player.fflags");
+                nlohmann::json fflagsJson = nlohmann::json::parse(fflagJsonString);
+
 #if defined(PLUGINS_ENABLED)
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
                     (*state)["VERSION_OVERRIDE"] = versionOverride;
                     (*state)["VERSION_CHANNEL"] = versionChannel;
+
+                    (*state).set_function("GetFFlag", [&fflagsJson](std::string key) -> std::string {
+                        return fflagsJson[key].dump();
+                    });
+                    (*state).set_function("SetFFlag", [&fflagsJson](std::string key, std::string value) {
+                        fflagsJson[key] = nlohmann::json::parse(value);
+                    });
+
                     if ((*state)["PluginPreVersion"].valid()) {
                         (*state)["PluginPreVersion"]();
                         versionOverride = (*state)["VERSION_OVERRIDE"];
@@ -210,7 +222,7 @@ int main(int argc, char *argv[]){
                 runner.AddLaunchers(cs::GetString("cork.launcher"));
                 runner.AddLaunchers(cs::GetString("player.launcher.post"));
 
-                cb::ApplyFFlags(playerData.first, cs::GetJson("player.fflags"));
+                cb::ApplyFFlags(playerData.first, fflagsJson);
 
 #if defined(PLUGINS_ENABLED)
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
@@ -226,10 +238,21 @@ int main(int argc, char *argv[]){
                 std::string versionOverride = cs::GetString("studio.version");
                 std::string versionChannel = cs::GetString("studio.channel");
 
+                std::string fflagJsonString = cs::GetJson("studio.fflags");
+                nlohmann::json fflagsJson = nlohmann::json::parse(fflagJsonString);
+
 #if defined(PLUGINS_ENABLED)
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
                     (*state)["VERSION_OVERRIDE"] = versionOverride;
                     (*state)["VERSION_CHANNEL"] = versionChannel;
+
+                    (*state).set_function("GetFFlag", [&fflagsJson](std::string key) -> std::string {
+                        return fflagsJson[key].dump();
+                    });
+                    (*state).set_function("SetFFlag", [&fflagsJson](std::string key, std::string value) {
+                        fflagsJson[key] = nlohmann::json::parse(value);
+                    });
+
                     if ((*state)["PluginPreVersion"].valid()) {
                         (*state)["PluginPreVersion"]();
                         versionOverride = (*state)["VERSION_OVERRIDE"];
@@ -274,7 +297,7 @@ int main(int argc, char *argv[]){
                 runner.AddLaunchers(cs::GetString("cork.launcher"));
                 runner.AddLaunchers(cs::GetString("studio.launcher.post"));
 
-                cb::ApplyFFlags(studioData.first, cs::GetJson("studio.fflags"));
+                cb::ApplyFFlags(studioData.first, fflagsJson);
 
 #if defined(PLUGINS_ENABLED)
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
