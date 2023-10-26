@@ -42,7 +42,7 @@ RPM and DEB packages are built with GitHub Actions for every commit, you can ins
     - xz
 - OpenSSL
 - cURL
-- Lua
+- Lua *(optional, required for plugin support)*
 
 #### Installing dependencies and build tools on Fedora
 ```bash
