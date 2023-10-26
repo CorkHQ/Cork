@@ -17,6 +17,7 @@ namespace cork::runners {
             bool HasEnvironment(std::string key);
             void SetEnvironment(std::string var, std::string value, bool preserveIfExists = false);
             void SetEnvironment(std::map<std::string, std::string> map, bool preserveIfExists = false);
+            std::string GetEnvironment(std::string var);
 
             virtual void Execute(std::list<std::string> arguments, std::string cwd);
             virtual void Execute(std::list<std::string> arguments);
