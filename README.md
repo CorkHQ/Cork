@@ -20,7 +20,7 @@ Whenever a version of Roblox starts being downloaded, Cork auto-selects the fast
 ### Extensible
 Cork ships with a built-in Lua interpreter for plugins, allowing great portions of the launcher to be changed and allowing features like automatic DXVK installation to be added relatively easily.
 ### Customizable
-Want to run Roblox with [gamescope](https://github.com/ValveSoftware/gamescope), inside of [distrobox](https://github.com/89luca89/distrobox) or [Box64](https://github.com/ptitSeb/box64) for some some non x86 action? Feel like changing some FFlags to mess about? Just do it, the settings are there, it's up to you to tinker.
+Want to run Roblox with [gamescope](https://github.com/ValveSoftware/gamescope), inside of [distrobox](https://github.com/89luca89/distrobox) or [Box64](https://github.com/ptitSeb/box64) for some non-x86 action? Feel like changing some FFlags to mess about? Just do it, the settings are there, it's up to you to tinker.
 ### Portable
 Felt like trying to get Roblox to run on your Ampere Altra or your Talos II? Cork has got you covered on at least getting the launcher built. Every single part of the bootstrapper is modular and does not depend on any specific operating system or environment, compiles on any platform that supports modern versions of C++.
 
