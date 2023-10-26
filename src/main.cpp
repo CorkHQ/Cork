@@ -138,6 +138,9 @@ int main(int argc, char *argv[]){
             (*pluginStates.back()).set_function("SetEnvironment", [&runner](std::string key, std::string value) {
                 runner.SetEnvironment(key, value);
             });
+            (*pluginStates.back()).set_function("GetEnvironment", [&runner](std::string key) -> std::string {
+                return runner.GetEnvironment(key);
+            });
 
             (*pluginStates.back()).script(pluginString);
         }
