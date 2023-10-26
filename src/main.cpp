@@ -135,6 +135,9 @@ int main(int argc, char *argv[]){
             (*pluginStates.back()).set_function("RunnerExecute", [&runner, pluginFolder](std::list<std::string> runnerArguments) {
                 runner.Execute(runnerArguments, pluginFolder);
             });
+            (*pluginStates.back()).set_function("SetEnvironment", [&runner](std::string key, std::string value) {
+                runner.SetEnvironment(key, value);
+            });
 
             (*pluginStates.back()).script(pluginString);
         }
