@@ -2,10 +2,13 @@
     <br/>
     <img src="https://github.com/Bugadinho/Cork/raw/master/resources/cork.svg" height="250"/>
     <br/>
-    <h1>Cork 2 (Cape Canaveral)</h1>
+    <h1>Cork</h1>
 <p>
 
-[![License](https://img.shields.io/github/license/Bugadinho/Cork)](https://github.com/Bugadinho/Cork/blob/master/LICENSE)
+[![Fedora Package (amd64)](https://img.shields.io/github/actions/workflow/status/CorkHQ/Cork/package-fedora-amd64.yml?logo=fedora&label=package+(amd64))](https://github.com/CorkHQ/Cork/actions/workflows/package-fedora-amd64.yml)
+[![Ubuntu Package (amd64)](https://img.shields.io/github/actions/workflow/status/CorkHQ/Cork/package-ubuntu-amd64.yml?logo=ubuntu&label=package+(amd64))](https://github.com/CorkHQ/Cork/actions/workflows/package-ubuntu-amd64.yml)
+[![Version](https://img.shields.io/github/v/release/CorkHQ/Cork?display_name=tag)](https://github.com/CorkHQ/Cork/releases/latest)
+[![License](https://img.shields.io/github/license/CorkHQ/Cork)](https://github.com/CorkHQ/Cork/blob/master/LICENSE)
 
 > **⚠️ Work in Progress**<br>
 > This version of Cork is a full rewrite of the original in an entirely different language, and as such, is not 100% stable yet.
@@ -85,6 +88,16 @@ cmake --install . --prefix ~/.local
 
 ## "Why should I use this over Grapejuice or Vinegar?"
 Maybe you should, maybe you shouldn't. All of the current solutions for running Roblox on Linux offer something over the other, there is no better or worse one, use whatever suits **you**.
+
+## Libraries
+Cork makes use of the following libraries:
+* [Boost](https://www.boost.org/)
+* [toml++](https://github.com/marzer/tomlplusplus)
+* [Nlohmann JSON](https://github.com/nlohmann/json)
+* [PlatformFolders](https://github.com/sago007/PlatformFolders)
+* [libcpr](https://github.com/libcpr/cpr)
+* [libzippp]( https://github.com/ctabin/libzippp)
+* [sol2](https://github.com/ThePhD/sol2)
 
 ## Acknowledgements
 Heavily inspired and based on:
