@@ -142,6 +142,18 @@ int main(int argc, char *argv[]){
             (*pluginStates.back()).set_function("GetEnvironment", [&runner](std::string key) -> std::string {
                 return runner.GetEnvironment(key);
             });
+            (*pluginStates.back()).set_function("Log", [](std::string text, std::string logLevel) {
+                if (logLevel == "trace") {
+                    BOOST_LOG_TRIVIAL(trace) << text;
+                } else if (logLevel == "debug") {
+                    BOOST_LOG_TRIVIAL(debug) << text;
+                } else if (logLevel == "info") {
+                    BOOST_LOG_TRIVIAL(info) << text;
+                }
+            });
+            (*pluginStates.back()).set_function("Throw", [](std::string text) {
+                throw std::runtime_error(text);
+            });
 
             (*pluginStates.back()).script(pluginString);
         }
