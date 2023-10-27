@@ -161,12 +161,12 @@ int main(int argc, char *argv[]){
 
         BOOST_LOG_TRIVIAL(info) << "mode: " << operationMode;
         try {
-            if (operationMode == "player") {
-                BOOST_LOG_TRIVIAL(trace) << "getting player...";
-                std::string versionOverride = cs::GetString("player.version");
-                std::string versionChannel = cs::GetString("player.channel");
+            if (operationMode == "player" || operationMode == "studio") {
+                BOOST_LOG_TRIVIAL(trace) << "getting " + operationMode + "...";
+                std::string versionOverride = cs::GetString(operationMode + ".version");
+                std::string versionChannel = cs::GetString(operationMode + ".channel");
 
-                std::string fflagJsonString = cs::GetJson("player.fflags");
+                std::string fflagJsonString = cs::GetJson(operationMode + ".fflags");
                 nlohmann::json fflagsJson = nlohmann::json::parse(fflagJsonString);
 
 #if defined(PLUGINS_ENABLED)
@@ -189,115 +189,61 @@ int main(int argc, char *argv[]){
                 }
 #endif
 
-                std::pair<std::string, std::string> playerData = environment.GetPlayer(versionChannel, versionOverride);
-                BOOST_LOG_TRIVIAL(trace) << "got player!";
+                std::pair<std::string, std::string> versionData;
+                if (operationMode == "player") {
+                    versionData = environment.GetPlayer(versionChannel, versionOverride);
+                } else if (operationMode == "studio") {
+                    versionData = environment.GetStudio(versionChannel, versionOverride);
+                }
+
+                BOOST_LOG_TRIVIAL(trace) << "got " + operationMode + "!";
 
 #if defined(PLUGINS_ENABLED)
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
-                    (*state)["VERSION_PATH"] = playerData.first;
-                    (*state)["VERSION_EXECUTABLE"] = playerData.second;
+                    (*state)["VERSION_PATH"] = versionData.first;
+                    (*state)["VERSION_EXECUTABLE"] = versionData.second;
                     if ((*state)["PluginVersion"].valid()) {
                         (*state)["PluginVersion"]();
-                        playerData.first = (*state)["VERSION_PATH"];
-                        playerData.second = (*state)["VERSION_EXECUTABLE"];
+                        versionData.first = (*state)["VERSION_PATH"];
+                        versionData.second = (*state)["VERSION_EXECUTABLE"];
                     }
                 }
 #endif
 
                 BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
-                std::list<std::string> playerArguments;
-                playerArguments.push_back(fs::path(playerData.first) / playerData.second);
-                if (arguments.size() > 0) {
-                    for (std::string argument: arguments) {
-                        playerArguments.push_back(argument);
-                    }
-                } else {
-                    playerArguments.push_back("--app");
-                }
-                BOOST_LOG_TRIVIAL(trace) << "arguments parsed!";
-
-                runner.SetEnvironment(cs::GetStringMap("player.env"));
-
-                runner.AddLaunchers(cs::GetString("player.launcher.pre"));
-                runner.AddLaunchers(cs::GetString("cork.launcher"));
-                runner.AddLaunchers(cs::GetString("player.launcher.post"));
-
-                cb::ApplyFFlags(playerData.first, fflagsJson);
-
-#if defined(PLUGINS_ENABLED)
-                for (std::unique_ptr<sol::state>& state: pluginStates) {
-                    if ((*state)["PluginExecute"].valid()) {
-                        (*state)["PluginExecute"]();
-                    }
-                }
-#endif
-
-                runner.Execute(playerArguments, playerData.first);
-            } else if (operationMode == "studio") {
-                BOOST_LOG_TRIVIAL(trace) << "getting studio...";
-                std::string versionOverride = cs::GetString("studio.version");
-                std::string versionChannel = cs::GetString("studio.channel");
-
-                std::string fflagJsonString = cs::GetJson("studio.fflags");
-                nlohmann::json fflagsJson = nlohmann::json::parse(fflagJsonString);
-
-#if defined(PLUGINS_ENABLED)
-                for (std::unique_ptr<sol::state>& state: pluginStates) {
-                    (*state)["VERSION_OVERRIDE"] = versionOverride;
-                    (*state)["VERSION_CHANNEL"] = versionChannel;
-
-                    (*state).set_function("GetFFlag", [&fflagsJson](std::string key) -> std::string {
-                        return fflagsJson[key].dump();
-                    });
-                    (*state).set_function("SetFFlag", [&fflagsJson](std::string key, std::string value) {
-                        fflagsJson[key] = nlohmann::json::parse(value);
-                    });
-
-                    if ((*state)["PluginPreVersion"].valid()) {
-                        (*state)["PluginPreVersion"]();
-                        versionOverride = (*state)["VERSION_OVERRIDE"];
-                        versionChannel = (*state)["VERSION_CHANNEL"];
-                    }
-                }
-#endif
-
-                std::pair<std::string, std::string> studioData = environment.GetStudio(versionChannel, versionOverride);
-                BOOST_LOG_TRIVIAL(trace) << "got studio!";
-
-#if defined(PLUGINS_ENABLED)
-                for (std::unique_ptr<sol::state>& state: pluginStates) {
-                    (*state)["VERSION_PATH"] = studioData.first;
-                    (*state)["VERSION_EXECUTABLE"] = studioData.second;
-                    if ((*state)["PluginVersion"].valid()) {
-                        (*state)["PluginVersion"]();
-                        studioData.first = (*state)["VERSION_PATH"];
-                        studioData.second = (*state)["VERSION_EXECUTABLE"];
-                    }
-                }
-#endif
-
-                BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
-                std::list<std::string> studioArguments;
-                studioArguments.push_back(fs::path(studioData.first) / studioData.second);
-                if (arguments.size() > 0) {
-                    for (std::string argument: arguments) {
-                        if (argument.rfind("roblox-studio:", 0) == 0) {
-                            studioArguments.push_back("-protocolString");
+                std::list<std::string> versionArguments;
+                if (operationMode == "player") {
+                    versionArguments.push_back(fs::path(versionData.first) / versionData.second);
+                    if (arguments.size() > 0) {
+                        for (std::string argument: arguments) {
+                            versionArguments.push_back(argument);
                         }
-                        studioArguments.push_back(argument);
+                    } else {
+                        versionArguments.push_back("--app");
                     }
-                } else {
-                    studioArguments.push_back("-ide");
+                } else if (operationMode == "studio") {
+                    versionArguments.push_back(fs::path(versionData.first) / versionData.second);
+                    if (arguments.size() > 0) {
+                        for (std::string argument: arguments) {
+                            if (argument.rfind("roblox-studio:", 0) == 0) {
+                                versionArguments.push_back("-protocolString");
+                            }
+                            versionArguments.push_back(argument);
+                        }
+                    } else {
+                        versionArguments.push_back("-ide");
+                    }
                 }
+
                 BOOST_LOG_TRIVIAL(trace) << "arguments parsed!";
 
-                runner.SetEnvironment(cs::GetStringMap("studio.env"));
+                runner.SetEnvironment(cs::GetStringMap(operationMode + ".env"));
 
-                runner.AddLaunchers(cs::GetString("studio.launcher.pre"));
+                runner.AddLaunchers(cs::GetString(operationMode + ".launcher.pre"));
                 runner.AddLaunchers(cs::GetString("cork.launcher"));
-                runner.AddLaunchers(cs::GetString("studio.launcher.post"));
+                runner.AddLaunchers(cs::GetString(operationMode + ".launcher.post"));
 
-                cb::ApplyFFlags(studioData.first, fflagsJson);
+                cb::ApplyFFlags(versionData.first, fflagsJson);
 
 #if defined(PLUGINS_ENABLED)
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
@@ -307,7 +253,7 @@ int main(int argc, char *argv[]){
                 }
 #endif
 
-                runner.Execute(studioArguments, studioData.first);
+                runner.Execute(versionArguments, versionData.first);
             } else if (operationMode == "runner") {
                 runner.AddLaunchers(cs::GetString("cork.launcher"));
                 runner.Execute(arguments);
