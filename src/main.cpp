@@ -102,6 +102,9 @@ int main(int argc, char *argv[]){
     for (std::string pluginFolder: pluginFolders) {
         fs::path pluginFile = fs::path(pluginFolder) / "plugin.lua";
         if (fs::exists(pluginFile) && fs::is_regular_file(pluginFile)) {
+            std::string pluginName = fs::path(pluginFolder).filename();
+            BOOST_LOG_TRIVIAL(info) << "initializing plugin '" << pluginName << "'...";
+
             std::ifstream pluginStream(pluginFile);
             std::ostringstream stringStream;
             stringStream << pluginStream.rdbuf();
@@ -119,6 +122,8 @@ int main(int argc, char *argv[]){
                 sol::lib::table,
                 sol::lib::io,
                 sol::lib::debug);
+            
+            (*pluginStates.back())["NAME"] = pluginName;
 
     #if defined(NATIVE_RUNNER)
             (*pluginStates.back())["RUNNER"] = "native";
@@ -142,20 +147,21 @@ int main(int argc, char *argv[]){
             (*pluginStates.back()).set_function("GetEnvironment", [&runner](std::string key) -> std::string {
                 return runner.GetEnvironment(key);
             });
-            (*pluginStates.back()).set_function("Log", [](std::string text, std::string logLevel) {
+            (*pluginStates.back()).set_function("Log", [pluginName](std::string text, std::string logLevel) {
                 if (logLevel == "trace") {
-                    BOOST_LOG_TRIVIAL(trace) << text;
+                    BOOST_LOG_TRIVIAL(trace) << pluginName + ": " << text;
                 } else if (logLevel == "debug") {
-                    BOOST_LOG_TRIVIAL(debug) << text;
+                    BOOST_LOG_TRIVIAL(debug) << pluginName + ": " << text;
                 } else if (logLevel == "info") {
-                    BOOST_LOG_TRIVIAL(info) << text;
+                    BOOST_LOG_TRIVIAL(info) << pluginName + ": " << text;
                 }
             });
-            (*pluginStates.back()).set_function("Throw", [](std::string text) {
-                throw std::runtime_error(text);
+            (*pluginStates.back()).set_function("Throw", [pluginName](std::string text) {
+                throw std::runtime_error(pluginName + ": " + text);
             });
 
             (*pluginStates.back()).script(pluginString);
+            BOOST_LOG_TRIVIAL(info) << "plugin '" << pluginName << "' initialized!";
         }
     }
 #endif
