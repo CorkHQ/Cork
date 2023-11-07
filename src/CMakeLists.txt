@@ -84,8 +84,8 @@ target_link_libraries(cork
     libzippp::libzippp
     tomlplusplus::tomlplusplus
     sago::platform_folders
-    ${Boost_SYSTEM_LIBRARY}
-    ${Boost_LOG_LIBRARY}
+    Boost::system
+    Boost::log
     OpenSSL::Crypto
     roblox
     runners
