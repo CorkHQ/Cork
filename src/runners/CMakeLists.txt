@@ -18,4 +18,5 @@ target_link_libraries(runners
   PRIVATE
     Boost::system
     Boost::log
+    Boost::program_options
 )

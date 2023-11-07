@@ -1,10 +1,12 @@
 #include <boost/process.hpp>
 #include <boost/log/trivial.hpp>
+#include <boost/program_options/parsers.hpp>
 #include <filesystem>
 #include <iostream>
 #include "native.hpp"
 
 namespace bp = boost::process;
+namespace bo = boost::program_options;
 namespace fs = std::filesystem;
 
 namespace cork::runners {
@@ -20,18 +22,8 @@ namespace cork::runners {
         }
     }
     void NativeRunner::AddLaunchers(std:: string launchers) {
-        std::string lastArgument = "";
-        for(char c : launchers) {
-            if (c == ' ') {
-                AddLauncher(lastArgument);
-                lastArgument = "";
-            } else {
-                lastArgument += c;
-            }
-        }
-        if (lastArgument != "") {
-            AddLauncher(lastArgument);
-            lastArgument = "";
+        for (std::string launcher : bo::split_unix(launchers)) {
+            AddLauncher(launcher);
         }
     }
 

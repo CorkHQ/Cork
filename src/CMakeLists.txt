@@ -54,7 +54,7 @@ if(CORK_PLUGINS)
 endif()
 
 find_package(OpenSSL REQUIRED)
-find_package(Boost COMPONENTS system log REQUIRED)
+find_package(Boost COMPONENTS system log program_options REQUIRED)
 
 if (WIN32)
   add_compile_definitions(NATIVE_RUNNER)
@@ -86,6 +86,7 @@ target_link_libraries(cork
     sago::platform_folders
     Boost::system
     Boost::log
+    Boost::program_options
     OpenSSL::Crypto
     roblox
     runners
