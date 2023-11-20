@@ -11,6 +11,7 @@
 #include <boost/log/utility/setup/console.hpp>
 #include "bootstrapper/environment.hpp"
 #include "settings/settings.hpp"
+#include "roblox/version.hpp"
 
 #if defined(NATIVE_RUNNER)
 #include "runners/native.hpp"
@@ -21,6 +22,7 @@
 namespace cb = cork::bootstrapper;
 namespace cr = cork::runners;
 namespace cs = cork::settings;
+namespace cro = cork::roblox;
 
 void setupLogger(std::string logLevel) {
     auto formatSeverity = boost::log::expressions::
@@ -208,10 +210,17 @@ int main(int argc, char *argv[]){
 #endif
 
                 std::pair<std::string, std::string> versionData;
+                std::string version = versionOverride;
                 if (operationMode == "player") {
-                    versionData = environment.GetPlayer(versionChannel, versionOverride);
+                    if (version == "") {
+                        version = cro::GetVersion("WindowsPlayer", versionChannel).clientVersionUpload;
+                    }
+                    versionData = environment.GetPlayer(versionChannel, version);
                 } else if (operationMode == "studio") {
-                    versionData = environment.GetStudio(versionChannel, versionOverride);
+                    if (version == "") {
+                        version = cro::GetVersion("WindowsStudio64", versionChannel).clientVersionUpload;
+                    }
+                    versionData = environment.GetStudio(versionChannel, version);
                 }
 
                 BOOST_LOG_TRIVIAL(trace) << "got " + operationMode + "!";

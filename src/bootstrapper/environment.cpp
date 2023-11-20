@@ -47,12 +47,8 @@ namespace cork::bootstrapper {
         BOOST_LOG_TRIVIAL(debug) << "temporary directory: " << temporaryDirectory; 
     }
 
-    std::pair<std::string, std::string> RobloxEnvironment::GetPlayer(std::string versionChannel, std::string versionOverride) {
+    std::pair<std::string, std::string> RobloxEnvironment::GetPlayer(std::string versionChannel, std::string version) {
         std::string versionType = "WindowsPlayer";
-        std::string version = versionOverride;
-        if (version == "") {
-            version = cr::GetVersion(versionType, versionChannel).clientVersionUpload;
-        }
         BOOST_LOG_TRIVIAL(info) << "player version: " << version; 
 
         fs::path versionPath = fs::weakly_canonical(versionsDirectory / version);
@@ -64,12 +60,8 @@ namespace cork::bootstrapper {
         return {versionPath, "RobloxPlayerBeta.exe"};
     }
 
-    std::pair<std::string, std::string> RobloxEnvironment::GetStudio(std::string versionChannel, std::string versionOverride) {
+    std::pair<std::string, std::string> RobloxEnvironment::GetStudio(std::string versionChannel, std::string version) {
         std::string versionType = "WindowsStudio64";
-        std::string version = versionOverride;
-        if (version == "") {
-            version = cr::GetVersion(versionType, versionChannel).clientVersionUpload;
-        }
         BOOST_LOG_TRIVIAL(info) << "studio version: " << version; 
 
         fs::path versionPath = fs::weakly_canonical(versionsDirectory / version);
