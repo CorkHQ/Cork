@@ -270,8 +270,6 @@ int main(int argc, char *argv[]){
                 runner.AddLaunchers(cs::GetString("cork.launcher"));
                 runner.AddLaunchers(cs::GetString(operationMode + ".launcher.post"));
 
-                cb::ApplyFFlags(versionData.first, fflagsJson);
-
 #if defined(PLUGINS_ENABLED)
                 for (std::unique_ptr<sol::state>& state: pluginStates) {
                     if ((*state)["PluginExecute"].valid()) {
@@ -280,6 +278,7 @@ int main(int argc, char *argv[]){
                 }
 #endif
 
+                cb::ApplyFFlags(versionData.first, fflagsJson);
                 runner.Execute(versionArguments, versionData.first);
             } else if (operationMode == "runner") {
                 runner.AddLaunchers(cs::GetString("cork.launcher"));
