@@ -43,6 +43,8 @@
 include/divisible/*
 
 .vscode
+.vs
+out
 
 ## Local 
 
