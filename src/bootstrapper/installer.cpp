@@ -139,7 +139,7 @@ namespace cork::bootstrapper {
             [filePath, versionPath, package, &installedPackages, &downloadedPackages, &totalPackages]()
             {
                 BOOST_LOG_TRIVIAL(trace) << "installing " << package.name << "...";
-                libzippp::ZipArchive zipFile(filePath);
+                libzippp::ZipArchive zipFile(filePath.string());
                 zipFile.open(libzippp::ZipArchive::ReadOnly);
 
                 std::vector<libzippp::ZipEntry> entries = zipFile.getEntries();

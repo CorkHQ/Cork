@@ -36,39 +36,39 @@ namespace cork::settings {
         fs::path dataPath = fs::path(sago::getDataHome()) / "cork";
         fs::create_directories(dataPath);
 
-        return dataPath;
+        return dataPath.string();
     }
     std::string GetConfigPath() {
         fs::path configPath = fs::path(sago::getConfigHome()) / "cork";
         fs::create_directories(configPath);
 
-        return configPath;
+        return configPath.string();
     }
     
     std::string GetSettingsPath() {
         fs::path filePath = fs::path(GetConfigPath()) / "settings.toml";
-        return filePath;
+        return filePath.string();
     }
     std::string GetVersionsPath() {
         fs::path versionsPath = fs::path(GetDataPath()) / "versions";
-        return versionsPath;
+        return versionsPath.string();
     }
     std::string GetDownloadsPath() {
         fs::path downloadsPath = fs::path(sago::getCacheDir()) / "cork" / "downloads";
         fs::create_directories(downloadsPath);
         
-        return downloadsPath;
+        return downloadsPath.string();
     }
     std::string GetLogsPath() {
         fs::path logsPath = fs::path(sago::getCacheDir()) / "cork" / "logs";
         fs::create_directories(logsPath);
         
-        return logsPath;
+        return logsPath.string();
     }
 #if defined(WINE_RUNNER)
     std::string GetPrefixPath() {
         fs::path prefixPath = fs::path(GetDataPath()) / "pfx";
-        return prefixPath;
+        return prefixPath.string();
     }
 #endif
     std::list<std::string> GetPlugins() {
@@ -84,7 +84,7 @@ namespace cork::settings {
             if (fs::exists(path)) {
                 for (const fs::directory_entry & entry : fs::directory_iterator(path)) {
                     if (entry.is_directory()) {
-                        pluginList.push_back(entry.path());
+                        pluginList.push_back(entry.path().string());
                     }
                 }
             }
@@ -96,7 +96,7 @@ namespace cork::settings {
     void LoadDefaults() {
         settingsTable = toml::parse(defaultSettings);
         if (HasVendorPath()) {
-            std::string vendorSettingsPath = fs::path(GetVendorPath()) / "settings.toml";
+            std::string vendorSettingsPath = (fs::path(GetVendorPath()) / "settings.toml").string();
             if (fs::exists(vendorSettingsPath)) {
                 toml::table vendorTable = toml::parse_file(vendorSettingsPath);
                 mergeTable(&settingsTable, &vendorTable);
