@@ -3,7 +3,11 @@
   "configurePresets": [
     {
       "name": "debug",
-      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "BUILD_SHARED_LIBS": false,
+        "CPR_USE_SYSTEM_CURL": true
+      }
     }
   ]
 }
