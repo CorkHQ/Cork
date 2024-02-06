@@ -1,0 +1,15 @@
+{
+  "dependencies": [
+    "boost-log",
+    "boost-process",
+    "boost-system",
+    "bzip2",
+    "curl",
+    "liblzma",
+    "libzip",
+    "lua",
+    "openssl",
+    "zlib",
+    "boost-program-options"
+  ]
+}
