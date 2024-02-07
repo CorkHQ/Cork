@@ -166,7 +166,7 @@ namespace cork::bootstrapper {
                     fs::path targetPath = versionPath / package.target / name;
                     fs::create_directories(targetPath.parent_path());
 
-                    std::ofstream fileStream(targetPath);
+                    std::ofstream fileStream(targetPath, std::ios::binary);
                     entry.readContent(fileStream);
                     fileStream.close();
                 }
