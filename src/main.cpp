@@ -240,7 +240,7 @@ int main(int argc, char *argv[]){
                 BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
                 std::list<std::string> versionArguments;
                 if (operationMode == "player") {
-                    versionArguments.push_back((fs::path(versionData.first) / versionData.second).generic_string());
+                    versionArguments.push_back((fs::path(versionData.first).make_preferred() / versionData.second).string());
                     if (arguments.size() > 0) {
                         for (std::string argument: arguments) {
                             versionArguments.push_back(argument);
@@ -249,7 +249,7 @@ int main(int argc, char *argv[]){
                         versionArguments.push_back("--app");
                     }
                 } else if (operationMode == "studio") {
-                    versionArguments.push_back((fs::path(versionData.first) / versionData.second).generic_string());
+                    versionArguments.push_back((fs::path(versionData.first).make_preferred() / versionData.second).string());
                     if (arguments.size() > 0) {
                         for (std::string argument: arguments) {
                             if (argument.rfind("roblox-studio:", 0) == 0) {
@@ -279,7 +279,7 @@ int main(int argc, char *argv[]){
 #endif
 
                 cb::ApplyFFlags(versionData.first, fflagsJson);
-                runner.Execute(versionArguments, versionData.first);
+                runner.Execute(versionArguments, fs::path(versionData.first).make_preferred().string()) ;
             } else if (operationMode == "runner") {
                 runner.AddLaunchers(cs::GetString("cork.launcher"));
                 runner.Execute(arguments);
