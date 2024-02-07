@@ -54,10 +54,10 @@ namespace cork::bootstrapper {
         fs::path versionPath = fs::weakly_canonical(versionsDirectory / version);
 
         if (!fs::is_regular_file(versionPath / "AppSettings.xml")) {
-            Install(versionType, version, versionChannel, versionPath.string(), temporaryDirectory);
+            Install(versionType, version, versionChannel, versionPath.generic_string(), temporaryDirectory);
         }
 
-        return {versionPath.string(), "RobloxPlayerBeta.exe"};
+        return {versionPath.generic_string(), "RobloxPlayerBeta.exe"};
     }
 
     std::pair<std::string, std::string> RobloxEnvironment::GetStudio(std::string versionChannel, std::string version) {
@@ -67,10 +67,10 @@ namespace cork::bootstrapper {
         fs::path versionPath = fs::weakly_canonical(versionsDirectory / version);
 
         if (!fs::is_regular_file(versionPath / "AppSettings.xml")) {
-            Install(versionType, version, versionChannel, versionPath.string(), temporaryDirectory);
+            Install(versionType, version, versionChannel, versionPath.generic_string(), temporaryDirectory);
         }
 
-        return {versionPath.string(), "RobloxStudioBeta.exe"};
+        return {versionPath.generic_string(), "RobloxStudioBeta.exe"};
     }
 
     void RobloxEnvironment::CleanVersions() {

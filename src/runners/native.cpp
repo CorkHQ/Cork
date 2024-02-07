@@ -62,6 +62,7 @@ namespace cork::runners {
         }
         for (std::string argument : arguments) {
             newArguments.push_back(argument);
+            std::cout << argument << std::endl;
         }
 
         bp::ipstream output;

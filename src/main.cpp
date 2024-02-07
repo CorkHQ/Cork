@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
     for (std::string pluginFolder: pluginFolders) {
         fs::path pluginFile = fs::path(pluginFolder) / "plugin.lua";
         if (fs::exists(pluginFile) && fs::is_regular_file(pluginFile)) {
-            std::string pluginName = fs::path(pluginFolder).filename().string();
+            std::string pluginName = fs::path(pluginFolder).filename().generic_string();
             BOOST_LOG_TRIVIAL(info) << "initializing plugin '" << pluginName << "'...";
 
             std::ifstream pluginStream(pluginFile);
@@ -240,7 +240,7 @@ int main(int argc, char *argv[]){
                 BOOST_LOG_TRIVIAL(trace) << "parsing arguments...";
                 std::list<std::string> versionArguments;
                 if (operationMode == "player") {
-                    versionArguments.push_back((fs::path(versionData.first) / versionData.second).string());
+                    versionArguments.push_back((fs::path(versionData.first) / versionData.second).generic_string());
                     if (arguments.size() > 0) {
                         for (std::string argument: arguments) {
                             versionArguments.push_back(argument);
@@ -249,7 +249,7 @@ int main(int argc, char *argv[]){
                         versionArguments.push_back("--app");
                     }
                 } else if (operationMode == "studio") {
-                    versionArguments.push_back((fs::path(versionData.first) / versionData.second).string());
+                    versionArguments.push_back((fs::path(versionData.first) / versionData.second).generic_string());
                     if (arguments.size() > 0) {
                         for (std::string argument: arguments) {
                             if (argument.rfind("roblox-studio:", 0) == 0) {

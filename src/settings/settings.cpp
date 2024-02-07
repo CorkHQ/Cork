@@ -36,39 +36,39 @@ namespace cork::settings {
         fs::path dataPath = fs::path(sago::getDataHome()) / "cork";
         fs::create_directories(dataPath);
 
-        return dataPath.string();
+        return dataPath.generic_string();
     }
     std::string GetConfigPath() {
         fs::path configPath = fs::path(sago::getConfigHome()) / "cork";
         fs::create_directories(configPath);
 
-        return configPath.string();
+        return configPath.generic_string();
     }
     
     std::string GetSettingsPath() {
         fs::path filePath = fs::path(GetConfigPath()) / "settings.toml";
-        return filePath.string();
+        return filePath.generic_string();
     }
     std::string GetVersionsPath() {
         fs::path versionsPath = fs::path(GetDataPath()) / "versions";
-        return versionsPath.string();
+        return versionsPath.generic_string();
     }
     std::string GetDownloadsPath() {
         fs::path downloadsPath = fs::path(sago::getCacheDir()) / "cork" / "downloads";
         fs::create_directories(downloadsPath);
         
-        return downloadsPath.string();
+        return downloadsPath.generic_string();
     }
     std::string GetLogsPath() {
         fs::path logsPath = fs::path(sago::getCacheDir()) / "cork" / "logs";
         fs::create_directories(logsPath);
         
-        return logsPath.string();
+        return logsPath.generic_string();
     }
 #if defined(WINE_RUNNER)
     std::string GetPrefixPath() {
         fs::path prefixPath = fs::path(GetDataPath()) / "pfx";
-        return prefixPath.string();
+        return prefixPath.generic_string();
     }
 #endif
     std::list<std::string> GetPlugins() {
@@ -84,7 +84,7 @@ namespace cork::settings {
             if (fs::exists(path)) {
                 for (const fs::directory_entry & entry : fs::directory_iterator(path)) {
                     if (entry.is_directory()) {
-                        pluginList.push_back(entry.path().string());
+                        pluginList.push_back(entry.path().generic_string());
                     }
                 }
             }
@@ -96,7 +96,7 @@ namespace cork::settings {
     void LoadDefaults() {
         settingsTable = toml::parse(defaultSettings);
         if (HasVendorPath()) {
-            std::string vendorSettingsPath = (fs::path(GetVendorPath()) / "settings.toml").string();
+            std::string vendorSettingsPath = (fs::path(GetVendorPath()) / "settings.toml").generic_string();
             if (fs::exists(vendorSettingsPath)) {
                 toml::table vendorTable = toml::parse_file(vendorSettingsPath);
                 mergeTable(&settingsTable, &vendorTable);
