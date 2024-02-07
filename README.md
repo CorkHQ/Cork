@@ -31,12 +31,12 @@ Felt like trying to get Roblox to run on your Ampere Altra or your Talos II? Cor
 | Operating System | Architecture | Runner | Support |
 | --- | --- | --- | --- |
 | Linux | x86_64 | Proton / Wine | Stable |
-| Windows | x86_64 | Native | Experimental |
+| Windows | x86_64 | Native | Stable |
 
 ## Installing from Package
 RPM and DEB packages are built with GitHub Actions for every commit, you can install those but they are experimental for now. Proper releases for those are coming soon!
 
-## Installing from Source
+## Installing from Source (Linux)
 ### Dependencies
 - Boost
 - libzip
@@ -82,6 +82,9 @@ cmake --build . --target all
 ```bash
 cmake --install . --prefix ~/.local
 ```
+
+## Installing from Source (Windows)
+Visual Studio wth VCPKG and CMake is enough to build this, but proper instructions are W.I.P
 
 ## Documentation
 **W.I.P**
