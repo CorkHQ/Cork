@@ -38,11 +38,10 @@ void setupLogger(std::string logLevel) {
     consoleSink->set_filter(boost::log::trivial::severity >= boost::log::trivial::trace);
 
     auto fsSink = boost::log::add_file_log(
-        boost::log::keywords::file_name = "cork-%Y-%m-%d_%H-%M-%S.%N.log",
+        boost::log::keywords::file_name = (fs::path(cs::GetLogsPath()) / "cork-%Y-%m-%d_%H-%M-%S.%N.log").string(),
         boost::log::keywords::rotation_size = 10 * 1024 * 1024,
         boost::log::keywords::min_free_space = 30 * 1024 * 1024,
-        boost::log::keywords::open_mode = std::ios_base::app,
-        boost::log::keywords::target = cs::GetLogsPath());
+        boost::log::keywords::open_mode = std::ios_base::app);
     fsSink->set_formatter(logFmt);
     fsSink->locked_backend()->auto_flush(true);
 
