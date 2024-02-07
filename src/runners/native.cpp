@@ -62,13 +62,16 @@ namespace cork::runners {
         }
         for (std::string argument : arguments) {
             newArguments.push_back(argument);
-            std::cout << argument << std::endl;
         }
 
         bp::ipstream output;
         std::string line;
 
+#if defined(PLATFORM_WINDOWS)
+        bp::child childProcess(bp::search_path("cmd.exe"), "/c", bp::args(newArguments), env, bp::start_dir(cwd), (bp::std_out & bp::std_err) > output);
+#else
         bp::child childProcess(bp::args(newArguments), env, bp::start_dir(cwd), (bp::std_out & bp::std_err) > output);
+#endif
         while (std::getline(output, line)) {
             BOOST_LOG_TRIVIAL(info) << line;
         }

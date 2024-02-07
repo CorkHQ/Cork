@@ -58,9 +58,11 @@ find_package(Boost COMPONENTS system log program_options REQUIRED)
 
 if (WIN32)
   add_compile_definitions(NATIVE_RUNNER)
+  add_compile_definitions(PLATFORM_WINDOWS)
   add_compile_definitions(BOOST_USE_WINAPI_VERSION=BOOST_WINAPI_VERSION_WIN7)
 else()
   add_compile_definitions(WINE_RUNNER)
+  add_compile_definitions(PLATFORM_POSIX)
 endif()
 
 if(CORK_PLUGINS)
