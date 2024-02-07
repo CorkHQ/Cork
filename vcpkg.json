@@ -2,14 +2,18 @@
   "dependencies": [
     "boost-log",
     "boost-process",
+    "boost-program-options",
     "boost-system",
     "bzip2",
+    "cpr",
     "curl",
     "liblzma",
     "libzip",
+    "libzippp",
     "lua",
     "openssl",
-    "zlib",
-    "boost-program-options"
+    "platform-folders",
+    "tomlplusplus",
+    "zlib"
   ]
 }
