@@ -4,6 +4,7 @@
 #include <sol/sol.hpp>
 #endif
 #include <nlohmann/json.hpp>
+#include <boost/interprocess/sync/named_mutex.hpp>
 #include <boost/log/core.hpp> 
 #include <boost/log/trivial.hpp> 
 #include <boost/log/expressions.hpp>
@@ -167,6 +168,8 @@ int main(int argc, char *argv[]){
     }
 #endif
 
+    boost::interprocess::named_mutex lockVersion(boost::interprocess::open_or_create, "CORK_version");
+
     int returnCode = 0;
     if (arguments.size() > 0) {
         std::string operationMode = arguments.front();
@@ -210,17 +213,23 @@ int main(int argc, char *argv[]){
 
                 std::pair<std::string, std::string> versionData;
                 std::string version = versionOverride;
+
                 if (operationMode == "player") {
                     if (version == "") {
                         version = cro::GetVersion("WindowsPlayer", versionChannel).clientVersionUpload;
                     }
+
+                    lockVersion.lock();
                     versionData = environment.GetPlayer(versionChannel, version);
                 } else if (operationMode == "studio") {
                     if (version == "") {
                         version = cro::GetVersion("WindowsStudio64", versionChannel).clientVersionUpload;
                     }
+
+                    lockVersion.lock();
                     versionData = environment.GetStudio(versionChannel, version);
                 }
+                lockVersion.unlock();
 
                 BOOST_LOG_TRIVIAL(trace) << "got " + operationMode + "!";
 
@@ -288,9 +297,13 @@ int main(int argc, char *argv[]){
 
                     BOOST_LOG_TRIVIAL(info) << "clear target: " << target;
                     if (target == "versions") {
+                        lockVersion.lock();
                         environment.CleanVersions();
+                        lockVersion.unlock();
                     } else if (target == "downloads") {
+                        lockVersion.lock();
                         fs::remove_all(fs::path(cs::GetDownloadsPath()));
+                        lockVersion.unlock();
                     } else if (target == "logs") {
                         fs::remove_all(fs::path(cs::GetLogsPath()));
                     } else if (target == "settings") {
