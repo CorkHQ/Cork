@@ -1,0 +1,23 @@
+name: Build (Windows amd64)
+on:
+  push:
+    branches: [ master ]
+jobs:
+  build-windows-amd64:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: mkdir
+      run: mkdir build
+      shell: pwsh
+    - name: cmake build
+      run: cmake -Bbuild --preset release-vcpkg
+      shell: pwsh
+    - name: cmake make
+      run: cmake --build build/ --preset release-vcpkg --config Release
+      shell: pwsh
+    - name: Upload binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: build
+        path: build/src/Release
