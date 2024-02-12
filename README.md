@@ -6,6 +6,7 @@
 <p>
 
 [![Version](https://img.shields.io/github/v/release/CorkHQ/Cork?display_name=tag)](https://github.com/CorkHQ/Cork/releases/latest)
+[![Windows Build (amd64)](https://img.shields.io/github/actions/workflow/status/CorkHQ/Cork/build-windows-amd64.yml?logo=windows&label=build+(amd64))](https://github.com/CorkHQ/Cork/actions/workflows/build-windows-amd64.yml)
 [![Fedora Package (amd64)](https://img.shields.io/github/actions/workflow/status/CorkHQ/Cork/package-fedora-amd64.yml?logo=fedora&label=package+(amd64))](https://github.com/CorkHQ/Cork/actions/workflows/package-fedora-amd64.yml)
 [![Ubuntu Package (amd64)](https://img.shields.io/github/actions/workflow/status/CorkHQ/Cork/package-ubuntu-amd64.yml?logo=ubuntu&label=package+(amd64))](https://github.com/CorkHQ/Cork/actions/workflows/package-ubuntu-amd64.yml)
 [![License](https://img.shields.io/github/license/CorkHQ/Cork)](https://github.com/CorkHQ/Cork/blob/master/LICENSE)
