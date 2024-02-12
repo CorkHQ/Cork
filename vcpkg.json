@@ -1,5 +1,6 @@
 {
   "dependencies": [
+    "boost-interprocess",
     "boost-log",
     "boost-process",
     "boost-program-options",
