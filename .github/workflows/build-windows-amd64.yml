@@ -20,7 +20,7 @@ jobs:
       run: mkdir build
       shell: pwsh
     - name: cmake build
-      run: cmake -Bbuild --preset release-vcpkg -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake
+      run: cmake -Bbuild --preset release-vcpkg -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
       shell: pwsh
     - name: cmake make
       run: cmake --build build/ --preset release-vcpkg --config Release
