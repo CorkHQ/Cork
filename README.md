@@ -34,7 +34,7 @@ Felt like trying to get Roblox to run on your Ampere Altra or your Talos II? Cor
 ## Installing from Package
 RPM and DEB packages are built with GitHub Actions for every commit, you can install those but they are experimental for now. Proper releases for those are coming soon!
 
-## Installing from Source (Linux)
+## Building from Source (Linux)
 ### Dependencies
 - Boost
 - libzip
@@ -58,7 +58,7 @@ sudo apt install libboost-all-dev libzip-dev zlib1g-dev libbz2-dev liblzma-dev l
 ```
 
 ### Building and Installing
-#### Clone the Repository
+#### Cloning the Repository
 ```bash
 git clone https://github.com/CorkHQ/Cork.git
 cd Cork
@@ -81,8 +81,32 @@ cmake --build . --target all
 cmake --install . --prefix ~/.local
 ```
 
-## Installing from Source (Windows)
-Visual Studio wth VCPKG and CMake is enough to build this, but proper instructions are W.I.P
+## Building from Source (Windows)
+### Requirements
+- Visual Studio 2022
+- CMake
+- Git
+- vcpkg
+
+### Building
+#### Cloning the Repository
+```bat
+git clone https://github.com/CorkHQ/Cork.git
+cd Cork
+```
+
+#### Preparing to Build
+```bat
+mkdir build
+cmake -Bbuild --preset release-vcpkg
+```
+
+#### Building
+```bat
+cmake --build build/ --preset release-vcpkg --config Release
+```
+
+Resulting binaries will be located in the `build/src/Release` directory on the Cork source folder.
 
 ## Documentation
 **W.I.P**
