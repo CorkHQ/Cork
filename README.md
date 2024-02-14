@@ -111,9 +111,6 @@ Resulting binaries will be located in the `build/src/Release` directory on the C
 ## Documentation
 **W.I.P**
 
-## "Why should I use this over Grapejuice or Vinegar?"
-Maybe you should, maybe you shouldn't. All of the current solutions for running Roblox on Linux offer something over the other, there is no better or worse one, use whatever suits **you**.
-
 ## Libraries
 Cork makes use of the following libraries:
 * [Boost](https://www.boost.org/)
