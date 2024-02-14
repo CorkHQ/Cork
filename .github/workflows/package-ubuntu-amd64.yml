@@ -12,9 +12,9 @@ jobs:
     - name: mkdir
       run: mkdir build
     - name: cmake build
-      run: cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCPACK_GENERATOR=DEB -DCPACK_DEBIAN_PACKAGE_SHLIBDEPS=ON -DCPR_USE_SYSTEM_CURL=ON
+      run: cmake -Bbuild --preset release -DCPACK_GENERATOR=DEB -DCPACK_DEBIAN_PACKAGE_SHLIBDEPS=ON
     - name: cmake make
-      run: cmake --build build/ --target all
+      run: cmake --build build/ --preset release --target all
     - name: cpack
       run: cd build && cpack
     - name: Upload binary
