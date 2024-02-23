@@ -28,10 +28,40 @@ Felt like trying to get Roblox to run on your Ampere Altra or your Talos II? Cor
 ## Supported Platforms
 | Operating System | Architecture | Runner | Support |
 | --- | --- | --- | --- |
-| Linux | x86_64 | Proton / Wine | Stable |
-| Windows | x86_64 | Native | Stable |
+| Windows | x86_64 | Native | Full |
+| Linux | x86_64 | Proton / Wine | Bootstrapper-only |
 
-## Installing from Package
+## Documentation
+**W.I.P**
+
+## Building from Source (Windows)
+### Requirements
+- Visual Studio 2022
+- CMake
+- Git
+- vcpkg
+
+### Building
+#### Cloning the Repository
+```bat
+git clone https://github.com/CorkHQ/Cork.git
+cd Cork
+```
+
+#### Preparing to Build
+```bat
+mkdir build
+cmake -Bbuild --preset release-vcpkg
+```
+
+#### Building
+```bat
+cmake --build build/ --preset release-vcpkg --config Release
+```
+
+Resulting binaries will be located in the `build/src/Release` directory on the Cork source folder.
+
+## Installing from Package (Linux)
 RPM and DEB packages are built with GitHub Actions for every commit, you can install those but they are experimental for now. Proper releases for those are coming soon!
 
 ## Building from Source (Linux)
@@ -80,36 +110,6 @@ cmake --build . --preset release --target all
 ```bash
 cmake --install . --prefix ~/.local
 ```
-
-## Building from Source (Windows)
-### Requirements
-- Visual Studio 2022
-- CMake
-- Git
-- vcpkg
-
-### Building
-#### Cloning the Repository
-```bat
-git clone https://github.com/CorkHQ/Cork.git
-cd Cork
-```
-
-#### Preparing to Build
-```bat
-mkdir build
-cmake -Bbuild --preset release-vcpkg
-```
-
-#### Building
-```bat
-cmake --build build/ --preset release-vcpkg --config Release
-```
-
-Resulting binaries will be located in the `build/src/Release` directory on the Cork source folder.
-
-## Documentation
-**W.I.P**
 
 ## Libraries
 Cork makes use of the following libraries:
