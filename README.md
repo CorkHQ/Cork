@@ -102,13 +102,12 @@ cmake -Bbuild --preset release
 
 #### Building
 ```bash
-cd build
-cmake --build . --preset release --target all
+cmake --build build/ --preset release --target all
 ```
 
 #### Installing
 ```bash
-cmake --install . --prefix ~/.local
+cmake --install build/ --prefix ~/.local
 ```
 
 ## Libraries
