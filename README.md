@@ -102,7 +102,7 @@ cmake -Bbuild --preset release
 
 #### Building
 ```bash
-cmake --build build/ --preset release --target all
+cmake --build build/ --target all
 ```
 
 #### Installing
